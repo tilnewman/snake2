@@ -1,0 +1,46 @@
+#ifndef COORDINATOR_HPP_INCLUDED
+#define COORDINATOR_HPP_INCLUDED
+//
+// coordinator.hpp
+//
+#include "bloom-shader.hpp"
+#include "config.hpp"
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/VideoMode.hpp>
+
+#include <memory>
+
+namespace snake2
+{
+
+    class Coordinator
+    {
+      public:
+        Coordinator();
+        void run(const Config & t_config);
+
+      private:
+        void setup(const Config & t_config);
+        void loop();
+        void teardown();
+
+        void setupRenderWindow(sf::VideoMode & t_videoMode);
+
+        void handleEvents();
+        void handleEvent(const sf::Event & t_event);
+        void update(const float t_elapsedTimeSec);
+        void draw();
+
+      private:
+        Config m_config;
+        sf::RenderStates m_renderStates;
+        sf::RenderWindow m_renderWindow;
+        std::unique_ptr<util::BloomEffectHelper> m_bloomWindowPtr;
+        bool m_isRunning;
+    };
+
+} // namespace gameoflife
+
+#endif // COORDINATOR_HPP_INCLUDED
