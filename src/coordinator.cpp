@@ -19,6 +19,8 @@ namespace snake2
         , m_bloomWindowPtr{}
         , m_isRunning{ true }
         , m_layout{}
+        , m_gridDisplay{}
+        , m_context{ m_config, m_layout, m_gridDisplay }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -31,14 +33,15 @@ namespace snake2
     void Coordinator::setup(const Config & t_config)
     {
         m_config = t_config;
-        
+
         setupRenderWindow(m_config.video_mode);
-        
+
         m_bloomWindowPtr = std::make_unique<util::BloomEffectHelper>(m_renderWindow);
         m_bloomWindowPtr->isEnabled(true);
         m_bloomWindowPtr->blurMultipassCount(3);
 
         m_layout.setup(m_config);
+        m_gridDisplay.setup(m_context);
     }
 
     void Coordinator::loop()
@@ -75,7 +78,7 @@ namespace snake2
         if (t_event.is<sf::Event::Closed>())
         {
             m_isRunning = false;
-            std::cout << "Stopping because window was closed externally.\n";
+            std::cout << "Exiting because window was closed externally.\n";
         }
         else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
@@ -91,7 +94,7 @@ namespace snake2
     void Coordinator::draw()
     {
         m_bloomWindowPtr->clear(sf::Color::Black);
-        // m_grid.draw(m_config, m_bloomWindowPtr->renderTarget(), m_renderStates);
+        m_bloomWindowPtr->renderTarget().draw(m_gridDisplay, m_renderStates);
         m_bloomWindowPtr->display();
     }
 

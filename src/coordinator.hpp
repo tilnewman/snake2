@@ -5,6 +5,8 @@
 //
 #include "bloom-shader.hpp"
 #include "config.hpp"
+#include "context.hpp"
+#include "grid-display.hpp"
 #include "layout.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -41,6 +43,8 @@ namespace snake2
         std::unique_ptr<util::BloomEffectHelper> m_bloomWindowPtr;
         bool m_isRunning;
         Layout m_layout;
+        GridDisplay m_gridDisplay;
+        Context m_context;
     };
 
 } // namespace snake2

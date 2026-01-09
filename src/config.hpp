@@ -15,9 +15,9 @@ namespace snake2
         sf::VideoMode video_mode{ { 4112u, 2580u }, 32u };
         unsigned framerate_limit{ 0 };
         float top_region_height_ratio{ 0.035f };
-        sf::Vector2u cell_counts{ 100u, 60u };
-        sf::Color grid_color_background{ 22, 22, 22 };
-        sf::Color grid_color_outline{ 0, 0, 0 };
+        float cell_size_ratio{ 0.025f };
+        sf::Color grid_color_background{ 28, 28, 28 };
+        sf::Color cell_color_outline{ 0, 0, 0 };
     };
 
 } // namespace gameoflife

@@ -29,8 +29,18 @@ namespace snake2
 
         m_bottomRect.position = { m_screenRect.position.x, (util::bottom(m_topRect) + 2.0f) };
 
-        m_bottomRect.size     = { m_screenRect.size.x,
-                                  (m_screenRect.size.y - m_bottomRect.position.y) };
+        m_bottomRect.size = { m_screenRect.size.x,
+                              (m_screenRect.size.y - m_bottomRect.position.y) };
+
+        m_cellSize.x = std::floor(m_screenRect.size.y * t_config.cell_size_ratio);
+        m_cellSize.y = m_cellSize.x;
+
+        m_cellCount = sf::Vector2u{ m_bottomRect.size / m_cellSize };
+
+        m_gridRect.size = (m_cellSize * sf::Vector2f{ m_cellCount });
+
+        m_gridRect.position =
+            (m_bottomRect.position + ((m_bottomRect.size - m_gridRect.size) * 0.5f));
     }
 
 } // namespace snake2
