@@ -29,6 +29,9 @@ namespace snake2
         [[nodiscard]] const sf::Vector2f
             gridPosToScreenPos(const Context & t_context, const GridPos_t & t_gridPos) const;
 
+        [[nodiscard]] const sf::FloatRect
+            gridPosToScreenRect(const Context & t_context, const GridPos_t & t_gridPos) const;
+
       private:
         sf::RectangleShape m_frameRectangle;
         sf::RectangleShape m_backgroundRectangle;

@@ -40,9 +40,11 @@ namespace snake2
 
         for (const GridPos_t & position : m_positions)
         {
-            rectangle.setPosition(
-                t_context.grid_display.gridPosToScreenPos(t_context, position) +
-                sf::Vector2f{ 1.0f, 1.0f });
+            const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
+                t_context, position) };
+
+            rectangle.setPosition(screenRect.position);
+            rectangle.setSize(screenRect.size);
 
             t_target.draw(rectangle, t_states);
         }
