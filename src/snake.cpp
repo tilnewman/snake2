@@ -8,6 +8,7 @@
 #include "grid-display.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
+#include "util.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -18,7 +19,7 @@ namespace snake2
         : m_positions{}
         , m_direction{ sf::Keyboard::Scancode::Left }
         , m_elapsedTimeSec{ 0.0f }
-        , m_timeBetweenMovesSec{ 0.1f }
+        , m_timeBetweenMovesSec{ 0.125f }
         , m_isAlive{ true }
         , m_toGrowCount{ 0 }
     {}
@@ -175,6 +176,29 @@ namespace snake2
     {
         m_isAlive = false;
         // TODO play death sound effect
+    }
+
+    void Snake::shrink()
+    {
+        if (length() <= 1)
+        {
+            return;
+        }
+
+        std::size_t toShrinkCount{ length() / 2_st };
+        if (m_toGrowCount >= toShrinkCount)
+        {
+            m_toGrowCount -= toShrinkCount;
+            return;
+        }
+        else
+        {
+            toShrinkCount -= m_toGrowCount;
+            while ((toShrinkCount-- > 0) && (length() > 1))
+            {
+                m_positions.pop_back();
+            }
+        }
     }
 
 } // namespace snake2

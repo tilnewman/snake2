@@ -24,6 +24,7 @@ namespace snake2
         sf::Color cell_snake_death_color{ sf::Color::Red };
         sf::Color cell_food_color{ sf::Color::Yellow };
         sf::Color cell_wall_color{ 93, 46, 20 };
+        sf::Color cell_shrink_color{ sf::Color::Magenta };
     };
 
 } // namespace snake2

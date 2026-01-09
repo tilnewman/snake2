@@ -31,6 +31,7 @@ namespace snake2
         [[nodiscard]] std::size_t length() const noexcept { return m_positions.size(); } 
         void kill(const Context & t_context);
         void grow(const std::size_t count) noexcept { m_toGrowCount += count; }
+        void shrink();
 
         void draw(
             const Context & t_context,

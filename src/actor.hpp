@@ -20,9 +20,9 @@ namespace snake2
     enum class Actor
     {
         Food,
-        Wall
+        Wall,
+        Shrink
         // SlowTime,
-        // TrimLength
     };
 
     //
@@ -96,6 +96,16 @@ namespace snake2
       public:
         Wall(const Context & t_context, const GridPos_t & t_position);
         virtual ~Wall() override = default;
+        bool onEat(const Context & t_context) override;
+    };
+
+    //
+
+    class Shrink : public ActorBase
+    {
+      public:
+        Shrink(const Context & t_context, const GridPos_t & t_position);
+        virtual ~Shrink() override = default;
         bool onEat(const Context & t_context) override;
     };
 

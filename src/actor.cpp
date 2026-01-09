@@ -65,4 +65,16 @@ namespace snake2
         return false;
     }
 
+    //
+
+    Shrink::Shrink(const Context & t_context, const GridPos_t & t_position)
+        : ActorBase(Actor::Shrink, t_position, t_context.config.cell_shrink_color)
+    {}
+
+    bool Shrink::onEat(const Context & t_context)
+    {
+        t_context.snake.shrink();
+        return true;
+    }
+
 } // namespace snake2
