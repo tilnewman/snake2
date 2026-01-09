@@ -49,10 +49,15 @@ namespace snake2
         m_actors.setup(m_context);
 
         // TODO remove after testing
-        for (int counter{ 0 }; counter < 10; ++counter)
+        for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.addActor(m_context, Actor::Food, m_random.from(freePositions));
+            m_actors.add(m_context, Actor::Food, m_random.from(freePositions));
+        }
+        for (int counter{ 0 }; counter < 6; ++counter)
+        {
+            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
+            m_actors.add(m_context, Actor::Wall, m_random.from(freePositions));
         }
     }
 

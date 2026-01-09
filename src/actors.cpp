@@ -21,10 +21,16 @@ namespace snake2
         m_actors.reserve(t_context.layout.cellCount().x * t_context.layout.cellCount().y);
     }
 
-    void
-        Actors::addActor(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos)
+    void Actors::add(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos)
     {
         m_actors.push_back(makeActor(t_context, t_type, t_gridPos));
+    }
+
+    void Actors::remove(const GridPos_t & t_gridPos)
+    {
+        std::erase_if(m_actors, [&](const std::unique_ptr<IActor> & actorUPtr) {
+            return (actorUPtr->position() == t_gridPos);
+        });
     }
 
     void Actors::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -74,7 +80,7 @@ namespace snake2
         }
 
         const GridPosVec_t snakePositions{ t_context.snake.positions() };
-        for (const GridPos_t & gridPos: snakePositions)
+        for (const GridPos_t & gridPos : snakePositions)
         {
             std::erase(positions, gridPos);
         }
@@ -82,16 +88,17 @@ namespace snake2
         return positions;
     }
 
-    void Actors::eat(const Context& t_context, const GridPos_t& t_gridPos)
+    bool Actors::eat(const Context & t_context, const GridPos_t & t_gridPos)
     {
         for (auto & actorUPtr : m_actors)
         {
             if (actorUPtr->position() == t_gridPos)
             {
-                actorUPtr->onEat(t_context);
-                break;
+                return actorUPtr->onEat(t_context);
             }
         }
+
+        return false;
     }
 
     std::unique_ptr<IActor> Actors::makeActor(

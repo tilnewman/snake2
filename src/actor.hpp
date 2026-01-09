@@ -34,8 +34,10 @@ namespace snake2
         virtual Actor type() const                                                   = 0;
         virtual const GridPos_t position() const                                     = 0;
         virtual const sf::Color color() const                                        = 0;
-        virtual void onEat(const Context & t_context)                                = 0;
         virtual void update(const Context & t_context, const float t_elpasedTimeSec) = 0;
+
+        // returns true if the eaten actor needs to be removed by the caller
+        virtual bool onEat(const Context & t_context) = 0;
 
         virtual void draw(
             const Context & t_context,
@@ -84,7 +86,7 @@ namespace snake2
       public:
         Food(const Context & t_context, const GridPos_t & t_position);
         virtual ~Food() override = default;
-        void onEat(const Context & t_context) override;
+        bool onEat(const Context & t_context) override;
     };
 
     //
@@ -94,7 +96,7 @@ namespace snake2
       public:
         Wall(const Context & t_context, const GridPos_t & t_position);
         virtual ~Wall() override = default;
-        void onEat(const Context & t_context) override;
+        bool onEat(const Context & t_context) override;
     };
 
 } // namespace snake2

@@ -46,9 +46,10 @@ namespace snake2
         : ActorBase(Actor::Food, t_position, t_context.config.cell_food_color)
     {}
 
-    void Food::onEat(const Context &)
+    bool Food::onEat(const Context &)
     {
-        // TODO  update score, speed up snake walk speed, maybe place another food
+        // TODO  update score, lengthen snake, start animation, maybe place another food
+        return true;
     }
 
     //
@@ -57,6 +58,10 @@ namespace snake2
         : ActorBase(Actor::Wall, t_position, t_context.config.cell_wall_color)
     {}
 
-    void Wall::onEat(const Context & t_context) { t_context.snake.kill(t_context); }
+    bool Wall::onEat(const Context & t_context)
+    {
+        t_context.snake.kill(t_context);
+        return false;
+    }
 
 } // namespace snake2

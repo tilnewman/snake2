@@ -3,6 +3,7 @@
 //
 #include "snake.hpp"
 
+#include "actors.hpp"
 #include "context.hpp"
 #include "grid-display.hpp"
 #include "keys.hpp"
@@ -17,7 +18,7 @@ namespace snake2
         : m_positions{}
         , m_direction{ sf::Keyboard::Scancode::Left }
         , m_elapsedTimeSec{ 0.0f }
-        , m_timeBetweenMovesSec{ 0.25f }
+        , m_timeBetweenMovesSec{ 0.15f }
         , m_isAlive{ true }
     {}
 
@@ -94,46 +95,7 @@ namespace snake2
             return;
         }
 
-        const GridPos_t newPos = [&]() {
-            const GridPos_t oldPos{ m_positions.front() };
-
-            if (sf::Keyboard::Scancode::Left == m_direction)
-            {
-                GridPos_t newPos{ oldPos.x - 1, oldPos.y };
-                if (newPos.x < 0)
-                {
-                    newPos.x = static_cast<int>(t_context.layout.cellCount().x - 1);
-                }
-                return newPos;
-            }
-            else if (sf::Keyboard::Scancode::Right == m_direction)
-            {
-                GridPos_t newPos{ oldPos.x + 1, oldPos.y };
-                if (newPos.x >= static_cast<int>(t_context.layout.cellCount().x))
-                {
-                    newPos.x = 0;
-                }
-                return newPos;
-            }
-            else if (sf::Keyboard::Scancode::Up == m_direction)
-            {
-                GridPos_t newPos{ oldPos.x, oldPos.y - 1 };
-                if (newPos.y < 0)
-                {
-                    newPos.y = static_cast<int>(t_context.layout.cellCount().y - 1);
-                }
-                return newPos;
-            }
-            else
-            {
-                GridPos_t newPos{ oldPos.x, oldPos.y + 1 };
-                if (newPos.y >= static_cast<int>(t_context.layout.cellCount().y))
-                {
-                    newPos.y = 0;
-                }
-                return newPos;
-            }
-        }();
+        const GridPos_t newPos{ makeMovedPosition(t_context) };
 
         m_positions.insert(std::begin(m_positions), newPos);
         m_positions.pop_back();
@@ -143,7 +105,7 @@ namespace snake2
         {
             for (std::size_t index{ 1 }; index < m_positions.size(); ++index)
             {
-                if (m_positions.front() == m_positions.at(index))
+                if (newPos == m_positions.at(index))
                 {
                     kill(t_context);
                     return;
@@ -151,7 +113,53 @@ namespace snake2
             }
         }
 
-        // TODO if not eating self, eat other Actors
+        // if not eating self, eat other Actors
+        if (t_context.actors.eat(t_context, newPos))
+        {
+            t_context.actors.remove(newPos);
+        }
+    }
+
+    const GridPos_t Snake::makeMovedPosition(const Context& t_context) const
+    {
+        const GridPos_t oldPos{ m_positions.front() };
+
+        if (sf::Keyboard::Scancode::Left == m_direction)
+        {
+            GridPos_t newPos{ oldPos.x - 1, oldPos.y };
+            if (newPos.x < 0)
+            {
+                newPos.x = static_cast<int>(t_context.layout.cellCount().x - 1);
+            }
+            return newPos;
+        }
+        else if (sf::Keyboard::Scancode::Right == m_direction)
+        {
+            GridPos_t newPos{ oldPos.x + 1, oldPos.y };
+            if (newPos.x >= static_cast<int>(t_context.layout.cellCount().x))
+            {
+                newPos.x = 0;
+            }
+            return newPos;
+        }
+        else if (sf::Keyboard::Scancode::Up == m_direction)
+        {
+            GridPos_t newPos{ oldPos.x, oldPos.y - 1 };
+            if (newPos.y < 0)
+            {
+                newPos.y = static_cast<int>(t_context.layout.cellCount().y - 1);
+            }
+            return newPos;
+        }
+        else
+        {
+            GridPos_t newPos{ oldPos.x, oldPos.y + 1 };
+            if (newPos.y >= static_cast<int>(t_context.layout.cellCount().y))
+            {
+                newPos.y = 0;
+            }
+            return newPos;
+        }
     }
 
     void Snake::kill(const Context &)

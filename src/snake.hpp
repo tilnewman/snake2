@@ -38,6 +38,7 @@ namespace snake2
 
       private:
         void move(const Context & t_context);
+        const GridPos_t makeMovedPosition(const Context & t_context) const;
 
       private:
         GridPosVec_t m_positions;

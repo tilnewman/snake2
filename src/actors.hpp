@@ -26,10 +26,11 @@ namespace snake2
         Actors();
 
         void setup(const Context & t_context);
-        void addActor(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos);
+        void add(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos);
+        void remove(const GridPos_t & t_gridPos);
         void handleEvent(const Context & t_context, const sf::Event & t_event);
         void update(const Context & t_context, const float t_elpasedTimeSec);
-        void eat(const Context & t_context, const GridPos_t & t_gridPos);
+        [[nodiscard]] bool eat(const Context & t_context, const GridPos_t & t_gridPos);
 
         void draw(
             const Context & t_context,
