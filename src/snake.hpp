@@ -30,6 +30,7 @@ namespace snake2
         [[nodiscard]] const GridPosVec_t positions() const noexcept { return m_positions; }
         [[nodiscard]] std::size_t length() const noexcept { return m_positions.size(); } 
         void kill(const Context & t_context);
+        void grow(const std::size_t count) noexcept { m_toGrowCount += count; }
 
         void draw(
             const Context & t_context,
@@ -46,6 +47,7 @@ namespace snake2
         float m_elapsedTimeSec;
         float m_timeBetweenMovesSec;
         bool m_isAlive;
+        std::size_t m_toGrowCount;
     };
 
 } // namespace snake2

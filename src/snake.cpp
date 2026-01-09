@@ -18,8 +18,9 @@ namespace snake2
         : m_positions{}
         , m_direction{ sf::Keyboard::Scancode::Left }
         , m_elapsedTimeSec{ 0.0f }
-        , m_timeBetweenMovesSec{ 0.15f }
+        , m_timeBetweenMovesSec{ 0.1f }
         , m_isAlive{ true }
+        , m_toGrowCount{ 0 }
     {}
 
     void Snake::setup(const Context & t_context)
@@ -98,7 +99,15 @@ namespace snake2
         const GridPos_t newPos{ makeMovedPosition(t_context) };
 
         m_positions.insert(std::begin(m_positions), newPos);
-        m_positions.pop_back();
+
+        if (0 == m_toGrowCount)
+        {
+            m_positions.pop_back();
+        }
+        else
+        {
+            --m_toGrowCount;
+        }
 
         // check for eating self
         if (m_positions.size() > 1)
@@ -120,7 +129,7 @@ namespace snake2
         }
     }
 
-    const GridPos_t Snake::makeMovedPosition(const Context& t_context) const
+    const GridPos_t Snake::makeMovedPosition(const Context & t_context) const
     {
         const GridPos_t oldPos{ m_positions.front() };
 

@@ -46,9 +46,10 @@ namespace snake2
         : ActorBase(Actor::Food, t_position, t_context.config.cell_food_color)
     {}
 
-    bool Food::onEat(const Context &)
+    bool Food::onEat(const Context & t_context)
     {
-        // TODO  update score, lengthen snake, start animation, maybe place another food
+        // TODO update score, start animation, maybe place another food
+        t_context.snake.grow(t_context.layout.cellCount().y / 2u);
         return true;
     }
 
