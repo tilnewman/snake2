@@ -20,7 +20,8 @@ namespace snake2
         , m_isRunning{ true }
         , m_layout{}
         , m_gridDisplay{}
-        , m_context{ m_config, m_layout, m_gridDisplay }
+        , m_snake{}
+        , m_context{ m_config, m_layout, m_snake, m_gridDisplay }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -42,6 +43,7 @@ namespace snake2
 
         m_layout.setup(m_config);
         m_gridDisplay.setup(m_context);
+        m_snake.setup(m_context);
     }
 
     void Coordinator::loop()
@@ -95,6 +97,7 @@ namespace snake2
     {
         m_bloomWindowPtr->clear(sf::Color::Black);
         m_bloomWindowPtr->renderTarget().draw(m_gridDisplay, m_renderStates);
+        m_snake.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_bloomWindowPtr->display();
     }
 

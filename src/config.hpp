@@ -19,8 +19,10 @@ namespace snake2
         sf::Color grid_frame_color{ 28, 28, 28 };
         sf::Color cell_background_color{ 16, 16, 16 };
         sf::Color cell_outline_color{ 0, 0, 0 };
+        sf::Color cell_snake_first_color{ 64, 255, 64 };
+        sf::Color cell_snake_last_color{ 0, 255, 0 };
     };
 
-} // namespace gameoflife
+} // namespace snake2
 
 #endif // CONFIG_HPP_INCLUDED

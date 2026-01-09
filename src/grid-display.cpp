@@ -67,4 +67,12 @@ namespace snake2
             &m_cellLineVerts[0], m_cellLineVerts.size(), sf::PrimitiveType::Lines, t_states);
     }
 
+    const sf::Vector2f GridDisplay::gridPosToScreenPos(
+        const Context & t_context, const sf::Vector2i & t_gridPos) const
+    {
+        return (
+            t_context.layout.gridRect().position +
+            (sf::Vector2f{ t_gridPos } * t_context.layout.cellSize()));
+    }
+
 } // namespace snake2

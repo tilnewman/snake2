@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
+#include "snake.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -44,6 +45,7 @@ namespace snake2
         bool m_isRunning;
         Layout m_layout;
         GridDisplay m_gridDisplay;
+        Snake m_snake;
         Context m_context;
     };
 

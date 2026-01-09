@@ -3,6 +3,8 @@
 //
 // grid-display.hpp
 //
+#include "grid-types.hpp"
+
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -23,6 +25,9 @@ namespace snake2
 
         void setup(const Context & t_context);
         void draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const override;
+
+        [[nodiscard]] const sf::Vector2f
+            gridPosToScreenPos(const Context & t_context, const GridPos_t & t_gridPos) const;
 
       private:
         sf::RectangleShape m_frameRectangle;
