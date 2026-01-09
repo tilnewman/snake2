@@ -61,7 +61,7 @@ namespace snake2
     {
         sf::RectangleShape rectangle;
         rectangle.setFillColor(t_context.config.cell_snake_first_color);
-        
+
         for (const GridPos_t & position : m_positions)
         {
             const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
@@ -74,7 +74,7 @@ namespace snake2
         }
     }
 
-    void Snake::move(const Context &)
+    void Snake::move(const Context & t_context)
     {
         if (m_positions.empty())
         {
@@ -86,19 +86,39 @@ namespace snake2
 
             if (sf::Keyboard::Scancode::Left == m_direction)
             {
-                return GridPos_t{ oldPos.x - 1, oldPos.y };
+                GridPos_t newPos{ oldPos.x - 1, oldPos.y };
+                if (newPos.x < 0)
+                {
+                    newPos.x = static_cast<int>(t_context.layout.cellCount().x - 1);
+                }
+                return newPos;
             }
             else if (sf::Keyboard::Scancode::Right == m_direction)
             {
-                return GridPos_t{ oldPos.x + 1, oldPos.y };
+                GridPos_t newPos{ oldPos.x + 1, oldPos.y };
+                if (newPos.x >= static_cast<int>(t_context.layout.cellCount().x))
+                {
+                    newPos.x = 0;
+                }
+                return newPos;
             }
             else if (sf::Keyboard::Scancode::Up == m_direction)
             {
-                return GridPos_t{ oldPos.x, oldPos.y - 1 };
+                GridPos_t newPos{ oldPos.x, oldPos.y - 1 };
+                if (newPos.y < 0)
+                {
+                    newPos.y = static_cast<int>(t_context.layout.cellCount().y - 1);
+                }
+                return newPos;
             }
             else
             {
-                return GridPos_t{ oldPos.x, oldPos.y + 1 };
+                GridPos_t newPos{ oldPos.x, oldPos.y + 1 };
+                if (newPos.y >= static_cast<int>(t_context.layout.cellCount().y))
+                {
+                    newPos.y = 0;
+                }
+                return newPos;
             }
         }();
 
