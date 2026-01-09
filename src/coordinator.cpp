@@ -47,7 +47,48 @@ namespace snake2
         }
     }
 
-    void Coordinator::teardown() { m_bloomWindowPtr.reset(); }
+    void Coordinator::teardown()
+    {
+        m_bloomWindowPtr.reset();
+
+        if (m_renderWindow.isOpen())
+        {
+            m_renderWindow.close();
+        }
+    }
+
+    void Coordinator::handleEvents()
+    {
+        while (const auto eventOpt = m_renderWindow.pollEvent())
+        {
+            handleEvent(eventOpt.value());
+        }
+    }
+
+    void Coordinator::handleEvent(const sf::Event & t_event)
+    {
+        if (t_event.is<sf::Event::Closed>())
+        {
+            m_isRunning = false;
+            std::cout << "Stopping because window was closed externally.\n";
+        }
+        else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+        {
+            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
+            {
+                m_isRunning = false;
+            }
+        }
+    }
+
+    void Coordinator::update(const float) {}
+
+    void Coordinator::draw()
+    {
+        m_bloomWindowPtr->clear(sf::Color::Black);
+        // m_grid.draw(m_config, m_bloomWindowPtr->renderTarget(), m_renderStates);
+        m_bloomWindowPtr->display();
+    }
 
     void Coordinator::setupRenderWindow(sf::VideoMode & t_videoMode)
     {
@@ -91,39 +132,4 @@ namespace snake2
         }
     }
 
-    void Coordinator::handleEvents()
-    {
-        while (const auto eventOpt = m_renderWindow.pollEvent())
-        {
-            handleEvent(eventOpt.value());
-        }
-    }
-
-    void Coordinator::handleEvent(const sf::Event & t_event)
-    {
-        if (t_event.is<sf::Event::Closed>())
-        {
-            m_isRunning = false;
-            std::cout << "Stopping because window was closed externally.\n";
-        }
-        else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
-        {
-            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
-            {
-                m_isRunning = false;
-            }
-        }
-    }
-
-    void Coordinator::update(const float t_elapsedTimeSec)
-    {
-    }
-
-    void Coordinator::draw()
-    {
-        m_bloomWindowPtr->clear(sf::Color::Black);
-        //m_grid.draw(m_config, m_bloomWindowPtr->renderTarget(), m_renderStates);
-        m_bloomWindowPtr->display();
-    }
-
-} // namespace gameoflife
+} // namespace snake2

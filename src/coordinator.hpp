@@ -26,12 +26,12 @@ namespace snake2
         void loop();
         void teardown();
 
-        void setupRenderWindow(sf::VideoMode & t_videoMode);
-
         void handleEvents();
         void handleEvent(const sf::Event & t_event);
         void update(const float t_elapsedTimeSec);
         void draw();
+
+        void setupRenderWindow(sf::VideoMode & t_videoMode);
 
       private:
         Config m_config;
