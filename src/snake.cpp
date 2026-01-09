@@ -61,8 +61,7 @@ namespace snake2
     {
         sf::RectangleShape rectangle;
         rectangle.setFillColor(t_context.config.cell_snake_first_color);
-        rectangle.setSize(t_context.layout.cellSize() - sf::Vector2f{ 2.0f, 2.0f });
-
+        
         for (const GridPos_t & position : m_positions)
         {
             const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
@@ -105,6 +104,10 @@ namespace snake2
 
         m_positions.insert(std::begin(m_positions), newPos);
         m_positions.pop_back();
+
+        // TODO check for eating self
+
+        // if not eating self, eat other Actors
     }
 
 } // namespace snake2
