@@ -56,7 +56,7 @@ namespace snake2
             , m_color{ t_color }
         {}
 
-        virtual ~ActorBase() = default;
+        virtual ~ActorBase() override = default;
 
         Actor type() const final { return m_type; }
         const GridPos_t position() const final { return m_position; }
@@ -83,7 +83,7 @@ namespace snake2
     {
       public:
         Food(const Context & t_context, const GridPos_t & t_position);
-        virtual ~Food() = default;
+        virtual ~Food() override = default;
         void onEat(const Context & t_context) override;
     };
 
@@ -93,7 +93,7 @@ namespace snake2
     {
       public:
         Wall(const Context & t_context, const GridPos_t & t_position);
-        virtual ~Wall() = default;
+        virtual ~Wall() override = default;
         void onEat(const Context & t_context) override;
     };
 
