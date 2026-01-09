@@ -88,10 +88,17 @@ namespace snake2
             {
                 m_isRunning = false;
             }
+            else
+            {
+                m_snake.handleEvent(m_context, t_event);
+            }
         }
     }
 
-    void Coordinator::update(const float) {}
+    void Coordinator::update(const float t_elapsedTimeSec)
+    {
+        m_snake.update(m_context, t_elapsedTimeSec);
+    }
 
     void Coordinator::draw()
     {
