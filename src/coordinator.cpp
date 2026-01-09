@@ -52,12 +52,12 @@ namespace snake2
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Food, m_random.from(freePositions));
+            m_actors.add(m_context, Actor::Slow, m_random.from(freePositions));
         }
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Shrink, m_random.from(freePositions));
+            m_actors.add(m_context, Actor::Fast, m_random.from(freePositions));
         }
     }
 

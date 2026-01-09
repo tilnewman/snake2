@@ -25,6 +25,9 @@ namespace snake2
         sf::Color cell_food_color{ sf::Color::Yellow };
         sf::Color cell_wall_color{ 93, 46, 20 };
         sf::Color cell_shrink_color{ sf::Color::Magenta };
+        sf::Color cell_slow_color{ sf::Color::Cyan };
+        sf::Color cell_fast_color{ 255, 50, 100 };
+        float snake_speed_change_ratio{ 0.25f };
     };
 
 } // namespace snake2

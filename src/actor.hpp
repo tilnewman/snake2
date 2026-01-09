@@ -21,8 +21,9 @@ namespace snake2
     {
         Food,
         Wall,
-        Shrink
-        // SlowTime,
+        Shrink,
+        Slow,
+        Fast
     };
 
     //
@@ -106,6 +107,26 @@ namespace snake2
       public:
         Shrink(const Context & t_context, const GridPos_t & t_position);
         virtual ~Shrink() override = default;
+        bool onEat(const Context & t_context) override;
+    };
+
+    //
+
+    class Slow : public ActorBase
+    {
+      public:
+        Slow(const Context & t_context, const GridPos_t & t_position);
+        virtual ~Slow() override = default;
+        bool onEat(const Context & t_context) override;
+    };
+
+    //
+
+    class Fast : public ActorBase
+    {
+      public:
+        Fast(const Context & t_context, const GridPos_t & t_position);
+        virtual ~Fast() override = default;
         bool onEat(const Context & t_context) override;
     };
 

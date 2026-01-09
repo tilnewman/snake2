@@ -32,6 +32,8 @@ namespace snake2
         void kill(const Context & t_context);
         void grow(const std::size_t count) noexcept { m_toGrowCount += count; }
         void shrink();
+        void slower(const Context & t_context);
+        void faster(const Context & t_context);
 
         void draw(
             const Context & t_context,

@@ -58,6 +58,16 @@ namespace snake2
         }
     }
 
+    void Snake::slower(const Context & t_context)
+    {
+        m_timeBetweenMovesSec *= (1.0f + t_context.config.snake_speed_change_ratio);
+    }
+
+    void Snake::faster(const Context & t_context)
+    {
+        m_timeBetweenMovesSec *= (1.0f - t_context.config.snake_speed_change_ratio);
+    }
+
     void Snake::draw(
         const Context & t_context,
         sf::RenderTarget & t_target,

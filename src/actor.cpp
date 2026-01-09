@@ -77,4 +77,28 @@ namespace snake2
         return true;
     }
 
+    //
+
+    Slow::Slow(const Context & t_context, const GridPos_t & t_position)
+        : ActorBase(Actor::Slow, t_position, t_context.config.cell_slow_color)
+    {}
+
+    bool Slow::onEat(const Context & t_context)
+    {
+        t_context.snake.slower(t_context);
+        return true;
+    }
+
+    //
+
+    Fast::Fast(const Context & t_context, const GridPos_t & t_position)
+        : ActorBase(Actor::Fast, t_position, t_context.config.cell_fast_color)
+    {}
+
+    bool Fast::onEat(const Context & t_context)
+    {
+        t_context.snake.faster(t_context);
+        return true;
+    }
+
 } // namespace snake2

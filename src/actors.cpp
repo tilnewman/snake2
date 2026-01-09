@@ -110,6 +110,8 @@ namespace snake2
             case Actor::Food:   { return std::make_unique<Food>(t_context, t_gridPos); }
             case Actor::Wall:   { return std::make_unique<Wall>(t_context, t_gridPos); }
             case Actor::Shrink: { return std::make_unique<Shrink>(t_context, t_gridPos); }
+            case Actor::Slow:   { return std::make_unique<Slow>(t_context, t_gridPos); }
+            case Actor::Fast:   { return std::make_unique<Fast>(t_context, t_gridPos); }
             default:
             {
                 throw std::runtime_error("makeActor() failed because given unknown Actor t_type!");
