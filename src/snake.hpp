@@ -42,6 +42,7 @@ namespace snake2
         sf::Keyboard::Scancode m_direction;
         float m_elapsedTimeSec;
         float m_timeBetweenMovesSec;
+        bool m_isAlive;
     };
 
 } // namespace snake2

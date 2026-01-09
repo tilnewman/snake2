@@ -18,6 +18,7 @@ namespace snake2
         , m_direction{ sf::Keyboard::Scancode::Left }
         , m_elapsedTimeSec{ 0.0f }
         , m_timeBetweenMovesSec{ 0.25f }
+        , m_isAlive{ true }
     {}
 
     void Snake::setup(const Context & t_context)
@@ -72,11 +73,23 @@ namespace snake2
 
             t_target.draw(rectangle, t_states);
         }
+
+        if (!m_isAlive && !m_positions.empty())
+        {
+            const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
+                t_context, m_positions.front()) };
+
+            rectangle.setPosition(screenRect.position);
+            rectangle.setSize(screenRect.size);
+            rectangle.setFillColor(t_context.config.cell_snake_death_color);
+
+            t_target.draw(rectangle, t_states);
+        }
     }
 
     void Snake::move(const Context & t_context)
     {
-        if (m_positions.empty())
+        if (m_positions.empty() || !m_isAlive)
         {
             return;
         }
@@ -125,9 +138,21 @@ namespace snake2
         m_positions.insert(std::begin(m_positions), newPos);
         m_positions.pop_back();
 
-        // TODO check for eating self
+        // check for eating self
+        if (m_positions.size() > 1)
+        {
+            for (std::size_t index{ 1 }; index < m_positions.size(); ++index)
+            {
+                if (m_positions.front() == m_positions.at(index))
+                {
+                    m_isAlive = false;
+                    // TODO play death sound effect
+                    return;
+                }
+            }
+        }
 
-        // if not eating self, eat other Actors
+        // TODO if not eating self, eat other Actors
     }
 
 } // namespace snake2
