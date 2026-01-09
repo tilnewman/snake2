@@ -18,6 +18,7 @@ namespace snake2
         , m_renderWindow{}
         , m_bloomWindowPtr{}
         , m_isRunning{ true }
+        , m_layout{}
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -30,10 +31,14 @@ namespace snake2
     void Coordinator::setup(const Config & t_config)
     {
         m_config = t_config;
+        
         setupRenderWindow(m_config.video_mode);
+        
         m_bloomWindowPtr = std::make_unique<util::BloomEffectHelper>(m_renderWindow);
         m_bloomWindowPtr->isEnabled(true);
         m_bloomWindowPtr->blurMultipassCount(3);
+
+        m_layout.setup(m_config);
     }
 
     void Coordinator::loop()

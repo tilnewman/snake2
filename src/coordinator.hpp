@@ -5,6 +5,7 @@
 //
 #include "bloom-shader.hpp"
 #include "config.hpp"
+#include "layout.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -39,8 +40,9 @@ namespace snake2
         sf::RenderWindow m_renderWindow;
         std::unique_ptr<util::BloomEffectHelper> m_bloomWindowPtr;
         bool m_isRunning;
+        Layout m_layout;
     };
 
-} // namespace gameoflife
+} // namespace snake2
 
 #endif // COORDINATOR_HPP_INCLUDED
