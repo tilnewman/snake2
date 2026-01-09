@@ -82,6 +82,18 @@ namespace snake2
         return positions;
     }
 
+    void Actors::eat(const Context& t_context, const GridPos_t& t_gridPos)
+    {
+        for (auto & actorUPtr : m_actors)
+        {
+            if (actorUPtr->position() == t_gridPos)
+            {
+                actorUPtr->onEat(t_context);
+                break;
+            }
+        }
+    }
+
     std::unique_ptr<IActor> Actors::makeActor(
         const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos)
     {

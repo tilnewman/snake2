@@ -145,14 +145,19 @@ namespace snake2
             {
                 if (m_positions.front() == m_positions.at(index))
                 {
-                    m_isAlive = false;
-                    // TODO play death sound effect
+                    kill(t_context);
                     return;
                 }
             }
         }
 
         // TODO if not eating self, eat other Actors
+    }
+
+    void Snake::kill(const Context &)
+    {
+        m_isAlive = false;
+        // TODO play death sound effect
     }
 
 } // namespace snake2

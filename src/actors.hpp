@@ -29,6 +29,7 @@ namespace snake2
         void addActor(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos);
         void handleEvent(const Context & t_context, const sf::Event & t_event);
         void update(const Context & t_context, const float t_elpasedTimeSec);
+        void eat(const Context & t_context, const GridPos_t & t_gridPos);
 
         void draw(
             const Context & t_context,

@@ -7,6 +7,7 @@
 #include "context.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
+#include "snake.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -56,9 +57,6 @@ namespace snake2
         : ActorBase(Actor::Wall, t_position, t_context.config.cell_wall_color)
     {}
 
-    void Wall::onEat(const Context &)
-    {
-        // TODO  lose the level
-    }
+    void Wall::onEat(const Context & t_context) { t_context.snake.kill(t_context); }
 
 } // namespace snake2
