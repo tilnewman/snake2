@@ -19,13 +19,11 @@ namespace snake2
 
     void GridDisplay::setup(const Context & t_context)
     {
-        m_frameRectangle.setFillColor(sf::Color::Transparent);
-        m_frameRectangle.setOutlineColor(sf::Color::White);
-        m_frameRectangle.setOutlineThickness(1.0f);
+        m_frameRectangle.setFillColor(t_context.config.grid_frame_color);
         m_frameRectangle.setPosition(t_context.layout.bottomRect().position);
         m_frameRectangle.setSize(t_context.layout.bottomRect().size);
 
-        m_backgroundRectangle.setFillColor(t_context.config.grid_color_background);
+        m_backgroundRectangle.setFillColor(t_context.config.cell_background_color);
         m_backgroundRectangle.setPosition(t_context.layout.gridRect().position);
         m_backgroundRectangle.setSize(t_context.layout.gridRect().size);
 
@@ -38,11 +36,11 @@ namespace snake2
 
             m_cellLineVerts.emplace_back(
                 sf::Vector2f{ horizPos, m_backgroundRectangle.getPosition().y },
-                t_context.config.cell_color_outline);
+                t_context.config.cell_outline_color);
 
             m_cellLineVerts.emplace_back(
                 sf::Vector2f{ horizPos, util::bottom(m_backgroundRectangle.getGlobalBounds()) },
-                t_context.config.cell_color_outline);
+                t_context.config.cell_outline_color);
         }
 
         for (unsigned y{ 0 }; y <= cellCount.y; ++y)
@@ -52,11 +50,11 @@ namespace snake2
 
             m_cellLineVerts.emplace_back(
                 sf::Vector2f{ m_backgroundRectangle.getPosition().x, vertPos },
-                t_context.config.cell_color_outline);
+                t_context.config.cell_outline_color);
 
             m_cellLineVerts.emplace_back(
                 sf::Vector2f{ util::right(m_backgroundRectangle.getGlobalBounds()), vertPos },
-                t_context.config.cell_color_outline);
+                t_context.config.cell_outline_color);
         }
     }
 

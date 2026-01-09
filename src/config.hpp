@@ -16,8 +16,9 @@ namespace snake2
         unsigned framerate_limit{ 0 };
         float top_region_height_ratio{ 0.035f };
         float cell_size_ratio{ 0.025f };
-        sf::Color grid_color_background{ 28, 28, 28 };
-        sf::Color cell_color_outline{ 0, 0, 0 };
+        sf::Color grid_frame_color{ 28, 28, 28 };
+        sf::Color cell_background_color{ 16, 16, 16 };
+        sf::Color cell_outline_color{ 0, 0, 0 };
     };
 
 } // namespace gameoflife
