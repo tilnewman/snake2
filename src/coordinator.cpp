@@ -22,7 +22,8 @@ namespace snake2
         , m_gridDisplay{}
         , m_snake{}
         , m_actors{}
-        , m_context{ m_config, m_layout, m_snake, m_gridDisplay, m_actors }
+        , m_random{}
+        , m_context{ m_config, m_layout, m_gridDisplay, m_random, m_snake, m_actors }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -50,7 +51,8 @@ namespace snake2
         // TODO remove after testing
         for (int counter{ 0 }; counter < 10; ++counter)
         {
-            m_actors.addActor(m_context, Actor::Food, { counter, counter });
+            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
+            m_actors.addActor(m_context, Actor::Food, m_random.from(freePositions));
         }
     }
 

@@ -4,6 +4,11 @@
 // context.hpp
 //
 
+namespace util
+{
+    class Random;
+}
+
 namespace snake2
 {
 
@@ -21,20 +26,24 @@ namespace snake2
         Context(
             const Config & t_config,
             const Layout & t_layout,
-            Snake & t_snake,
             const GridDisplay & t_gridDisplay,
+            const util::Random & t_random,
+            Snake & t_snake,
             Actors & t_actors)
             : config{ t_config }
             , layout{ t_layout }
-            , snake{ t_snake }
             , grid_display{ t_gridDisplay }
-            , actors{t_actors}
+            , random{ t_random }
+            , snake{ t_snake }
+            , actors{ t_actors }
+
         {}
 
         const Config & config;
         const Layout & layout;
-        Snake & snake;
         const GridDisplay & grid_display;
+        const util::Random & random;
+        Snake & snake;
         Actors & actors;
     };
 

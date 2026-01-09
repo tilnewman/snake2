@@ -3,13 +3,14 @@
 //
 // coordinator.hpp
 //
+#include "actors.hpp"
 #include "bloom-shader.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
+#include "random.hpp"
 #include "snake.hpp"
-#include "actors.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -48,6 +49,7 @@ namespace snake2
         GridDisplay m_gridDisplay;
         Snake m_snake;
         Actors m_actors;
+        util::Random m_random;
         Context m_context;
     };
 

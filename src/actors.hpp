@@ -34,9 +34,11 @@ namespace snake2
             const Context & t_context,
             sf::RenderTarget & t_target,
             const sf::RenderStates & t_states) const;
-        
+
+        [[nodiscard]] const GridPosVec_t findFreePositions(const Context & t_context) const;
+
       private:
-        std::unique_ptr<IActor>
+        [[nodiscard]] std::unique_ptr<IActor>
             makeActor(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos);
 
       private:

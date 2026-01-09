@@ -17,7 +17,7 @@ namespace snake2
         : m_positions{}
         , m_direction{ sf::Keyboard::Scancode::Left }
         , m_elapsedTimeSec{ 0.0f }
-        , m_timeBetweenMovesSec{ 0.5f }
+        , m_timeBetweenMovesSec{ 0.25f }
     {}
 
     void Snake::setup(const Context & t_context)

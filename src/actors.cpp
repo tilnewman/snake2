@@ -5,6 +5,9 @@
 
 #include "context.hpp"
 #include "layout.hpp"
+#include "snake.hpp"
+
+#include <algorithm>
 
 namespace snake2
 {
@@ -49,6 +52,34 @@ namespace snake2
         {
             actorUPtr->draw(t_context, t_target, t_states);
         }
+    }
+
+    const GridPosVec_t Actors::findFreePositions(const Context & t_context) const
+    {
+        GridPosVec_t positions;
+        positions.reserve(t_context.layout.cellCount().x * t_context.layout.cellCount().y);
+
+        const sf::Vector2i cellCounts{ t_context.layout.cellCount() };
+        for (int y{ 0 }; y < cellCounts.y; ++y)
+        {
+            for (int x{ 0 }; x < cellCounts.x; ++x)
+            {
+                positions.emplace_back(x, y);
+            }
+        }
+
+        for (const auto & actorUPtr : m_actors)
+        {
+            std::erase(positions, actorUPtr->position());
+        }
+
+        const GridPosVec_t snakePositions{ t_context.snake.positions() };
+        for (const GridPos_t & gridPos: snakePositions)
+        {
+            std::erase(positions, gridPos);
+        }
+
+        return positions;
     }
 
     std::unique_ptr<IActor> Actors::makeActor(
