@@ -9,6 +9,7 @@
 #include "grid-display.hpp"
 #include "layout.hpp"
 #include "snake.hpp"
+#include "actors.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -46,6 +47,7 @@ namespace snake2
         Layout m_layout;
         GridDisplay m_gridDisplay;
         Snake m_snake;
+        Actors m_actors;
         Context m_context;
     };
 

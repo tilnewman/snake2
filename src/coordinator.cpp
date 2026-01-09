@@ -21,7 +21,8 @@ namespace snake2
         , m_layout{}
         , m_gridDisplay{}
         , m_snake{}
-        , m_context{ m_config, m_layout, m_snake, m_gridDisplay }
+        , m_actors{}
+        , m_context{ m_config, m_layout, m_snake, m_gridDisplay, m_actors }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -39,11 +40,18 @@ namespace snake2
 
         m_bloomWindowPtr = std::make_unique<util::BloomEffectHelper>(m_renderWindow);
         m_bloomWindowPtr->isEnabled(true);
-        m_bloomWindowPtr->blurMultipassCount(3);
+        m_bloomWindowPtr->blurMultipassCount(5);
 
         m_layout.setup(m_config);
         m_gridDisplay.setup(m_context);
         m_snake.setup(m_context);
+        m_actors.setup(m_context);
+
+        // TODO remove after testing
+        for (int counter{ 0 }; counter < 10; ++counter)
+        {
+            m_actors.addActor(m_context, Actor::Food, { counter, counter });
+        }
     }
 
     void Coordinator::loop()
@@ -81,22 +89,24 @@ namespace snake2
         {
             m_isRunning = false;
             std::cout << "Exiting because window was closed externally.\n";
+            return;
         }
         else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
                 m_isRunning = false;
-            }
-            else
-            {
-                m_snake.handleEvent(m_context, t_event);
+                return;
             }
         }
+
+        m_actors.handleEvent(m_context, t_event);
+        m_snake.handleEvent(m_context, t_event);
     }
 
     void Coordinator::update(const float t_elapsedTimeSec)
     {
+        m_actors.update(m_context, t_elapsedTimeSec);
         m_snake.update(m_context, t_elapsedTimeSec);
     }
 
@@ -104,6 +114,7 @@ namespace snake2
     {
         m_bloomWindowPtr->clear(sf::Color::Black);
         m_bloomWindowPtr->renderTarget().draw(m_gridDisplay, m_renderStates);
+        m_actors.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_snake.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_bloomWindowPtr->display();
     }
@@ -124,7 +135,7 @@ namespace snake2
             return;
         }
 
-        m_renderWindow.create(t_videoMode, "CastleCrawl2", sf::State::Fullscreen);
+        m_renderWindow.create(t_videoMode, "Snake2", sf::State::Fullscreen);
 
         // sometimes the resolution of the window created does not match what was specified
         const unsigned actualWidth  = m_renderWindow.getSize().x;

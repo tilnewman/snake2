@@ -21,6 +21,8 @@ namespace snake2
         sf::Color cell_outline_color{ 0, 0, 0 };
         sf::Color cell_snake_first_color{ 64, 255, 64 };
         sf::Color cell_snake_last_color{ 0, 255, 0 };
+        sf::Color cell_food_color{ sf::Color::Yellow };
+        sf::Color cell_wall_color{ 93, 46, 20 };
     };
 
 } // namespace snake2
