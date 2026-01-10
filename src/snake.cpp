@@ -49,13 +49,20 @@ namespace snake2
         }
     }
 
-    void Snake::handleEvent(const Context &, const sf::Event & t_event)
+    void Snake::handleEvent(const Context & t_context, const sf::Event & t_event)
     {
         if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
         {
             if (util::keys::isArrow(keyPtr->scancode))
             {
-                m_direction = keyPtr->scancode;
+                if (util::keys::isOpposite(keyPtr->scancode, m_direction))
+                {
+                    t_context.sfx.play("error-1");
+                }
+                else
+                {
+                    m_direction = keyPtr->scancode;
+                }
             }
         }
     }
