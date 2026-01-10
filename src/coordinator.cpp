@@ -60,6 +60,13 @@ namespace snake2
         m_soundPlayer.loadAll();
 
         // TODO remove after testing
+        for (int x{ 0 }; x < static_cast<int>(m_layout.cellCount().x); ++x)
+        {
+            m_actors.add(m_context, Actor::Wall, { x, 0 });
+
+            m_actors.add(
+                m_context, Actor::Wall, { x, static_cast<int>(m_layout.cellCount().y - 1u) });
+        }
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
