@@ -9,7 +9,6 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
-#include "framerate-display.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
 #include "random.hpp"
@@ -49,7 +48,6 @@ namespace snake2
         sf::RenderStates m_renderStates;
         sf::RenderWindow m_renderWindow;
         std::unique_ptr<util::BloomEffectHelper> m_bloomWindowPtr;
-        std::unique_ptr<FramerateDisplay> m_framerateDisplayUPtr;
         Layout m_layout;
         GridDisplay m_gridDisplay;
         Snake m_snake;

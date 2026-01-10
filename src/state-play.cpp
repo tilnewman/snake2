@@ -18,6 +18,8 @@ namespace snake2
 
     void StatePlay::onEnter(const Context & t_context)
     {
+        m_framerateDisplay.setup(t_context);
+
         // TODO remove after testing
         for (int x{ 0 }; x < static_cast<int>(t_context.layout.cellCount().x); ++x)
         {
@@ -52,6 +54,7 @@ namespace snake2
         t_context.actors.update(t_context, t_elapsedTimeSec);
         t_context.snake.update(t_context, t_elapsedTimeSec);
         t_context.cell_anim.update(t_context, t_elapsedTimeSec);
+        m_framerateDisplay.update(t_context, t_elapsedTimeSec); 
     }
 
     void StatePlay::draw(
@@ -63,6 +66,7 @@ namespace snake2
         t_context.actors.draw(t_context, t_target, t_states);
         t_context.snake.draw(t_context, t_target, t_states);
         t_context.cell_anim.draw(t_target, t_states);
+        m_framerateDisplay.draw(t_target, t_states);
     }
 
     void StatePlay::handleEvent(const Context & t_context, const sf::Event & t_event)

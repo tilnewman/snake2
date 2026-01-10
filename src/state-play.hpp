@@ -3,6 +3,7 @@
 //
 // state-play.hpp
 //
+#include "framerate-display.hpp"
 #include "state.hpp"
 
 namespace snake2
@@ -24,6 +25,9 @@ namespace snake2
             const Context & t_context,
             sf::RenderTarget & t_target,
             const sf::RenderStates & t_states) const override;
+
+      private:
+        FramerateDisplay m_framerateDisplay;
     };
 
 } // namespace snake2

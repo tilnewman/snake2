@@ -18,7 +18,6 @@ namespace snake2
         , m_renderStates{}
         , m_renderWindow{}
         , m_bloomWindowPtr{}
-        , m_framerateDisplayUPtr{}
         , m_layout{}
         , m_gridDisplay{}
         , m_snake{}
@@ -54,8 +53,6 @@ namespace snake2
         util::SfmlDefaults::instance().setup();
         m_layout.setup(m_config);
         m_fontManager.setup(m_config);
-        m_framerateDisplayUPtr = std::make_unique<FramerateDisplay>();
-        m_framerateDisplayUPtr->setup(m_context);
         m_gridDisplay.setup(m_context);
         m_snake.setup(m_context);
         m_actors.setup(m_context);
@@ -113,14 +110,12 @@ namespace snake2
     void Coordinator::update(const float t_elapsedTimeSec)
     {
         m_stateManager.current().update(m_context, t_elapsedTimeSec);
-        m_framerateDisplayUPtr->update(m_context, t_elapsedTimeSec);
     }
 
     void Coordinator::draw()
     {
         m_bloomWindowPtr->clear(sf::Color::Black);
         m_stateManager.current().draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
-        m_framerateDisplayUPtr->draw(m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_bloomWindowPtr->display();
     }
 
