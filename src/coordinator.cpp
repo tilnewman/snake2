@@ -18,7 +18,6 @@ namespace snake2
         , m_renderStates{}
         , m_renderWindow{}
         , m_bloomWindowPtr{}
-        , m_isRunning{ true }
         , m_framerateDisplayUPtr{}
         , m_layout{}
         , m_gridDisplay{}
@@ -28,9 +27,10 @@ namespace snake2
         , m_cellAnimationManager{}
         , m_soundPlayer{ m_random }
         , m_fontManager{}
-        , m_context{ m_config,     m_layout, m_gridDisplay,          m_random,
-                     m_snake,      m_actors, m_cellAnimationManager, m_soundPlayer,
-                     m_fontManager }
+        , m_stateManager{}
+        , m_context{ m_config,      m_layout,      m_gridDisplay,          m_random,
+                     m_snake,       m_actors,      m_cellAnimationManager, m_soundPlayer,
+                     m_fontManager, m_stateManager }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -64,39 +64,18 @@ namespace snake2
         m_soundPlayer.setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayer.loadAll();
 
-        // TODO remove after testing
-        for (int x{ 0 }; x < static_cast<int>(m_layout.cellCount().x); ++x)
-        {
-            m_actors.add(m_context, Actor::Wall, { x, 0 });
-
-            m_actors.add(
-                m_context, Actor::Wall, { x, static_cast<int>(m_layout.cellCount().y - 1u) });
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Food, m_random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Shrink, m_random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Slow, m_random.from(freePositions));
-        }
+        m_stateManager.setPending(State::Play);
     }
 
     void Coordinator::loop()
     {
         sf::Clock frameClock;
-        while (m_bloomWindowPtr->isOpen() && m_isRunning)
+        while (m_bloomWindowPtr->isOpen() && (m_stateManager.current().type() != State::Quit))
         {
             handleEvents();
             update(frameClock.restart().asSeconds());
             draw();
+            m_stateManager.changeIfPending(m_context);
         }
     }
 
@@ -122,41 +101,26 @@ namespace snake2
     {
         if (t_event.is<sf::Event::Closed>())
         {
-            m_isRunning = false;
+            m_stateManager.setPending(State::Quit);
             std::cout << "Exiting because window was closed externally.\n";
-            return;
         }
-        else if (const auto * keyPtr = t_event.getIf<sf::Event::KeyPressed>())
+        else
         {
-            if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
-            {
-                m_isRunning = false;
-                return;
-            }
+            m_stateManager.current().handleEvent(m_context, t_event);
         }
-
-        m_actors.handleEvent(m_context, t_event);
-        m_snake.handleEvent(m_context, t_event);
     }
 
     void Coordinator::update(const float t_elapsedTimeSec)
     {
-        m_actors.update(m_context, t_elapsedTimeSec);
-        m_snake.update(m_context, t_elapsedTimeSec);
-        m_cellAnimationManager.update(m_context, t_elapsedTimeSec);
+        m_stateManager.current().update(m_context, t_elapsedTimeSec);
         m_framerateDisplayUPtr->update(m_context, t_elapsedTimeSec);
     }
 
     void Coordinator::draw()
     {
         m_bloomWindowPtr->clear(sf::Color::Black);
-
-        m_bloomWindowPtr->renderTarget().draw(m_gridDisplay, m_renderStates);
-        m_actors.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
-        m_snake.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
-        m_cellAnimationManager.draw(m_bloomWindowPtr->renderTarget(), m_renderStates);
+        m_stateManager.current().draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_framerateDisplayUPtr->draw(m_bloomWindowPtr->renderTarget(), m_renderStates);
-
         m_bloomWindowPtr->display();
     }
 

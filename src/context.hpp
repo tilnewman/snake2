@@ -21,6 +21,7 @@ namespace snake2
     class Actors;
     class CellAnimationManager;
     class FontManager;
+    class StateManager;
 
     //
 
@@ -35,7 +36,8 @@ namespace snake2
             Actors & t_actors,
             CellAnimationManager & t_cellAnimationManager,
             util::SoundPlayer & t_soundPlayer,
-            FontManager & t_fontManager)
+            FontManager & t_fontManager,
+            StateManager & t_stateManager)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -45,6 +47,7 @@ namespace snake2
             , cell_anim{ t_cellAnimationManager }
             , sfx{ t_soundPlayer }
             , font{ t_fontManager }
+            , state{ t_stateManager }
         {}
 
         const Config & config;
@@ -56,6 +59,7 @@ namespace snake2
         CellAnimationManager & cell_anim;
         util::SoundPlayer & sfx;
         FontManager & font;
+        StateManager & state;
     };
 
 } // namespace snake2

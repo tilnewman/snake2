@@ -15,6 +15,7 @@
 #include "random.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
+#include "state.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -48,7 +49,6 @@ namespace snake2
         sf::RenderStates m_renderStates;
         sf::RenderWindow m_renderWindow;
         std::unique_ptr<util::BloomEffectHelper> m_bloomWindowPtr;
-        bool m_isRunning;
         std::unique_ptr<FramerateDisplay> m_framerateDisplayUPtr;
         Layout m_layout;
         GridDisplay m_gridDisplay;
@@ -58,6 +58,7 @@ namespace snake2
         CellAnimationManager m_cellAnimationManager;
         util::SoundPlayer m_soundPlayer;
         FontManager m_fontManager;
+        StateManager m_stateManager;
         Context m_context;
     };
 
