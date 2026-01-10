@@ -4,6 +4,7 @@
 #include "snake.hpp"
 
 #include "actors.hpp"
+#include "color-range.hpp"
 #include "context.hpp"
 #include "grid-display.hpp"
 #include "keys.hpp"
@@ -75,12 +76,21 @@ namespace snake2
         const sf::RenderStates & t_states) const
     {
         sf::RectangleShape rectangle;
-        rectangle.setFillColor(t_context.config.cell_snake_first_color);
 
-        for (const GridPos_t & position : m_positions)
+        for (std::size_t index{ 0 }; index < m_positions.size(); ++index)
         {
+            const float colorRatio{ static_cast<float>(index) /
+                                    static_cast<float>(m_positions.size()) };
+
+            const sf::Color color{ colors::blend(
+                colorRatio,
+                t_context.config.cell_snake_first_color,
+                t_context.config.cell_snake_last_color) };
+
+            rectangle.setFillColor(color);
+
             const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
-                t_context, position) };
+                t_context, m_positions.at(index)) };
 
             rectangle.setPosition(screenRect.position);
             rectangle.setSize(screenRect.size);
@@ -184,10 +194,7 @@ namespace snake2
         }
     }
 
-    void Snake::kill(const Context &)
-    {
-        m_isAlive = false;
-    }
+    void Snake::kill(const Context &) { m_isAlive = false; }
 
     void Snake::shrink()
     {
