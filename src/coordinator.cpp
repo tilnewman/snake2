@@ -25,8 +25,10 @@ namespace snake2
         , m_random{}
         , m_cellAnimationManager{}
         , m_soundPlayer{ m_random }
-        , m_context{ m_config, m_layout, m_gridDisplay,          m_random,
-                     m_snake,  m_actors, m_cellAnimationManager, m_soundPlayer }
+        , m_fontManager{}
+        , m_context{ m_config,     m_layout, m_gridDisplay,          m_random,
+                     m_snake,      m_actors, m_cellAnimationManager, m_soundPlayer,
+                     m_fontManager }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -48,6 +50,7 @@ namespace snake2
         m_bloomWindowPtr->blurMultipassCount(5);
 
         m_layout.setup(m_config);
+        m_fontManager.setup(m_config);
         m_gridDisplay.setup(m_context);
         m_snake.setup(m_context);
         m_actors.setup(m_context);

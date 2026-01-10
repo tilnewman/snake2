@@ -20,6 +20,7 @@ namespace snake2
     class Snake;
     class Actors;
     class CellAnimationManager;
+    class FontManager;
 
     //
 
@@ -33,7 +34,8 @@ namespace snake2
             Snake & t_snake,
             Actors & t_actors,
             CellAnimationManager & t_cellAnimationManager,
-            util::SoundPlayer & t_soundPlayer)
+            util::SoundPlayer & t_soundPlayer,
+            FontManager & t_fontManager)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -42,7 +44,7 @@ namespace snake2
             , actors{ t_actors }
             , cell_anim{ t_cellAnimationManager }
             , sfx{ t_soundPlayer }
-
+            , font{ t_fontManager }
         {}
 
         const Config & config;
@@ -53,6 +55,7 @@ namespace snake2
         Actors & actors;
         CellAnimationManager & cell_anim;
         util::SoundPlayer & sfx;
+        FontManager & font;
     };
 
 } // namespace snake2

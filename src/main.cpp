@@ -27,7 +27,7 @@ int main(const int argc, const char * const argv[])
         if (!std::filesystem::exists(config.media_path))
         {
             throw std::runtime_error(
-                "Error:  The media path does not exist! Put the media path on the command line or "
+                "Error: The media path does not exist! Put the media path on the command line or "
                 "put the 'media' folder here.");
         }
 

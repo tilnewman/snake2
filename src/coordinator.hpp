@@ -13,6 +13,7 @@
 #include "random.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
+#include "font.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -54,6 +55,7 @@ namespace snake2
         util::Random m_random;
         CellAnimationManager m_cellAnimationManager;
         util::SoundPlayer m_soundPlayer;
+        FontManager m_fontManager;
         Context m_context;
     };
 
