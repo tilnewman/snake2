@@ -72,8 +72,8 @@ namespace snake2
 
     bool Wall::onEat(const Context & t_context)
     {
-        t_context.snake.kill(t_context);
         t_context.sfx.play("break-block");
+        t_context.snake.kill(t_context);
         return false;
     }
 
@@ -85,6 +85,7 @@ namespace snake2
 
     bool Shrink::onEat(const Context & t_context)
     {
+        t_context.sfx.play("chop");
         t_context.snake.shrink();
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Shrink!", color());
