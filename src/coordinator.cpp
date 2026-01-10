@@ -24,12 +24,13 @@ namespace snake2
         , m_actors{}
         , m_random{}
         , m_cellAnimationManager{}
+        , m_textAnimationManager{}
         , m_soundPlayer{ m_random }
         , m_fontManager{}
         , m_stateManager{}
         , m_context{ m_config,      m_layout,      m_gridDisplay,          m_random,
-                     m_snake,       m_actors,      m_cellAnimationManager, m_soundPlayer,
-                     m_fontManager, m_stateManager }
+                     m_snake,       m_actors,      m_cellAnimationManager, m_textAnimationManager,
+                     m_soundPlayer, m_fontManager, m_stateManager }
     {}
 
     void Coordinator::run(const Config & t_config)

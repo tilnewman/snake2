@@ -15,6 +15,7 @@
 #include "snake.hpp"
 #include "sound-player.hpp"
 #include "state.hpp"
+#include "text-anim.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -54,6 +55,7 @@ namespace snake2
         Actors m_actors;
         util::Random m_random;
         CellAnimationManager m_cellAnimationManager;
+        TextAnimationManager m_textAnimationManager;
         util::SoundPlayer m_soundPlayer;
         FontManager m_fontManager;
         StateManager m_stateManager;

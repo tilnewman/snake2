@@ -10,6 +10,7 @@
 #include "layout.hpp"
 #include "random.hpp"
 #include "snake.hpp"
+#include "text-anim.hpp"
 
 namespace snake2
 {
@@ -54,7 +55,8 @@ namespace snake2
         t_context.actors.update(t_context, t_elapsedTimeSec);
         t_context.snake.update(t_context, t_elapsedTimeSec);
         t_context.cell_anim.update(t_context, t_elapsedTimeSec);
-        m_framerateDisplay.update(t_context, t_elapsedTimeSec); 
+        t_context.text_anim.update(t_context, t_elapsedTimeSec);
+        m_framerateDisplay.update(t_context, t_elapsedTimeSec);
     }
 
     void StatePlay::draw(
@@ -66,6 +68,7 @@ namespace snake2
         t_context.actors.draw(t_context, t_target, t_states);
         t_context.snake.draw(t_context, t_target, t_states);
         t_context.cell_anim.draw(t_target, t_states);
+        t_context.text_anim.draw(t_target, t_states);
         m_framerateDisplay.draw(t_target, t_states);
     }
 

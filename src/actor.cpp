@@ -10,6 +10,7 @@
 #include "layout.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
+#include "text-anim.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -52,12 +53,14 @@ namespace snake2
     {
         // TODO update score, maybe place another food
 
+        t_context.sfx.play("shine");
+
         t_context.snake.grow(
             (t_context.layout.cellCount().y / 2u) +
             (2u * static_cast<unsigned>(std::sqrt(t_context.snake.length()))));
 
         t_context.cell_anim.add(t_context, position(), color());
-        t_context.sfx.play("shine");
+        t_context.text_anim.add(t_context, position(), "Test!", color());
         return true;
     }
 

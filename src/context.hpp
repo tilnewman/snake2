@@ -22,6 +22,7 @@ namespace snake2
     class CellAnimationManager;
     class FontManager;
     class StateManager;
+    class TextAnimationManager;
 
     //
 
@@ -35,6 +36,7 @@ namespace snake2
             Snake & t_snake,
             Actors & t_actors,
             CellAnimationManager & t_cellAnimationManager,
+            TextAnimationManager & t_textAnimationManager,
             util::SoundPlayer & t_soundPlayer,
             FontManager & t_fontManager,
             StateManager & t_stateManager)
@@ -45,6 +47,7 @@ namespace snake2
             , snake{ t_snake }
             , actors{ t_actors }
             , cell_anim{ t_cellAnimationManager }
+            , text_anim{ t_textAnimationManager }
             , sfx{ t_soundPlayer }
             , font{ t_fontManager }
             , state{ t_stateManager }
@@ -57,6 +60,7 @@ namespace snake2
         Snake & snake;
         Actors & actors;
         CellAnimationManager & cell_anim;
+        TextAnimationManager & text_anim;
         util::SoundPlayer & sfx;
         FontManager & font;
         StateManager & state;
