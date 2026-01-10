@@ -3,6 +3,8 @@
 //
 // config.hpp
 //
+#include <filesystem>
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/VideoMode.hpp>
@@ -12,6 +14,7 @@ namespace snake2
 
     struct Config
     {
+        std::filesystem::path media_path{};
         sf::VideoMode video_mode{ { 4112u, 2580u }, 32u };
         unsigned framerate_limit{ 0 };
         float top_region_height_ratio{ 0.035f };

@@ -8,6 +8,7 @@
 #include "grid-display.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
+#include "sound-player.hpp"
 #include "util.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -182,10 +183,10 @@ namespace snake2
         }
     }
 
-    void Snake::kill(const Context &)
+    void Snake::kill(const Context & t_context)
     {
         m_isAlive = false;
-        // TODO play death sound effect
+        t_context.sfx.play("step-smash");
     }
 
     void Snake::shrink()

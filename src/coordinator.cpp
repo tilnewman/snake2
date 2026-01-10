@@ -24,8 +24,9 @@ namespace snake2
         , m_actors{}
         , m_random{}
         , m_cellAnimationManager{}
-        , m_context{ m_config, m_layout, m_gridDisplay,         m_random,
-                     m_snake,  m_actors, m_cellAnimationManager }
+        , m_soundPlayer{ m_random }
+        , m_context{ m_config, m_layout, m_gridDisplay,          m_random,
+                     m_snake,  m_actors, m_cellAnimationManager, m_soundPlayer }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -52,16 +53,14 @@ namespace snake2
         m_actors.setup(m_context);
         m_cellAnimationManager.setup(m_context);
 
+        m_soundPlayer.setMediaPath((m_config.media_path / "sfx").string());
+        m_soundPlayer.loadAll();
+
         // TODO remove after testing
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
             m_actors.add(m_context, Actor::Food, m_random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Fast, m_random.from(freePositions));
         }
         for (int counter{ 0 }; counter < 6; ++counter)
         {

@@ -7,7 +7,8 @@
 namespace util
 {
     class Random;
-}
+    class SoundPlayer;
+} // namespace util
 
 namespace snake2
 {
@@ -31,7 +32,8 @@ namespace snake2
             const util::Random & t_random,
             Snake & t_snake,
             Actors & t_actors,
-            CellAnimationManager & t_cellAnimationManager)
+            CellAnimationManager & t_cellAnimationManager,
+            util::SoundPlayer & t_soundPlayer)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -39,6 +41,7 @@ namespace snake2
             , snake{ t_snake }
             , actors{ t_actors }
             , cell_anim{ t_cellAnimationManager }
+            , sfx{ t_soundPlayer }
 
         {}
 
@@ -49,6 +52,7 @@ namespace snake2
         Snake & snake;
         Actors & actors;
         CellAnimationManager & cell_anim;
+        util::SoundPlayer & sfx;
     };
 
 } // namespace snake2

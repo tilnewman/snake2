@@ -5,13 +5,14 @@
 //
 #include "actors.hpp"
 #include "bloom-shader.hpp"
+#include "cell-anim.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
 #include "random.hpp"
 #include "snake.hpp"
-#include "cell-anim.hpp"
+#include "sound-player.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -52,6 +53,7 @@ namespace snake2
         Actors m_actors;
         util::Random m_random;
         CellAnimationManager m_cellAnimationManager;
+        util::SoundPlayer m_soundPlayer;
         Context m_context;
     };
 
