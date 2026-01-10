@@ -53,7 +53,7 @@ namespace snake2
                 anim.rectangle.setScale({ scale*scale, scale*scale });
 
                 const std::uint8_t alpha{ static_cast<std::uint8_t>(util::map(
-                    anim.elapsed_sec, 0.0f, t_context.config.cell_anim_duration_sec, 255, 0)) };
+                    anim.elapsed_sec, 0.0f, t_context.config.cell_anim_duration_sec, 127, 0)) };
 
                 sf::Color color{ anim.color };
                 color.a = alpha;
