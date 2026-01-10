@@ -51,7 +51,11 @@ namespace snake2
     bool Food::onEat(const Context & t_context)
     {
         // TODO update score, maybe place another food
-        t_context.snake.grow(t_context.layout.cellCount().y / 2u);
+
+        t_context.snake.grow(
+            (t_context.layout.cellCount().y / 2u) +
+            (2u * static_cast<unsigned>(std::sqrt(t_context.snake.length()))));
+
         t_context.cell_anim.add(t_context, position(), color());
         t_context.sfx.play("shine");
         return true;
