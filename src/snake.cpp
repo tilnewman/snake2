@@ -30,6 +30,12 @@ namespace snake2
     void Snake::setup(const Context & t_context)
     {
         m_positions.reserve(t_context.layout.cellCount().x * t_context.layout.cellCount().y);
+        reset(t_context);
+    }
+
+    void Snake::reset(const Context & t_context)
+    {
+        m_positions.clear();
 
         // start the snake in the center of the screen horizontally
         const int vertPos{ static_cast<int>(t_context.layout.cellCount().y / 2u) };

@@ -25,6 +25,7 @@ namespace snake2
         Snake();
 
         void setup(const Context & t_context);
+        void reset(const Context & t_context);
         void update(const Context & t_context, const float t_elapsedTimeSec);
         void handleEvent(const Context & t_context, const sf::Event & t_event);
         [[nodiscard]] const GridPosVec_t positions() const noexcept { return m_positions; }
@@ -42,7 +43,7 @@ namespace snake2
 
       private:
         void move(const Context & t_context);
-        const GridPos_t makeMovedPosition(const Context & t_context) const;
+        [[nodiscard]] const GridPos_t makeMovedPosition(const Context & t_context) const;
 
       private:
         GridPosVec_t m_positions;
