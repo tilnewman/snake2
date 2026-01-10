@@ -128,13 +128,14 @@ namespace snake2
             {
                 if (newPos == m_positions.at(index))
                 {
+                    t_context.sfx.play("step-smash");
                     kill(t_context);
                     return;
                 }
             }
         }
 
-        // if not eating self, eat other Actors
+        // if not eating self, eat other Actors, if any
         if (t_context.actors.eat(t_context, newPos))
         {
             t_context.actors.remove(newPos);
@@ -183,10 +184,9 @@ namespace snake2
         }
     }
 
-    void Snake::kill(const Context & t_context)
+    void Snake::kill(const Context &)
     {
         m_isAlive = false;
-        t_context.sfx.play("step-smash");
     }
 
     void Snake::shrink()
