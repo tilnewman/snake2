@@ -5,6 +5,7 @@
 //
 #include "framerate-display.hpp"
 #include "state.hpp"
+#include "walls.hpp"
 
 namespace snake2
 {
@@ -27,6 +28,7 @@ namespace snake2
             const sf::RenderStates & t_states) const override;
 
       private:
+        Walls m_walls;
         FramerateDisplay m_framerateDisplay;
     };
 

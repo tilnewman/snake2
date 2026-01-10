@@ -26,6 +26,7 @@ namespace snake2
         Actors();
 
         void setup(const Context & t_context);
+        void clear() { m_actors.clear(); }
         void add(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos);
         void remove(const GridPos_t & t_gridPos);
         void handleEvent(const Context & t_context, const sf::Event & t_event);

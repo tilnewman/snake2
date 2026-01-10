@@ -7,7 +7,6 @@
 #include "cell-anim.hpp"
 #include "context.hpp"
 #include "grid-display.hpp"
-#include "layout.hpp"
 #include "random.hpp"
 #include "snake.hpp"
 #include "text-anim.hpp"
@@ -15,22 +14,20 @@
 namespace snake2
 {
 
-    StatePlay::StatePlay() {}
+    StatePlay::StatePlay()
+        : m_walls{}
+        , m_framerateDisplay{}
+    {}
 
     void StatePlay::onEnter(const Context & t_context)
     {
         m_framerateDisplay.setup(t_context);
 
+        t_context.snake.reset(t_context);
+        t_context.actors.clear();
+        m_walls.fullWithHoles(t_context);
+        
         // TODO remove after testing
-        for (int x{ 0 }; x < static_cast<int>(t_context.layout.cellCount().x); ++x)
-        {
-            t_context.actors.add(t_context, Actor::Wall, { x, 0 });
-
-            t_context.actors.add(
-                t_context,
-                Actor::Wall,
-                { x, static_cast<int>(t_context.layout.cellCount().y - 1u) });
-        }
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
