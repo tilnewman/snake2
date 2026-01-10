@@ -8,12 +8,12 @@
 #include "cell-anim.hpp"
 #include "config.hpp"
 #include "context.hpp"
+#include "font.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
 #include "random.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
-#include "font.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
