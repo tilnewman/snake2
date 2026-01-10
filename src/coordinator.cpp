@@ -23,7 +23,9 @@ namespace snake2
         , m_snake{}
         , m_actors{}
         , m_random{}
-        , m_context{ m_config, m_layout, m_gridDisplay, m_random, m_snake, m_actors }
+        , m_cellAnimationManager{}
+        , m_context{ m_config, m_layout, m_gridDisplay,         m_random,
+                     m_snake,  m_actors, m_cellAnimationManager }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -38,6 +40,7 @@ namespace snake2
         m_config = t_config;
 
         setupRenderWindow(m_config.video_mode);
+        m_renderWindow.setMouseCursorVisible(false);
 
         m_bloomWindowPtr = std::make_unique<util::BloomEffectHelper>(m_renderWindow);
         m_bloomWindowPtr->isEnabled(true);
@@ -47,17 +50,28 @@ namespace snake2
         m_gridDisplay.setup(m_context);
         m_snake.setup(m_context);
         m_actors.setup(m_context);
+        m_cellAnimationManager.setup(m_context);
 
         // TODO remove after testing
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
-            m_actors.add(m_context, Actor::Slow, m_random.from(freePositions));
+            m_actors.add(m_context, Actor::Food, m_random.from(freePositions));
         }
         for (int counter{ 0 }; counter < 6; ++counter)
         {
             const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
             m_actors.add(m_context, Actor::Fast, m_random.from(freePositions));
+        }
+        for (int counter{ 0 }; counter < 6; ++counter)
+        {
+            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
+            m_actors.add(m_context, Actor::Shrink, m_random.from(freePositions));
+        }
+        for (int counter{ 0 }; counter < 6; ++counter)
+        {
+            const GridPosVec_t freePositions{ m_actors.findFreePositions(m_context) };
+            m_actors.add(m_context, Actor::Slow, m_random.from(freePositions));
         }
     }
 
@@ -115,14 +129,18 @@ namespace snake2
     {
         m_actors.update(m_context, t_elapsedTimeSec);
         m_snake.update(m_context, t_elapsedTimeSec);
+        m_cellAnimationManager.update(m_context, t_elapsedTimeSec);
     }
 
     void Coordinator::draw()
     {
         m_bloomWindowPtr->clear(sf::Color::Black);
+
         m_bloomWindowPtr->renderTarget().draw(m_gridDisplay, m_renderStates);
         m_actors.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_snake.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
+        m_cellAnimationManager.draw(m_bloomWindowPtr->renderTarget(), m_renderStates);
+
         m_bloomWindowPtr->display();
     }
 

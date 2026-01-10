@@ -18,6 +18,7 @@ namespace snake2
     class GridDisplay;
     class Snake;
     class Actors;
+    class CellAnimationManager;
 
     //
 
@@ -29,13 +30,15 @@ namespace snake2
             const GridDisplay & t_gridDisplay,
             const util::Random & t_random,
             Snake & t_snake,
-            Actors & t_actors)
+            Actors & t_actors,
+            CellAnimationManager & t_cellAnimationManager)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
             , random{ t_random }
             , snake{ t_snake }
             , actors{ t_actors }
+            , cell_anim{ t_cellAnimationManager }
 
         {}
 
@@ -45,6 +48,7 @@ namespace snake2
         const util::Random & random;
         Snake & snake;
         Actors & actors;
+        CellAnimationManager & cell_anim;
     };
 
 } // namespace snake2

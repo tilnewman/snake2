@@ -11,6 +11,7 @@
 #include "layout.hpp"
 #include "random.hpp"
 #include "snake.hpp"
+#include "cell-anim.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -50,6 +51,7 @@ namespace snake2
         Snake m_snake;
         Actors m_actors;
         util::Random m_random;
+        CellAnimationManager m_cellAnimationManager;
         Context m_context;
     };
 

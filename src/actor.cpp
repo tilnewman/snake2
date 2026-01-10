@@ -3,6 +3,7 @@
 //
 #include "actor.hpp"
 
+#include "cell-anim.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "grid-display.hpp"
@@ -48,8 +49,9 @@ namespace snake2
 
     bool Food::onEat(const Context & t_context)
     {
-        // TODO update score, start animation, maybe place another food
+        // TODO update score, maybe place another food
         t_context.snake.grow(t_context.layout.cellCount().y / 2u);
+        t_context.cell_anim.add(t_context, position(), color());
         return true;
     }
 
@@ -74,6 +76,7 @@ namespace snake2
     bool Shrink::onEat(const Context & t_context)
     {
         t_context.snake.shrink();
+        t_context.cell_anim.add(t_context, position(), color());
         return true;
     }
 
@@ -86,6 +89,7 @@ namespace snake2
     bool Slow::onEat(const Context & t_context)
     {
         t_context.snake.slower(t_context);
+        t_context.cell_anim.add(t_context, position(), color());
         return true;
     }
 
@@ -98,6 +102,7 @@ namespace snake2
     bool Fast::onEat(const Context & t_context)
     {
         t_context.snake.faster(t_context);
+        t_context.cell_anim.add(t_context, position(), color());
         return true;
     }
 

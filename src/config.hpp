@@ -28,6 +28,8 @@ namespace snake2
         sf::Color cell_slow_color{ sf::Color::Cyan };
         sf::Color cell_fast_color{ 255, 50, 100 };
         float snake_speed_change_ratio{ 0.25f };
+        float cell_anim_duration_sec{ 0.25f };
+        float cell_anim_scale_max{ 3.0f };
     };
 
 } // namespace snake2
