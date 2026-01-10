@@ -18,7 +18,7 @@ namespace snake2
         sf::VideoMode video_mode{ { 4112u, 2580u }, 32u };
         unsigned framerate_limit{ 0 };
         float top_region_height_ratio{ 0.035f };
-        float cell_size_ratio{ 0.025f };
+        float cell_size_ratio{ 0.02f };
         sf::Color grid_frame_color{ 28, 28, 28 };
         sf::Color cell_background_color{ 16, 16, 16 };
         sf::Color cell_outline_color{ 0, 0, 0 };
