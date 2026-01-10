@@ -33,7 +33,7 @@ namespace snake2
         float snake_speed_change_ratio{ 0.25f };
         float cell_anim_duration_sec{ 0.25f };
         float cell_anim_scale_max{ 3.0f };
-        float text_anim_duration_sec{ 0.35f };
+        float text_anim_duration_sec{ 1.0f };
         float text_anim_rise_mult{ 3.0f };
     };
 

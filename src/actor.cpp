@@ -87,6 +87,7 @@ namespace snake2
     {
         t_context.snake.shrink();
         t_context.cell_anim.add(t_context, position(), color());
+        t_context.text_anim.add(t_context, position(), "Shrink!", color());
         return true;
     }
 
@@ -98,9 +99,10 @@ namespace snake2
 
     bool Slow::onEat(const Context & t_context)
     {
+        t_context.sfx.play("slow");
         t_context.snake.slower(t_context);
         t_context.cell_anim.add(t_context, position(), color());
-        t_context.sfx.play("slow");
+        t_context.text_anim.add(t_context, position(), "Slow!", color());
         return true;
     }
 
