@@ -101,6 +101,46 @@ namespace snake2
         return false;
     }
 
+    const std::optional<Actor> Actors::findNonWallAtPosition(const GridPos_t & t_gridPos) const
+    {
+        for (const auto & actorUPtr : m_actors)
+        {
+            if ((actorUPtr->position() == t_gridPos) && (actorUPtr->type() != Actor::Wall))
+            {
+                return actorUPtr->type();
+            }
+        }
+
+        return {};
+    }
+
+    std::size_t Actors::findNonWallCountSurrounding(const GridPos_t & t_gridPos) const
+    {
+        std::size_t count{ 0 };
+
+        if (findNonWallAtPosition(t_gridPos + GridPos_t{ -1, 0 }).has_value())
+        {
+            ++count;
+        }
+
+        if (findNonWallAtPosition(t_gridPos + GridPos_t{ 1, 0 }).has_value())
+        {
+            ++count;
+        }
+
+        if (findNonWallAtPosition(t_gridPos + GridPos_t{ 0, -1 }).has_value())
+        {
+            ++count;
+        }
+
+        if (findNonWallAtPosition(t_gridPos + GridPos_t{ 0, 1 }).has_value())
+        {
+            ++count;
+        }
+
+        return count;
+    }
+
     std::unique_ptr<IActor> Actors::makeActor(
         const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos)
     {

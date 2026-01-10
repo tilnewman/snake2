@@ -10,6 +10,7 @@
 #include "keys.hpp"
 #include "layout.hpp"
 #include "sound-player.hpp"
+#include "text-anim.hpp"
 #include "util.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -125,6 +126,9 @@ namespace snake2
             return;
         }
 
+        const std::size_t surroundingActorCountBefore{ t_context.actors.findNonWallCountSurrounding(
+            m_positions.front()) };
+
         const GridPos_t newPos{ makeMovedPosition(t_context) };
 
         m_positions.insert(std::begin(m_positions), newPos);
@@ -156,6 +160,13 @@ namespace snake2
         if (t_context.actors.eat(t_context, newPos))
         {
             t_context.actors.remove(newPos);
+        }
+        else
+        {
+            if (surroundingActorCountBefore > 0)
+            {
+                t_context.text_anim.add(t_context, newPos, "Miss!", sf::Color::White);
+            }
         }
     }
 

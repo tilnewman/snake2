@@ -39,6 +39,11 @@ namespace snake2
 
         [[nodiscard]] const GridPosVec_t findFreePositions(const Context & t_context) const;
 
+        [[nodiscard]] const std::optional<Actor>
+            findNonWallAtPosition(const GridPos_t & t_gridPos) const;
+
+        [[nodiscard]] std::size_t findNonWallCountSurrounding(const GridPos_t & t_gridPos) const;
+
       private:
         [[nodiscard]] std::unique_ptr<IActor>
             makeActor(const Context & t_context, const Actor t_type, const GridPos_t & t_gridPos);
