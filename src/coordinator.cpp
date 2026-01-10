@@ -3,6 +3,7 @@
 //
 #include "coordinator.hpp"
 
+#include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 
 #include <SFML/System/Clock.hpp>
@@ -18,6 +19,7 @@ namespace snake2
         , m_renderWindow{}
         , m_bloomWindowPtr{}
         , m_isRunning{ true }
+        , m_framerateDisplayUPtr{}
         , m_layout{}
         , m_gridDisplay{}
         , m_snake{}
@@ -49,8 +51,11 @@ namespace snake2
         m_bloomWindowPtr->isEnabled(true);
         m_bloomWindowPtr->blurMultipassCount(5);
 
+        util::SfmlDefaults::instance().setup();
         m_layout.setup(m_config);
         m_fontManager.setup(m_config);
+        m_framerateDisplayUPtr = std::make_unique<FramerateDisplay>();
+        m_framerateDisplayUPtr->setup(m_context);
         m_gridDisplay.setup(m_context);
         m_snake.setup(m_context);
         m_actors.setup(m_context);
@@ -139,6 +144,7 @@ namespace snake2
         m_actors.update(m_context, t_elapsedTimeSec);
         m_snake.update(m_context, t_elapsedTimeSec);
         m_cellAnimationManager.update(m_context, t_elapsedTimeSec);
+        m_framerateDisplayUPtr->update(m_context, t_elapsedTimeSec);
     }
 
     void Coordinator::draw()
@@ -149,6 +155,7 @@ namespace snake2
         m_actors.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_snake.draw(m_context, m_bloomWindowPtr->renderTarget(), m_renderStates);
         m_cellAnimationManager.draw(m_bloomWindowPtr->renderTarget(), m_renderStates);
+        m_framerateDisplayUPtr->draw(m_bloomWindowPtr->renderTarget(), m_renderStates);
 
         m_bloomWindowPtr->display();
     }
