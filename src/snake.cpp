@@ -227,7 +227,7 @@ namespace snake2
             return;
         }
 
-        std::size_t toShrinkCount{ length() / 2_st };
+        std::size_t toShrinkCount{ length() / 3_st };
         if (m_toGrowCount >= toShrinkCount)
         {
             m_toGrowCount -= toShrinkCount;
