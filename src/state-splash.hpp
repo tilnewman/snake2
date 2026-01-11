@@ -20,7 +20,7 @@ namespace snake2
         State type() const override { return State::Splash; }
         void onEnter(const Context & t_context) override;
         void onExit(const Context & t_context) override;
-        void update(const Context & t_context, const float t_elapsedTimeSec) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
         void handleEvent(const Context & t_context, const sf::Event & t_event) override;
 
         void draw(
@@ -31,6 +31,9 @@ namespace snake2
       private:
         sf::Text m_text;
         float m_elapsedSec;
+        float m_colorElapsedSec;
+        sf::Color m_color1;
+        sf::Color m_color2;
     };
 
 } // namespace snake2

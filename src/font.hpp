@@ -17,6 +17,7 @@ namespace snake2
 
     enum class FontSize
     {
+        Colossal,
         Huge,
         Large,
         Medium,
@@ -47,7 +48,8 @@ namespace snake2
             // clang-format off
             switch (t_size)
             {
-                case FontSize::Huge:    { return m_fontExtentHuge;   }
+                case FontSize::Colossal:{ return m_fontExtentColossal; }
+                case FontSize::Huge:    { return m_fontExtentHuge;     }
                 case FontSize::Large:   { return m_fontExtentLarge;  }
                 case FontSize::Medium:  { return m_fontExtentMedium; }
                 case FontSize::Small:  
@@ -66,6 +68,7 @@ namespace snake2
 
       private:
         sf::Font m_font;
+        FontExtent m_fontExtentColossal;
         FontExtent m_fontExtentHuge;
         FontExtent m_fontExtentLarge;
         FontExtent m_fontExtentMedium;

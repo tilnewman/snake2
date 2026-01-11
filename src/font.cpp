@@ -54,6 +54,12 @@ namespace snake2
         const std::string widthStr{ "M" };
         const std::string heightStr{ "|g" };
 
+        m_fontExtentColossal.char_size     = static_cast<unsigned>(400.0f * ratioRes);
+        text                               = makeText(FontSize::Colossal, widthStr);
+        m_fontExtentColossal.letter_size.x = text.getGlobalBounds().size.x;
+        text                               = makeText(FontSize::Colossal, heightStr);
+        m_fontExtentColossal.letter_size.y = text.getGlobalBounds().size.y;
+
         m_fontExtentHuge.char_size     = static_cast<unsigned>(200.0f * ratioRes);
         text                           = makeText(FontSize::Huge, widthStr);
         m_fontExtentHuge.letter_size.x = text.getGlobalBounds().size.x;
