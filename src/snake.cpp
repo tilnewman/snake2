@@ -37,6 +37,11 @@ namespace snake2
     {
         m_positions.clear();
 
+        m_isAlive        = true;
+        m_toGrowCount    = 0;
+        m_elapsedTimeSec = 0.0f;
+        m_direction      = sf::Keyboard::Scancode::Left;
+
         // start the snake in the center of the screen horizontally
         const int vertPos{ static_cast<int>(t_context.layout.cellCount().y / 2u) };
         const int leftMostPos{ static_cast<int>(t_context.layout.cellCount().x / 3u) };
@@ -219,9 +224,9 @@ namespace snake2
         }
     }
 
-    void Snake::kill(const Context & t_context) 
-    { 
-        m_isAlive = false; 
+    void Snake::kill(const Context & t_context)
+    {
+        m_isAlive = false;
         t_context.sfx.play("death");
     }
 

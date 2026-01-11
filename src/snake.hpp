@@ -35,6 +35,7 @@ namespace snake2
         void shrink();
         void slower(const Context & t_context);
         void faster(const Context & t_context);
+        [[nodiscard]] bool isAlive() const noexcept { return m_isAlive; }
 
         void draw(
             const Context & t_context,

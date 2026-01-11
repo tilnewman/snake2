@@ -31,6 +31,8 @@ namespace snake2
         Walls m_walls;
         float m_elapsedSec;
         bool m_hasPreDelayFinished;
+        bool m_hasPostDelayFinished;
+        bool m_wasSnakeAlive;
         FramerateDisplay m_framerateDisplay;
     };
 

@@ -19,6 +19,8 @@ namespace snake2
         : m_walls{}
         , m_elapsedSec{ 0.0f }
         , m_hasPreDelayFinished{ false }
+        , m_hasPostDelayFinished{ false }
+        , m_wasSnakeAlive{ true }
         , m_framerateDisplay{}
     {}
 
@@ -54,10 +56,34 @@ namespace snake2
 
     void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        m_elapsedSec += t_elapsedSec;
-        if (m_elapsedSec > 3.0f)
+        if (!m_hasPreDelayFinished)
         {
-            m_hasPreDelayFinished = true;
+            m_elapsedSec += t_elapsedSec;
+            if (m_elapsedSec > 3.0f)
+            {
+                m_hasPreDelayFinished = true;
+            }
+        }
+
+        if (m_wasSnakeAlive)
+        {
+            if (!t_context.snake.isAlive())
+            {
+                m_wasSnakeAlive = false;
+                m_elapsedSec    = 0.0f;
+            }
+        }
+        else
+        {
+            if (!m_hasPostDelayFinished)
+            {
+                m_elapsedSec += t_elapsedSec;
+                if (m_elapsedSec > 5.0f)
+                {
+                    m_hasPostDelayFinished = true;
+                    t_context.state.setPending(State::Play);
+                }
+            }
         }
 
         if (m_hasPreDelayFinished)
