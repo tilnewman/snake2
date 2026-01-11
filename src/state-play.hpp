@@ -29,6 +29,8 @@ namespace snake2
 
       private:
         Walls m_walls;
+        float m_elapsedSec;
+        bool m_hasPreDelayFinished;
         FramerateDisplay m_framerateDisplay;
     };
 

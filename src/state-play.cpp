@@ -9,6 +9,7 @@
 #include "grid-display.hpp"
 #include "random.hpp"
 #include "snake.hpp"
+#include "sound-player.hpp"
 #include "text-anim.hpp"
 
 namespace snake2
@@ -16,6 +17,8 @@ namespace snake2
 
     StatePlay::StatePlay()
         : m_walls{}
+        , m_elapsedSec{ 0.0f }
+        , m_hasPreDelayFinished{ false }
         , m_framerateDisplay{}
     {}
 
@@ -26,7 +29,7 @@ namespace snake2
         t_context.snake.reset(t_context);
         t_context.actors.clear();
         m_walls.fullWithHoles(t_context);
-        
+
         // TODO remove after testing
         for (int counter{ 0 }; counter < 6; ++counter)
         {
@@ -43,16 +46,28 @@ namespace snake2
             const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
             t_context.actors.add(t_context, Actor::Slow, t_context.random.from(freePositions));
         }
+
+        t_context.sfx.play("level-intro");
     }
 
     void StatePlay::onExit(const Context &) {}
 
     void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        t_context.actors.update(t_context, t_elapsedSec);
-        t_context.snake.update(t_context, t_elapsedSec);
-        t_context.cell_anim.update(t_context, t_elapsedSec);
-        t_context.text_anim.update(t_context, t_elapsedSec);
+        m_elapsedSec += t_elapsedSec;
+        if (m_elapsedSec > 3.0f)
+        {
+            m_hasPreDelayFinished = true;
+        }
+
+        if (m_hasPreDelayFinished)
+        {
+            t_context.actors.update(t_context, t_elapsedSec);
+            t_context.snake.update(t_context, t_elapsedSec);
+            t_context.cell_anim.update(t_context, t_elapsedSec);
+            t_context.text_anim.update(t_context, t_elapsedSec);
+        }
+
         m_framerateDisplay.update(t_context, t_elapsedSec);
     }
 
@@ -80,8 +95,11 @@ namespace snake2
             }
         }
 
-        t_context.actors.handleEvent(t_context, t_event);
-        t_context.snake.handleEvent(t_context, t_event);
+        if (m_hasPreDelayFinished)
+        {
+            t_context.actors.handleEvent(t_context, t_event);
+            t_context.snake.handleEvent(t_context, t_event);
+        }
     }
 
 } // namespace snake2
