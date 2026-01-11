@@ -113,9 +113,9 @@ namespace snake2
         }
     }
 
-    void Coordinator::update(const float t_elapsedTimeSec)
+    void Coordinator::update(const float t_elapsedSec)
     {
-        m_stateManager.current().update(m_context, t_elapsedTimeSec);
+        m_stateManager.current().update(m_context, t_elapsedSec);
     }
 
     void Coordinator::draw()

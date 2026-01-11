@@ -39,7 +39,7 @@ namespace snake2
 
         void handleEvents();
         void handleEvent(const sf::Event & t_event);
-        void update(const float t_elapsedTimeSec);
+        void update(const float t_elapsedSec);
         void draw();
 
         void setupRenderWindow(sf::VideoMode & t_videoMode);

@@ -47,13 +47,13 @@ namespace snake2
 
     void StatePlay::onExit(const Context &) {}
 
-    void StatePlay::update(const Context & t_context, const float t_elapsedTimeSec)
+    void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        t_context.actors.update(t_context, t_elapsedTimeSec);
-        t_context.snake.update(t_context, t_elapsedTimeSec);
-        t_context.cell_anim.update(t_context, t_elapsedTimeSec);
-        t_context.text_anim.update(t_context, t_elapsedTimeSec);
-        m_framerateDisplay.update(t_context, t_elapsedTimeSec);
+        t_context.actors.update(t_context, t_elapsedSec);
+        t_context.snake.update(t_context, t_elapsedSec);
+        t_context.cell_anim.update(t_context, t_elapsedSec);
+        t_context.text_anim.update(t_context, t_elapsedSec);
+        m_framerateDisplay.update(t_context, t_elapsedSec);
     }
 
     void StatePlay::draw(
