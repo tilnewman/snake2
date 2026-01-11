@@ -8,6 +8,7 @@
 
 #include <SFML/System/Clock.hpp>
 
+#include <algorithm>
 #include <iostream>
 
 namespace snake2
@@ -49,7 +50,11 @@ namespace snake2
 
         m_bloomWindowPtr = std::make_unique<util::BloomEffectHelper>(m_renderWindow);
         m_bloomWindowPtr->isEnabled(true);
-        m_bloomWindowPtr->blurMultipassCount(5);
+
+        const std::size_t blureMultiPassCount{ std::clamp(
+            ((m_config.video_mode.size.x / 1000u) * 2u), 1u, 10u) };
+
+        m_bloomWindowPtr->blurMultipassCount(blureMultiPassCount);
 
         util::SfmlDefaults::instance().setup();
         m_layout.setup(m_config);
