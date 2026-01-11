@@ -19,6 +19,7 @@ namespace snake2
         unsigned framerate_limit{ 0 };
         float top_region_height_ratio{ 0.035f };
         float cell_size_ratio{ 0.02f };
+
         sf::Color grid_frame_color{ 28, 28, 28 };
         sf::Color cell_background_color{ 16, 16, 16 };
         sf::Color cell_outline_color{ 0, 0, 0 };
@@ -30,12 +31,15 @@ namespace snake2
         sf::Color cell_shrink_color{ sf::Color::Magenta };
         sf::Color cell_slow_color{ sf::Color::Cyan };
         sf::Color cell_fast_color{ 255, 50, 100 };
+        
         float snake_speed_change_ratio{ 0.25f };
         float snake_speed_default{ 0.125f };
         float cell_anim_duration_sec{ 0.25f };
         float cell_anim_scale_max{ 3.0f };
         float text_anim_duration_sec{ 1.0f };
         float text_anim_rise_mult{ 3.0f };
+        
+        std::size_t food_pieces_per_level{ 6 };
     };
 
 } // namespace snake2
