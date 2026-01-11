@@ -62,7 +62,7 @@ namespace snake2
         m_soundPlayer.setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayer.loadAll();
 
-        m_stateManager.setPending(State::Play);
+        m_stateManager.setPending(State::Splash);
     }
 
     void Coordinator::loop()

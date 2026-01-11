@@ -4,6 +4,7 @@
 #include "state.hpp"
 
 #include "state-play.hpp"
+#include "state-splash.hpp"
 
 #include <stdexcept>
 
@@ -45,9 +46,10 @@ namespace snake2
         // clang-format off
         switch (t_type)
         {
-            case State::Init: { return std::make_unique<StateInit>(); }
-            case State::Play: { return std::make_unique<StatePlay>(); }
-            case State::Quit: { return std::make_unique<StateQuit>(); }
+            case State::Init:   { return std::make_unique<StateInit>();   }
+            case State::Play:   { return std::make_unique<StatePlay>();   }
+            case State::Quit:   { return std::make_unique<StateQuit>();   }
+            case State::Splash: { return std::make_unique<StateSplash>(); }
             default:
             {
                 throw std::runtime_error("Error: StateFactory::make() given an unknown type!");

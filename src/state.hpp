@@ -20,6 +20,7 @@ namespace snake2
     enum class State
     {
         Init,
+        Splash,
         Play,
         Quit
     };
