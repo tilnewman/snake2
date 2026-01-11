@@ -5,6 +5,8 @@
 //
 #include "state.hpp"
 
+#include <SFML/Graphics/Text.hpp>
+
 namespace snake2
 {
 
@@ -27,6 +29,7 @@ namespace snake2
 
       private:
         float m_elapsedSec;
+        sf::Text m_text;
     };
 
 } // namespace snake2
