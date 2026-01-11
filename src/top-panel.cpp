@@ -27,9 +27,13 @@ namespace snake2
         m_scoreTextUPtr = std::make_unique<sf::Text>(t_context.font.font());
         m_levelTextUPtr = std::make_unique<sf::Text>(t_context.font.font());
 
-        *m_livesTextUPtr = t_context.font.makeText(FontSize::Medium, "Lives:");
-        *m_scoreTextUPtr = t_context.font.makeText(FontSize::Medium, "Score:");
-        *m_levelTextUPtr = t_context.font.makeText(FontSize::Medium, "Level:");
+        const sf::Color yellow(230, 190, 50);
+        const sf::Color orange(255, 170, 60);
+        const sf::Color creamCool(230, 190, 180, 192);
+
+        *m_livesTextUPtr = t_context.font.makeText(FontSize::Medium, "Lives:", yellow);
+        *m_scoreTextUPtr = t_context.font.makeText(FontSize::Medium, "Score:", orange);
+        *m_levelTextUPtr = t_context.font.makeText(FontSize::Medium, "Level:", creamCool);
 
         update(t_context);
     }
