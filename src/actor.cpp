@@ -9,6 +9,8 @@
 #include "game-info.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
+#include "level.hpp"
+#include "sfml-util.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
 #include "text-anim.hpp"
@@ -54,7 +56,20 @@ namespace snake2
     {
         // TODO update score, maybe place another food
 
-        t_context.sfx.play("shine");
+        // this tracks how many food pieces have been eaten during the whole game
+        ++t_context.game.food_pieces_eaten;
+
+        // this tracks how many food pieces have been eaten during just this level
+        ++t_context.level.food_eaten;
+
+        const float pitch{ util::map(
+            t_context.level.food_eaten,
+            1_st,
+            t_context.config.food_pieces_per_level,
+            0.33f,
+            1.0f) };
+
+        t_context.sfx.play("shine", pitch);
 
         t_context.snake.grow(
             (t_context.layout.cellCount().y / 2u) +
@@ -62,7 +77,7 @@ namespace snake2
 
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Test!", color());
-        ++t_context.game.food_pieces_eaten;
+
         return true;
     }
 

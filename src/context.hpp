@@ -15,6 +15,7 @@ namespace snake2
 
     struct Config;
     struct GameInfo;
+    struct Level;
 
     class Layout;
     class GridDisplay;
@@ -41,7 +42,8 @@ namespace snake2
             util::SoundPlayer & t_soundPlayer,
             FontManager & t_fontManager,
             StateManager & t_stateManager,
-            GameInfo & t_gameInfo)
+            GameInfo & t_gameInfo,
+            Level & t_levelInfo)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -54,6 +56,7 @@ namespace snake2
             , font{ t_fontManager }
             , state{ t_stateManager }
             , game{ t_gameInfo }
+            , level{ t_levelInfo }
         {}
 
         const Config & config;
@@ -68,6 +71,7 @@ namespace snake2
         FontManager & font;
         StateManager & state;
         GameInfo & game;
+        Level & level;
     };
 
 } // namespace snake2

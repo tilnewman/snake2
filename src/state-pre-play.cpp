@@ -5,9 +5,11 @@
 
 #include "actors.hpp"
 #include "cell-anim.hpp"
+#include "config.hpp"
 #include "context.hpp"
 #include "game-info.hpp"
 #include "grid-display.hpp"
+#include "level.hpp"
 #include "random.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
@@ -24,6 +26,7 @@ namespace snake2
     void StatePrePlay::onEnter(const Context & t_context)
     {
         ++t_context.game.level;
+        t_context.level.setup(t_context);
 
         t_context.cell_anim.clear();
         t_context.text_anim.clear();
@@ -32,7 +35,8 @@ namespace snake2
         m_walls.fullWithHoles(t_context);
 
         // TODO remove after testing
-        for (int counter{ 0 }; counter < 6; ++counter)
+        for (int counter{ 0 }; counter < static_cast<int>(t_context.level.food_to_spawn_on_start);
+             ++counter)
         {
             const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
             t_context.actors.add(t_context, Actor::Food, t_context.random.from(freePositions));

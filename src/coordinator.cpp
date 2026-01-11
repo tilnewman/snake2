@@ -30,9 +30,11 @@ namespace snake2
         , m_fontManager{}
         , m_stateManager{}
         , m_gamInfo{}
+        , m_level{}
         , m_context{ m_config,      m_layout,      m_gridDisplay,          m_random,
                      m_snake,       m_actors,      m_cellAnimationManager, m_textAnimationManager,
-                     m_soundPlayer, m_fontManager, m_stateManager,         m_gamInfo }
+                     m_soundPlayer, m_fontManager, m_stateManager,         m_gamInfo,
+                     m_level }
     {}
 
     void Coordinator::run(const Config & t_config)

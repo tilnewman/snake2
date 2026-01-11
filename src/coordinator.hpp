@@ -12,6 +12,7 @@
 #include "game-info.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
+#include "level.hpp"
 #include "random.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
@@ -61,6 +62,7 @@ namespace snake2
         FontManager m_fontManager;
         StateManager m_stateManager;
         GameInfo m_gamInfo;
+        Level m_level;
         Context m_context;
     };
 

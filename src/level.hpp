@@ -8,14 +8,20 @@
 namespace snake2
 {
 
+    struct Context;
+
+    //
+
     struct Level
     {
         std::size_t food_to_spawn_on_start{ 0 };
         std::size_t food_to_spawn_after_start{ 0 };
+        std::size_t food_eaten{ 0 };
+
         bool will_spawn_shrink_pieces{ false };
         bool will_spawn_slow_pieces{ false };
 
-        void setup(const std::size_t t_levelNumber);
+        void setup(const Context & t_context);
     };
 
 } // namespace snake2
