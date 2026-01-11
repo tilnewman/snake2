@@ -171,7 +171,8 @@ namespace snake2
         {
             if (surroundingActorCountBefore > 0)
             {
-                t_context.text_anim.add(t_context, newPos, "Miss!", sf::Color::White);
+                t_context.sfx.play("miss");
+                t_context.text_anim.add(t_context, newPos, "miss", sf::Color::White);
             }
         }
     }
