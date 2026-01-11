@@ -81,7 +81,7 @@ namespace snake2
 
         if (t_context.config.food_pieces_per_level == t_context.level.food_eaten)
         {
-            t_context.state.setPending(State::PrePlay);
+            t_context.state.setPending(State::LevelWon);
         }
 
         return true;

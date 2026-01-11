@@ -237,7 +237,7 @@ namespace snake2
     {
         m_isAlive = false;
         --t_context.game.lives;
-        t_context.state.setPending(State::PostPlay);
+        t_context.state.setPending(State::LevelLost);
     }
 
     void Snake::shrink()

@@ -1,7 +1,7 @@
 //
-// state-post-play.cpp
+// state-level-won.cpp
 //
-#include "state-post-play.hpp"
+#include "state-level-won.hpp"
 
 #include "actors.hpp"
 #include "cell-anim.hpp"
@@ -16,31 +16,27 @@
 namespace snake2
 {
 
-    StatePostPlay::StatePostPlay()
+    StateLevelWon::StateLevelWon()
         : m_elapsedSec{ 0.0f }
     {}
 
-    void StatePostPlay::onEnter(const Context & t_context) { t_context.sfx.play("death"); }
+    void StateLevelWon::onEnter(const Context &) {}
 
-    void StatePostPlay::onExit(const Context &) {}
+    void StateLevelWon::onExit(const Context &) {}
 
-    void StatePostPlay::update(const Context & t_context, const float t_elapsedSec)
+    void StateLevelWon::update(const Context & t_context, const float t_elapsedSec)
     {
         m_elapsedSec += t_elapsedSec;
-        if (m_elapsedSec > 5.0f)
+        if (m_elapsedSec > 3.0f)
         {
-            if (t_context.game.lives == 0)
-            {
-                t_context.state.setPending(State::Quit);
-            }
-            else
-            {
-                t_context.state.setPending(State::PrePlay);
-            }
+            t_context.state.setPending(State::PrePlay);
         }
+
+        t_context.cell_anim.update(t_context, t_elapsedSec);
+        t_context.text_anim.update(t_context, t_elapsedSec);
     }
 
-    void StatePostPlay::draw(
+    void StateLevelWon::draw(
         const Context & t_context,
         sf::RenderTarget & t_target,
         const sf::RenderStates & t_states) const
@@ -52,6 +48,6 @@ namespace snake2
         t_context.text_anim.draw(t_target, t_states);
     }
 
-    void StatePostPlay::handleEvent(const Context &, const sf::Event &) {}
+    void StateLevelWon::handleEvent(const Context &, const sf::Event &) {}
 
 } // namespace snake2

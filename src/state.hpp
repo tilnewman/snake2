@@ -23,7 +23,9 @@ namespace snake2
         Splash,
         PrePlay,
         Play,
-        PostPlay,
+        LevelWon,
+        LevelLost,
+        // GameOver,
         Quit
     };
 

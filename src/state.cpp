@@ -3,8 +3,9 @@
 //
 #include "state.hpp"
 
+#include "state-level-lost.hpp"
+#include "state-level-won.hpp"
 #include "state-play.hpp"
-#include "state-post-play.hpp"
 #include "state-pre-play.hpp"
 #include "state-splash.hpp"
 
@@ -48,12 +49,13 @@ namespace snake2
         // clang-format off
         switch (t_type)
         {
-            case State::Init:     { return std::make_unique<StateInit>();     }
-            case State::Play:     { return std::make_unique<StatePlay>();     }
-            case State::Quit:     { return std::make_unique<StateQuit>();     }
-            case State::Splash:   { return std::make_unique<StateSplash>();   }
-            case State::PrePlay:  { return std::make_unique<StatePrePlay>();  }
-            case State::PostPlay: { return std::make_unique<StatePostPlay>(); }
+            case State::Init:      { return std::make_unique<StateInit>();      }
+            case State::Play:      { return std::make_unique<StatePlay>();      }
+            case State::Quit:      { return std::make_unique<StateQuit>();      }
+            case State::Splash:    { return std::make_unique<StateSplash>();    }
+            case State::PrePlay:   { return std::make_unique<StatePrePlay>();   }
+            case State::LevelWon:  { return std::make_unique<StateLevelWon>();  }
+            case State::LevelLost: { return std::make_unique<StateLevelLost>(); }
             default:
             {
                 throw std::runtime_error("Error: StateFactory::make() given an unknown type!");

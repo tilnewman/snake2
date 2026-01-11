@@ -1,20 +1,20 @@
-#ifndef STATE_POST_PLAY_HPP_INLCUDED
-#define STATE_POST_PLAY_HPP_INLCUDED
+#ifndef STATE_LEVEL_WON_HPP_INLCUDED
+#define STATE_LEVEL_WON_HPP_INLCUDED
 //
-// state-post-play.hpp
+// state-level-won.hpp
 //
 #include "state.hpp"
 
 namespace snake2
 {
 
-    class StatePostPlay : public StateBase
+    class StateLevelWon : public StateBase
     {
       public:
-        StatePostPlay();
-        virtual ~StatePostPlay() override = default;
+        StateLevelWon();
+        virtual ~StateLevelWon() override = default;
 
-        State type() const override { return State::PostPlay; }
+        State type() const override { return State::LevelWon; }
         void onEnter(const Context & t_context) override;
         void onExit(const Context & t_context) override;
         void update(const Context & t_context, const float t_elapsedTimeSec) override;
@@ -31,4 +31,4 @@ namespace snake2
 
 } // namespace snake2
 
-#endif // STATE_POST_PLAY_HPP_INLCUDED
+#endif // STATE_LEVEL_WON_HPP_INLCUDED
