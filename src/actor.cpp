@@ -6,6 +6,7 @@
 #include "cell-anim.hpp"
 #include "config.hpp"
 #include "context.hpp"
+#include "game-info.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
 #include "snake.hpp"
@@ -61,6 +62,7 @@ namespace snake2
 
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Test!", color());
+        ++t_context.game.food_pieces_eaten;
         return true;
     }
 
@@ -74,6 +76,7 @@ namespace snake2
     {
         t_context.sfx.play("break-block");
         t_context.snake.kill(t_context);
+        ++t_context.game.brick_pieces_eaten;
         return false;
     }
 
@@ -89,6 +92,7 @@ namespace snake2
         t_context.snake.shrink();
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Shrink!", color());
+        ++t_context.game.shrink_pieces_eaten;
         return true;
     }
 
@@ -104,19 +108,7 @@ namespace snake2
         t_context.snake.slower(t_context);
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Slow!", color());
-        return true;
-    }
-
-    //
-
-    Fast::Fast(const Context & t_context, const GridPos_t & t_position)
-        : ActorBase(Actor::Fast, t_position, t_context.config.cell_fast_color)
-    {}
-
-    bool Fast::onEat(const Context & t_context)
-    {
-        t_context.snake.faster(t_context);
-        t_context.cell_anim.add(t_context, position(), color());
+        ++t_context.game.slow_pieces_eaten;
         return true;
     }
 

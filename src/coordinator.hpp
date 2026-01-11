@@ -9,6 +9,7 @@
 #include "config.hpp"
 #include "context.hpp"
 #include "font.hpp"
+#include "game-info.hpp"
 #include "grid-display.hpp"
 #include "layout.hpp"
 #include "random.hpp"
@@ -59,6 +60,7 @@ namespace snake2
         util::SoundPlayer m_soundPlayer;
         FontManager m_fontManager;
         StateManager m_stateManager;
+        GameInfo m_gamInfo;
         Context m_context;
     };
 

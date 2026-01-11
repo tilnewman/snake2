@@ -6,6 +6,7 @@
 #include "actors.hpp"
 #include "cell-anim.hpp"
 #include "context.hpp"
+#include "game-info.hpp"
 #include "grid-display.hpp"
 #include "random.hpp"
 #include "snake.hpp"
@@ -22,6 +23,8 @@ namespace snake2
 
     void StatePrePlay::onEnter(const Context & t_context)
     {
+        ++t_context.game.level;
+
         t_context.cell_anim.clear();
         t_context.text_anim.clear();
         t_context.snake.reset(t_context);

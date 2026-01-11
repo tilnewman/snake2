@@ -14,6 +14,7 @@ namespace snake2
 {
 
     struct Config;
+    struct GameInfo;
 
     class Layout;
     class GridDisplay;
@@ -39,7 +40,8 @@ namespace snake2
             TextAnimationManager & t_textAnimationManager,
             util::SoundPlayer & t_soundPlayer,
             FontManager & t_fontManager,
-            StateManager & t_stateManager)
+            StateManager & t_stateManager,
+            GameInfo & t_gameInfo)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -51,6 +53,7 @@ namespace snake2
             , sfx{ t_soundPlayer }
             , font{ t_fontManager }
             , state{ t_stateManager }
+            , game{ t_gameInfo }
         {}
 
         const Config & config;
@@ -64,6 +67,7 @@ namespace snake2
         util::SoundPlayer & sfx;
         FontManager & font;
         StateManager & state;
+        GameInfo & game;
     };
 
 } // namespace snake2

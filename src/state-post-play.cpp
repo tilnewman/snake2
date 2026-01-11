@@ -6,6 +6,7 @@
 #include "actors.hpp"
 #include "cell-anim.hpp"
 #include "context.hpp"
+#include "game-info.hpp"
 #include "grid-display.hpp"
 #include "random.hpp"
 #include "snake.hpp"
@@ -28,8 +29,14 @@ namespace snake2
         m_elapsedSec += t_elapsedSec;
         if (m_elapsedSec > 5.0f)
         {
-            // TODO if lives are spent then transition to State::GameOver
-            t_context.state.setPending(State::PrePlay);
+            if (t_context.game.lives == 0)
+            {
+                t_context.state.setPending(State::Quit);
+            }
+            else
+            {
+                t_context.state.setPending(State::PrePlay);
+            }
         }
     }
 

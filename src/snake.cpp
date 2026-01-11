@@ -6,6 +6,7 @@
 #include "actors.hpp"
 #include "color-range.hpp"
 #include "context.hpp"
+#include "game-info.hpp"
 #include "grid-display.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
@@ -163,6 +164,7 @@ namespace snake2
                 if (newPos == m_positions.at(index))
                 {
                     t_context.sfx.play("step-smash");
+                    ++t_context.game.snake_pieces_eaten;
                     kill(t_context);
                     return;
                 }
@@ -229,6 +231,7 @@ namespace snake2
     void Snake::kill(const Context & t_context)
     {
         m_isAlive = false;
+        --t_context.game.lives;
         t_context.state.setPending(State::PostPlay);
     }
 
