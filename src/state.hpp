@@ -21,7 +21,9 @@ namespace snake2
     {
         Init,
         Splash,
+        PrePlay,
         Play,
+        PostPlay,
         Quit
     };
 

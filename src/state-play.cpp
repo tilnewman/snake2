@@ -17,83 +17,20 @@ namespace snake2
 
     StatePlay::StatePlay()
         : m_walls{}
-        , m_elapsedSec{ 0.0f }
-        , m_hasPreDelayFinished{ false }
-        , m_hasPostDelayFinished{ false }
         , m_wasSnakeAlive{ true }
         , m_framerateDisplay{}
     {}
 
-    void StatePlay::onEnter(const Context & t_context)
-    {
-        m_framerateDisplay.setup(t_context);
-
-        t_context.snake.reset(t_context);
-        t_context.actors.clear();
-        m_walls.fullWithHoles(t_context);
-
-        // TODO remove after testing
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
-            t_context.actors.add(t_context, Actor::Food, t_context.random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
-            t_context.actors.add(t_context, Actor::Shrink, t_context.random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
-            t_context.actors.add(t_context, Actor::Slow, t_context.random.from(freePositions));
-        }
-
-        t_context.sfx.play("level-intro");
-    }
+    void StatePlay::onEnter(const Context & t_context) { m_framerateDisplay.setup(t_context); }
 
     void StatePlay::onExit(const Context &) {}
 
     void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        if (!m_hasPreDelayFinished)
-        {
-            m_elapsedSec += t_elapsedSec;
-            if (m_elapsedSec > 3.0f)
-            {
-                m_hasPreDelayFinished = true;
-            }
-        }
-
-        if (m_wasSnakeAlive)
-        {
-            if (!t_context.snake.isAlive())
-            {
-                m_wasSnakeAlive = false;
-                m_elapsedSec    = 0.0f;
-            }
-        }
-        else
-        {
-            if (!m_hasPostDelayFinished)
-            {
-                m_elapsedSec += t_elapsedSec;
-                if (m_elapsedSec > 5.0f)
-                {
-                    m_hasPostDelayFinished = true;
-                    t_context.state.setPending(State::Play);
-                }
-            }
-        }
-
-        if (m_hasPreDelayFinished)
-        {
-            t_context.actors.update(t_context, t_elapsedSec);
-            t_context.snake.update(t_context, t_elapsedSec);
-            t_context.cell_anim.update(t_context, t_elapsedSec);
-            t_context.text_anim.update(t_context, t_elapsedSec);
-        }
-
+        t_context.actors.update(t_context, t_elapsedSec);
+        t_context.snake.update(t_context, t_elapsedSec);
+        t_context.cell_anim.update(t_context, t_elapsedSec);
+        t_context.text_anim.update(t_context, t_elapsedSec);
         m_framerateDisplay.update(t_context, t_elapsedSec);
     }
 
@@ -121,11 +58,8 @@ namespace snake2
             }
         }
 
-        if (m_hasPreDelayFinished)
-        {
-            t_context.actors.handleEvent(t_context, t_event);
-            t_context.snake.handleEvent(t_context, t_event);
-        }
+        t_context.actors.handleEvent(t_context, t_event);
+        t_context.snake.handleEvent(t_context, t_event);
     }
 
 } // namespace snake2

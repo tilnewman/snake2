@@ -35,6 +35,7 @@ namespace snake2
         void add(const Context & t_context, const GridPos_t & t_gridPos, const sf::Color & t_color);
         void update(const Context & t_context, const float t_elapsedTimeSec);
         void draw(sf::RenderTarget & t_target, const sf::RenderStates & t_states) const;
+        void clear() { m_animations.clear(); }
 
       private:
         std::vector<CellAnimation> m_animations;

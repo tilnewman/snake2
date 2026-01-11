@@ -1,22 +1,21 @@
-#ifndef STATE_PLAY_HPP_INLCUDED
-#define STATE_PLAY_HPP_INLCUDED
+#ifndef STATE_PRE_PLAY_HPP_INLCUDED
+#define STATE_PRE_PLAY_HPP_INLCUDED
 //
-// state-play.hpp
+// state-pre-play.hpp
 //
-#include "framerate-display.hpp"
 #include "state.hpp"
 #include "walls.hpp"
 
 namespace snake2
 {
 
-    class StatePlay : public StateBase
+    class StatePrePlay : public StateBase
     {
       public:
-        StatePlay();
-        virtual ~StatePlay() override = default;
+        StatePrePlay();
+        virtual ~StatePrePlay() override = default;
 
-        State type() const override { return State::Play; }
+        State type() const override { return State::PrePlay; }
         void onEnter(const Context & t_context) override;
         void onExit(const Context & t_context) override;
         void update(const Context & t_context, const float t_elapsedTimeSec) override;
@@ -28,11 +27,10 @@ namespace snake2
             const sf::RenderStates & t_states) const override;
 
       private:
+        float m_elapsedSec;
         Walls m_walls;
-        bool m_wasSnakeAlive;
-        FramerateDisplay m_framerateDisplay;
     };
 
 } // namespace snake2
 
-#endif // STATE_PLAY_HPP_INLCUDED
+#endif // STATE_PRE_PLAY_HPP_INLCUDED

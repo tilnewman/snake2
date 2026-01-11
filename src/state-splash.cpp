@@ -29,7 +29,7 @@ namespace snake2
         m_elapsedSec += t_elapsedTimeSec;
         if (m_elapsedSec > 4.0f)
         {
-            t_context.state.setPending(State::Play);
+            t_context.state.setPending(State::PrePlay);
         }
     }
 
@@ -39,7 +39,7 @@ namespace snake2
         const auto * mousePtr{ t_event.getIf<sf::Event::MouseButtonPressed>() };
         if (keyPtr || mousePtr)
         {
-            t_context.state.setPending(State::Play);
+            t_context.state.setPending(State::PrePlay);
             return;
         }
     }

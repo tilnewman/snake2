@@ -10,6 +10,7 @@
 #include "keys.hpp"
 #include "layout.hpp"
 #include "sound-player.hpp"
+#include "state.hpp"
 #include "text-anim.hpp"
 #include "util.hpp"
 
@@ -22,7 +23,7 @@ namespace snake2
         : m_positions{}
         , m_direction{ sf::Keyboard::Scancode::Left }
         , m_elapsedTimeSec{ 0.0f }
-        , m_timeBetweenMovesSec{ 0.125f }
+        , m_timeBetweenMovesSec{ 0.0f }
         , m_isAlive{ true }
         , m_toGrowCount{ 0 }
     {}
@@ -37,10 +38,11 @@ namespace snake2
     {
         m_positions.clear();
 
-        m_isAlive        = true;
-        m_toGrowCount    = 0;
-        m_elapsedTimeSec = 0.0f;
-        m_direction      = sf::Keyboard::Scancode::Left;
+        m_isAlive             = true;
+        m_toGrowCount         = 0;
+        m_elapsedTimeSec      = 0.0f;
+        m_timeBetweenMovesSec = t_context.config.snake_speed_default;
+        m_direction           = sf::Keyboard::Scancode::Left;
 
         // start the snake in the center of the screen horizontally
         const int vertPos{ static_cast<int>(t_context.layout.cellCount().y / 2u) };
@@ -227,7 +229,7 @@ namespace snake2
     void Snake::kill(const Context & t_context)
     {
         m_isAlive = false;
-        t_context.sfx.play("death");
+        t_context.state.setPending(State::PostPlay);
     }
 
     void Snake::shrink()
