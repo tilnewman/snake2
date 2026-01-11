@@ -25,14 +25,13 @@ namespace snake2
 
     void StatePrePlay::onEnter(const Context & t_context)
     {
-        ++t_context.game.level;
-        t_context.level.setup(t_context);
-
         t_context.cell_anim.clear();
         t_context.text_anim.clear();
         t_context.snake.reset(t_context);
         t_context.actors.clear();
-        m_walls.fullWithHoles(t_context);
+
+        ++t_context.game.level;
+        t_context.level.setup(t_context);
 
         // TODO remove after testing
         for (int counter{ 0 }; counter < static_cast<int>(t_context.level.food_to_spawn_on_start);

@@ -51,10 +51,8 @@ namespace snake2
         halfVert(t_context);
     }
 
-    void Walls::fullWithHoles(const Context & t_context)
+    void Walls::cutHolesInBorderWalls(const Context & t_context)
     {
-        full(t_context);
-
         const sf::Vector2i cellCount{ t_context.layout.cellCount() };
 
         {
@@ -72,6 +70,20 @@ namespace snake2
             {
                 t_context.actors.remove({ 0, (length + y) });
                 t_context.actors.remove({ (cellCount.x - 1), (length + y) });
+            }
+        }
+    }
+
+    void Walls::centerBlock(const Context & t_context)
+    {
+        const sf::Vector2i cellCount{ t_context.layout.cellCount() };
+        const sf::Vector2i blockDimm{ cellCount / 3 };
+
+        for (int y{ 0 }; y < blockDimm.y; ++y)
+        {
+            for (int x{ 0 }; x < blockDimm.x; ++x)
+            {
+                t_context.actors.add(t_context, Actor::Wall, { blockDimm + sf::Vector2i{ x, y } });
             }
         }
     }

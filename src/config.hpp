@@ -39,7 +39,7 @@ namespace snake2
         float text_anim_duration_sec{ 1.0f };
         float text_anim_rise_mult{ 3.0f };
         
-        std::size_t food_pieces_per_level{ 6 };
+        std::size_t food_pieces_per_level{ 2 };
     };
 
 } // namespace snake2

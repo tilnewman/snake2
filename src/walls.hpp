@@ -14,10 +14,11 @@ namespace snake2
     class Walls
     {
       public:
-        void halfHoriz(const Context & t_context);
-        void halfVert(const Context & t_context);
-        void full(const Context & t_context);
-        void fullWithHoles(const Context & t_context);
+        static void halfHoriz(const Context & t_context);
+        static void halfVert(const Context & t_context);
+        static void full(const Context & t_context);
+        static void cutHolesInBorderWalls(const Context & t_context);
+        static void centerBlock(const Context & t_context);
     };
 
 } // namespace snake2

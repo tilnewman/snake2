@@ -13,6 +13,7 @@
 #include "sfml-util.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
+#include "state.hpp"
 #include "text-anim.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -77,6 +78,11 @@ namespace snake2
 
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Test!", color());
+
+        if (t_context.config.food_pieces_per_level == t_context.level.food_eaten)
+        {
+            t_context.state.setPending(State::PrePlay);
+        }
 
         return true;
     }

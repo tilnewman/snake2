@@ -16,8 +16,7 @@ namespace snake2
 {
 
     StatePlay::StatePlay()
-        : m_walls{}
-        , m_wasSnakeAlive{ true }
+        : m_wasSnakeAlive{ true }
         , m_framerateDisplay{}
     {}
 
