@@ -30,7 +30,6 @@ namespace snake2
         t_context.snake.reset(t_context);
         t_context.actors.clear();
 
-        ++t_context.game.level;
         t_context.level.setup(t_context);
 
         // TODO remove after testing

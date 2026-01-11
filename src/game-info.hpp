@@ -12,7 +12,7 @@ namespace snake2
     {
         std::size_t lives{ 3 };
         std::size_t score{ 0 };
-        std::size_t level{ 0 };
+        std::size_t level{ 1 };
 
         // statistics tracking
         std::size_t food_pieces_eaten{ 0 };

@@ -38,6 +38,8 @@ namespace snake2
         m_elapsedSec += t_elapsedSec;
         if (m_elapsedSec > 3.0f)
         {
+            m_elapsedSec = 0.0f;
+            ++t_context.game.level;
             t_context.state.setPending(State::PrePlay);
         }
 
