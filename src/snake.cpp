@@ -154,11 +154,11 @@ namespace snake2
         else
         {
             --m_toGrowCount;
+        }
 
-            if (m_positions.size() > t_context.game.longest_tail_length)
-            {
-                t_context.game.longest_tail_length = m_positions.size();
-            }
+        if (m_positions.size() > t_context.game.longest_tail_length)
+        {
+            t_context.game.longest_tail_length = m_positions.size();
         }
 
         // check for eating self
