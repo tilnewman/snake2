@@ -20,6 +20,7 @@ namespace snake2
         std::size_t slow_pieces_eaten{ 0 };
         std::size_t snake_pieces_eaten{ 0 };
         std::size_t brick_pieces_eaten{ 0 };
+        std::size_t longest_tail_length{ 0 };
     };
 
 } // namespace snake2
