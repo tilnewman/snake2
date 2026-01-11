@@ -219,7 +219,11 @@ namespace snake2
         }
     }
 
-    void Snake::kill(const Context &) { m_isAlive = false; }
+    void Snake::kill(const Context & t_context) 
+    { 
+        m_isAlive = false; 
+        t_context.sfx.play("death");
+    }
 
     void Snake::shrink()
     {
