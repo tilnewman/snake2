@@ -78,6 +78,7 @@ namespace snake2
 
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Test!", color());
+        t_context.snake.faster(t_context);
 
         if (t_context.config.food_pieces_per_level == t_context.level.food_eaten)
         {
