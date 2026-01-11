@@ -188,6 +188,7 @@ namespace snake2
             {
                 t_context.sfx.play("miss");
                 t_context.text_anim.add(t_context, newPos, "miss", sf::Color::White);
+                ++t_context.game.miss_count;
             }
         }
     }
