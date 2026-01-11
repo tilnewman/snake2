@@ -56,7 +56,7 @@ namespace snake2
 
     bool Food::onEat(const Context & t_context)
     {
-        // TODO update score, maybe place another food
+        // TODO maybe place another food
 
         // this tracks how many food pieces have been eaten during the whole game
         ++t_context.game.food_pieces_eaten;
@@ -77,10 +77,17 @@ namespace snake2
             (t_context.layout.cellCount().y / 2u) +
             (2u * static_cast<unsigned>(std::sqrt(t_context.snake.length()))));
 
-        t_context.cell_anim.add(t_context, position(), color());
-        t_context.text_anim.add(t_context, position(), "Test!", color());
-        t_context.snake.faster(t_context);
+        const std::size_t score{ t_context.game.food_pieces_eaten + t_context.level.food_eaten +
+                                 t_context.game.level };
 
+        t_context.game.score += score;
+
+        std::string scoreStr{ "+" };
+        scoreStr += std::to_string(score);
+
+        t_context.cell_anim.add(t_context, position(), color());
+        t_context.text_anim.add(t_context, position(), scoreStr, color());
+        t_context.snake.faster(t_context);
         t_context.top.update(t_context);
 
         if (t_context.config.food_pieces_per_level == t_context.level.food_eaten)
