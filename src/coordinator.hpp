@@ -18,6 +18,7 @@
 #include "sound-player.hpp"
 #include "state.hpp"
 #include "text-anim.hpp"
+#include "top-panel.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -63,6 +64,7 @@ namespace snake2
         StateManager m_stateManager;
         GameInfo m_gamInfo;
         Level m_level;
+        TopPanel m_topPanel;
         Context m_context;
     };
 

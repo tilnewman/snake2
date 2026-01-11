@@ -11,6 +11,7 @@
 #include "snake.hpp"
 #include "sound-player.hpp"
 #include "text-anim.hpp"
+#include "top-panel.hpp"
 
 namespace snake2
 {
@@ -43,6 +44,7 @@ namespace snake2
         t_context.snake.draw(t_context, t_target, t_states);
         t_context.cell_anim.draw(t_target, t_states);
         t_context.text_anim.draw(t_target, t_states);
+        t_context.top.draw(t_target, t_states);
         m_framerateDisplay.draw(t_target, t_states);
     }
 

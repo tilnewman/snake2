@@ -14,6 +14,7 @@
 #include "snake.hpp"
 #include "sound-player.hpp"
 #include "text-anim.hpp"
+#include "top-panel.hpp"
 
 namespace snake2
 {
@@ -72,6 +73,7 @@ namespace snake2
         t_target.draw(t_context.grid_display, t_states);
         t_context.actors.draw(t_context, t_target, t_states);
         t_context.snake.draw(t_context, t_target, t_states);
+        t_context.top.draw(t_target, t_states);
     }
 
     void StatePrePlay::handleEvent(const Context &, const sf::Event &) {}

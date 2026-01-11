@@ -25,6 +25,7 @@ namespace snake2
     class FontManager;
     class StateManager;
     class TextAnimationManager;
+    class TopPanel;
 
     //
 
@@ -43,7 +44,8 @@ namespace snake2
             FontManager & t_fontManager,
             StateManager & t_stateManager,
             GameInfo & t_gameInfo,
-            Level & t_levelInfo)
+            Level & t_levelInfo,
+            TopPanel & t_topPanel)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -57,6 +59,7 @@ namespace snake2
             , state{ t_stateManager }
             , game{ t_gameInfo }
             , level{ t_levelInfo }
+            , top{ t_topPanel }
         {}
 
         const Config & config;
@@ -72,6 +75,7 @@ namespace snake2
         StateManager & state;
         GameInfo & game;
         Level & level;
+        TopPanel & top;
     };
 
 } // namespace snake2

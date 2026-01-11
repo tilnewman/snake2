@@ -13,6 +13,7 @@
 #include "sound-player.hpp"
 #include "state.hpp"
 #include "text-anim.hpp"
+#include "top-panel.hpp"
 #include "util.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -237,6 +238,7 @@ namespace snake2
     {
         m_isAlive = false;
         --t_context.game.lives;
+        t_context.top.update(t_context);
         t_context.state.setPending(State::LevelLost);
     }
 
