@@ -19,7 +19,7 @@ namespace snake2
         State type() const override { return State::LevelLost; }
         void onEnter(const Context & t_context) override;
         void onExit(const Context & t_context) override;
-        void update(const Context & t_context, const float t_elapsedTimeSec) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
         void handleEvent(const Context & t_context, const sf::Event & t_event) override;
 
         void draw(

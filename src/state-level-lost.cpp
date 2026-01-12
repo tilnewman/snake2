@@ -43,7 +43,7 @@ namespace snake2
         {
             if (t_context.game.lives == 0)
             {
-                t_context.state.setPending(State::Quit);
+                t_context.state.setPending(State::GameOver);
             }
             else
             {

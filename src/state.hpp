@@ -25,7 +25,7 @@ namespace snake2
         Play,
         LevelWon,
         LevelLost,
-        // GameOver,
+        GameOver,
         Quit
     };
 
@@ -38,7 +38,7 @@ namespace snake2
         virtual State type() const                                                     = 0;
         virtual void onEnter(const Context & t_context)                                = 0;
         virtual void onExit(const Context & t_context)                                 = 0;
-        virtual void update(const Context & t_context, const float t_elapsedTimeSec)   = 0;
+        virtual void update(const Context & t_context, const float t_elapsedSec)       = 0;
         virtual void handleEvent(const Context & t_context, const sf::Event & t_event) = 0;
 
         virtual void draw(
@@ -60,7 +60,7 @@ namespace snake2
         // by default these functions do nothing in the base class
         void onEnter(const Context & t_context) override;
         void onExit(const Context & t_context) override;
-        void update(const Context & t_context, const float t_elapsedTimeSec) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
         void handleEvent(const Context & t_context, const sf::Event & t_event) override;
 
         void draw(

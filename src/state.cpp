@@ -3,6 +3,7 @@
 //
 #include "state.hpp"
 
+#include "state-game-over.hpp"
 #include "state-level-lost.hpp"
 #include "state-level-won.hpp"
 #include "state-play.hpp"
@@ -56,6 +57,7 @@ namespace snake2
             case State::PrePlay:   { return std::make_unique<StatePrePlay>();   }
             case State::LevelWon:  { return std::make_unique<StateLevelWon>();  }
             case State::LevelLost: { return std::make_unique<StateLevelLost>(); }
+            case State::GameOver:  { return std::make_unique<StateGameOver>();  }
             default:
             {
                 throw std::runtime_error("Error: StateFactory::make() given an unknown type!");

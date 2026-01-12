@@ -239,6 +239,7 @@ namespace snake2
     {
         m_isAlive = false;
         --t_context.game.lives;
+        ++t_context.game.death_count;
         t_context.top.update(t_context);
         t_context.state.setPending(State::LevelLost);
     }
