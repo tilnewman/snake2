@@ -15,6 +15,7 @@ namespace snake2
         : m_frameRectangle{}
         , m_backgroundRectangle{}
         , m_cellLineVerts{}
+        , m_blackCellVerts{}
     {}
 
     void GridDisplay::setup(const Context & t_context)
@@ -29,6 +30,8 @@ namespace snake2
 
         const sf::Vector2f cellSize{ t_context.layout.cellSize() };
         const sf::Vector2u cellCount{ t_context.layout.cellCount() };
+
+        m_cellLineVerts.reserve(cellCount.x * cellCount.y * 4);
         for (unsigned x{ 0 }; x <= cellCount.x; ++x)
         {
             const float horizPos{ m_backgroundRectangle.getPosition().x +
@@ -56,6 +59,21 @@ namespace snake2
                 sf::Vector2f{ util::right(m_backgroundRectangle.getGlobalBounds()), vertPos },
                 t_context.config.cell_outline_color);
         }
+
+        // alternating black cells
+        bool isFirstCellBlack{ true };
+        for (unsigned y{ 0 }; y < cellCount.y; ++y)
+        {
+            for (unsigned x{ (isFirstCellBlack) ? 0u : 1u }; x < cellCount.x; x += 2u)
+            {
+                const sf::FloatRect rect{ gridPosToScreenRect(
+                    t_context, { static_cast<int>(x), static_cast<int>(y) }) };
+
+                util::appendTriangleVerts(rect, m_blackCellVerts, sf::Color::Black);
+            }
+
+            isFirstCellBlack = !isFirstCellBlack;
+        }
     }
 
     void GridDisplay::draw(sf::RenderTarget & t_target, sf::RenderStates t_states) const
@@ -65,6 +83,9 @@ namespace snake2
 
         t_target.draw(
             &m_cellLineVerts[0], m_cellLineVerts.size(), sf::PrimitiveType::Lines, t_states);
+
+        t_target.draw(
+            &m_blackCellVerts[0], m_blackCellVerts.size(), sf::PrimitiveType::Triangles, t_states);
     }
 
     const sf::Vector2f GridDisplay::gridPosToScreenPos(

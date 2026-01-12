@@ -36,6 +36,7 @@ namespace snake2
         sf::RectangleShape m_frameRectangle;
         sf::RectangleShape m_backgroundRectangle;
         std::vector<sf::Vertex> m_cellLineVerts;
+        std::vector<sf::Vertex> m_blackCellVerts;
     };
 
 } // namespace snake2
