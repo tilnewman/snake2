@@ -33,22 +33,11 @@ namespace snake2
 
         t_context.level.setup(t_context);
 
-        // TODO remove after testing
         for (int counter{ 0 }; counter < static_cast<int>(t_context.level.food_to_spawn_on_start);
              ++counter)
         {
             const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
             t_context.actors.add(t_context, Actor::Food, t_context.random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
-            t_context.actors.add(t_context, Actor::Shrink, t_context.random.from(freePositions));
-        }
-        for (int counter{ 0 }; counter < 6; ++counter)
-        {
-            const GridPosVec_t freePositions{ t_context.actors.findFreePositions(t_context) };
-            t_context.actors.add(t_context, Actor::Slow, t_context.random.from(freePositions));
         }
 
         t_context.sfx.play("level-intro");

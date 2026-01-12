@@ -18,8 +18,7 @@ namespace snake2
 {
 
     StatePlay::StatePlay()
-        : m_wasSnakeAlive{ true }
-        , m_framerateDisplay{}
+        : m_framerateDisplay{}
         , m_spawnElapsedSec{ 0.0f }
         , m_spawnSec{ 0.0f }
     {}
@@ -27,7 +26,7 @@ namespace snake2
     void StatePlay::onEnter(const Context & t_context)
     {
         m_framerateDisplay.setup(t_context);
-        m_spawnSec = t_context.random.fromTo(2.0f, 5.0f);
+        m_spawnSec = t_context.random.fromTo(5.0f, 10.0f);
     }
 
     void StatePlay::onExit(const Context &) {}
@@ -78,9 +77,22 @@ namespace snake2
         if (m_spawnElapsedSec > m_spawnSec)
         {
             m_spawnElapsedSec = 0.0f;
-            m_spawnSec        = t_context.random.fromTo(2.0f, 5.0f);
+            m_spawnSec        = t_context.random.fromTo(5.0f, 10.0f);
 
-            // TODO
+            if (t_context.random.boolean())
+            {
+                t_context.actors.add(
+                    t_context,
+                    Actor::Slow,
+                    t_context.random.from(t_context.actors.findFreePositions(t_context)));
+            }
+            else
+            {
+                t_context.actors.add(
+                    t_context,
+                    Actor::Shrink,
+                    t_context.random.from(t_context.actors.findFreePositions(t_context)));
+            }
         }
     }
 

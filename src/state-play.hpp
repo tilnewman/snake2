@@ -30,7 +30,6 @@ namespace snake2
         void updateFoodSpawn(const Context & t_context, const float t_elapsedSec);
 
       private:
-        bool m_wasSnakeAlive;
         FramerateDisplay m_framerateDisplay;
         float m_spawnElapsedSec;
         float m_spawnSec;
