@@ -26,7 +26,7 @@ namespace snake2
     void StatePlay::onEnter(const Context & t_context)
     {
         m_framerateDisplay.setup(t_context);
-        m_spawnSec = t_context.random.fromTo(5.0f, 10.0f);
+        m_spawnSec = randomTimeUntilSpawn(t_context);
     }
 
     void StatePlay::onExit(const Context &) {}
@@ -39,7 +39,7 @@ namespace snake2
         t_context.text_anim.update(t_context, t_elapsedSec);
         m_framerateDisplay.update(t_context, t_elapsedSec);
 
-        updateFoodSpawn(t_context, t_elapsedSec);
+        updateSpawn(t_context, t_elapsedSec);
     }
 
     void StatePlay::draw(
@@ -71,13 +71,13 @@ namespace snake2
         t_context.snake.handleEvent(t_context, t_event);
     }
 
-    void StatePlay::updateFoodSpawn(const Context & t_context, const float t_elapsedSec)
+    void StatePlay::updateSpawn(const Context & t_context, const float t_elapsedSec)
     {
         m_spawnElapsedSec += t_elapsedSec;
         if (m_spawnElapsedSec > m_spawnSec)
         {
             m_spawnElapsedSec = 0.0f;
-            m_spawnSec        = t_context.random.fromTo(5.0f, 10.0f);
+            m_spawnSec        = randomTimeUntilSpawn(t_context);
 
             if (t_context.random.boolean())
             {
@@ -94,6 +94,12 @@ namespace snake2
                     t_context.random.from(t_context.actors.findFreePositions(t_context)));
             }
         }
+    }
+
+    float StatePlay::randomTimeUntilSpawn(const Context & t_context) const
+    {
+        const float levelNumber{ static_cast<float>(t_context.game.level) };
+        return t_context.random.fromTo((5.0f + levelNumber), (10.0f + levelNumber));
     }
 
 } // namespace snake2

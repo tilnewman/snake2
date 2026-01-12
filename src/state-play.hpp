@@ -26,8 +26,9 @@ namespace snake2
             sf::RenderTarget & t_target,
             const sf::RenderStates & t_states) const override;
 
-        private:
-        void updateFoodSpawn(const Context & t_context, const float t_elapsedSec);
+      private:
+        void updateSpawn(const Context & t_context, const float t_elapsedSec);
+        float randomTimeUntilSpawn(const Context & t_context) const;
 
       private:
         FramerateDisplay m_framerateDisplay;
