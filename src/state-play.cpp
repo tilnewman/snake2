@@ -62,7 +62,7 @@ namespace snake2
         {
             if (keyPtr->scancode == sf::Keyboard::Scancode::Escape)
             {
-                t_context.state.setPending(State::Quit);
+                t_context.state.setPending(State::GameOver);
                 return;
             }
         }
