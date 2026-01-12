@@ -57,7 +57,7 @@ namespace snake2
         util::setOriginToPosition(*m_scoreTextUPtr);
 
         m_scoreTextUPtr->setPosition(
-            { ((topRect.size.x * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
+            { ((topRect.size.x * 0.75f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
               ((topRect.size.y * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.y * 0.5f)) });
 
         str = "Level: ";
@@ -66,7 +66,7 @@ namespace snake2
         util::setOriginToPosition(*m_levelTextUPtr);
 
         m_levelTextUPtr->setPosition(
-            { ((topRect.size.x * 0.75f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
+            { ((topRect.size.x * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
               ((topRect.size.y * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.y * 0.5f)) });
     }
 
