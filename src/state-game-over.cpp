@@ -17,21 +17,15 @@ namespace snake2
 
     StatAnimation::StatAnimation(
         const Context & t_context, const std::string & t_labelStr, const std::size_t t_stat)
-        : phase{ StatAnimPhase::Hold }
+        : phase{ StatAnimPhase::Label }
         , label_text{ t_context.font.makeText(FontSize::Large, t_labelStr, sf::Color::Cyan) }
         , stat_text{ t_context.font.makeText(
               FontSize::Large, std::to_string(t_stat), sf::Color::Cyan) }
         , elapsed_sec{ 0.0f }
     {
         const sf::FloatRect screenRect{ t_context.layout.screenRect() };
-
-        label_text.setPosition(
-            { ((screenRect.size.x * 0.5f) - (label_text.getGlobalBounds().size.x * 0.5f)),
-              (screenRect.size.y * 0.5f) });
-
-        stat_text.setPosition(
-            { ((screenRect.size.x * 0.5f) - (stat_text.getGlobalBounds().size.x * 0.5f)),
-              (screenRect.size.y * 0.55f) });
+        label_text.setPosition({ screenRect.size.x, (screenRect.size.y * 0.5f) });
+        stat_text.setPosition({ screenRect.size.x, (screenRect.size.y * 0.55f) });
     }
 
     //
@@ -43,6 +37,7 @@ namespace snake2
         , m_color2{}
         , m_animations{}
         , m_animIndex{ 0 }
+        , m_slider{ 2.5f }
     {}
 
     void StateGameOver::onEnter(const Context & t_context)
@@ -127,11 +122,37 @@ namespace snake2
         m_text.setFillColor(color);
     }
 
-    void StateGameOver::updateAnimations(const Context &, const float t_elapsedSec)
+    void StateGameOver::updateAnimations(const Context & t_context, const float t_elapsedSec)
     {
         StatAnimation & anim = m_animations.at(m_animIndex);
 
-        if (StatAnimPhase::Hold == anim.phase)
+        if (StatAnimPhase::Label == anim.phase)
+        {
+            const sf::FloatRect screenRect{ t_context.layout.screenRect() };
+
+            const float amountToMoveLabel{ screenRect.size.x -
+                                           ((screenRect.size.x * 0.5f) -
+                                            (anim.label_text.getGlobalBounds().size.x * 0.5f)) };
+
+            const float amountToMoveStat{ screenRect.size.x -
+                                          ((screenRect.size.x * 0.5f) -
+                                           (anim.stat_text.getGlobalBounds().size.x * 0.5f)) };
+
+            const float moveRatio{ m_slider.update(t_elapsedSec) };
+
+            anim.label_text.setPosition({ screenRect.size.x, anim.label_text.getPosition().y });
+            anim.label_text.move({ -(amountToMoveLabel * moveRatio), 0.0f });
+
+            anim.stat_text.setPosition({ screenRect.size.x, anim.stat_text.getPosition().y });
+            anim.stat_text.move({ -(amountToMoveStat * moveRatio), 0.0f });
+
+            if (!m_slider.isMoving())
+            {
+                m_slider.restart();
+                anim.phase = StatAnimPhase::Hold;
+            }
+        }
+        else if (StatAnimPhase::Hold == anim.phase)
         {
             anim.elapsed_sec += t_elapsedSec;
             if (anim.elapsed_sec > 4.0f)
