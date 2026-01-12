@@ -14,7 +14,6 @@ namespace snake2
     GridDisplay::GridDisplay()
         : m_frameRectangle{}
         , m_backgroundRectangle{}
-        , m_cellLineVerts{}
         , m_blackCellVerts{}
     {}
 
@@ -28,39 +27,8 @@ namespace snake2
         m_backgroundRectangle.setPosition(t_context.layout.gridRect().position);
         m_backgroundRectangle.setSize(t_context.layout.gridRect().size);
 
-        const sf::Vector2f cellSize{ t_context.layout.cellSize() };
         const sf::Vector2u cellCount{ t_context.layout.cellCount() };
 
-        m_cellLineVerts.reserve(cellCount.x * cellCount.y * 4);
-        for (unsigned x{ 0 }; x <= cellCount.x; ++x)
-        {
-            const float horizPos{ m_backgroundRectangle.getPosition().x +
-                                  (static_cast<float>(x) * cellSize.x) };
-
-            m_cellLineVerts.emplace_back(
-                sf::Vector2f{ horizPos, m_backgroundRectangle.getPosition().y },
-                t_context.config.cell_outline_color);
-
-            m_cellLineVerts.emplace_back(
-                sf::Vector2f{ horizPos, util::bottom(m_backgroundRectangle.getGlobalBounds()) },
-                t_context.config.cell_outline_color);
-        }
-
-        for (unsigned y{ 0 }; y <= cellCount.y; ++y)
-        {
-            const float vertPos{ m_backgroundRectangle.getPosition().y +
-                                 (static_cast<float>(y) * cellSize.y) };
-
-            m_cellLineVerts.emplace_back(
-                sf::Vector2f{ m_backgroundRectangle.getPosition().x, vertPos },
-                t_context.config.cell_outline_color);
-
-            m_cellLineVerts.emplace_back(
-                sf::Vector2f{ util::right(m_backgroundRectangle.getGlobalBounds()), vertPos },
-                t_context.config.cell_outline_color);
-        }
-
-        // alternating black cells
         bool isFirstCellBlack{ true };
         for (unsigned y{ 0 }; y < cellCount.y; ++y)
         {
@@ -80,9 +48,6 @@ namespace snake2
     {
         t_target.draw(m_frameRectangle, t_states);
         t_target.draw(m_backgroundRectangle, t_states);
-
-        t_target.draw(
-            &m_cellLineVerts[0], m_cellLineVerts.size(), sf::PrimitiveType::Lines, t_states);
 
         t_target.draw(
             &m_blackCellVerts[0], m_blackCellVerts.size(), sf::PrimitiveType::Triangles, t_states);
