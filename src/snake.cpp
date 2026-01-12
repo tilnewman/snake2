@@ -47,7 +47,7 @@ namespace snake2
         m_direction           = sf::Keyboard::Scancode::Left;
 
         // start the snake in the center of the screen horizontally
-        const int vertPos{ static_cast<int>(t_context.layout.cellCount().y / 2u) };
+        const int vertPos{ static_cast<int>(t_context.layout.cellCount().y / 6u) };
         const int leftMostPos{ static_cast<int>(t_context.layout.cellCount().x / 3u) };
         for (unsigned x{ 0 }; x < (t_context.layout.cellCount().x / 4); ++x)
         {
