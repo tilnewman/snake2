@@ -31,9 +31,9 @@ namespace snake2
         const sf::Color orange(255, 170, 60);
         const sf::Color creamCool(230, 190, 180, 192);
 
-        *m_livesTextUPtr = t_context.font.makeText(FontSize::Medium, "Lives:", yellow);
-        *m_scoreTextUPtr = t_context.font.makeText(FontSize::Medium, "Score:", orange);
-        *m_levelTextUPtr = t_context.font.makeText(FontSize::Medium, "Level:", creamCool);
+        *m_livesTextUPtr = t_context.font.makeText(FontSize::Large, "Lives:", yellow);
+        *m_scoreTextUPtr = t_context.font.makeText(FontSize::Large, "Score:", orange);
+        *m_levelTextUPtr = t_context.font.makeText(FontSize::Large, "Level:", creamCool);
 
         update(t_context);
     }
@@ -48,8 +48,8 @@ namespace snake2
         util::setOriginToPosition(*m_livesTextUPtr);
 
         m_livesTextUPtr->setPosition(
-            { ((topRect.size.x * 0.25f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
-              ((topRect.size.y * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.y * 0.5f)) });
+            { ((topRect.size.x * 0.875f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
+              ((topRect.size.y - m_livesTextUPtr->getGlobalBounds().size.y) - 10.0f) });
 
         str = "Score: ";
         str += std::to_string(t_context.game.score);
@@ -57,8 +57,8 @@ namespace snake2
         util::setOriginToPosition(*m_scoreTextUPtr);
 
         m_scoreTextUPtr->setPosition(
-            { ((topRect.size.x * 0.75f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
-              ((topRect.size.y * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.y * 0.5f)) });
+            { ((topRect.size.x * 0.125f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
+              (topRect.size.y - m_livesTextUPtr->getGlobalBounds().size.y) });
 
         str = "Level: ";
         str += std::to_string(t_context.game.level);
@@ -67,7 +67,7 @@ namespace snake2
 
         m_levelTextUPtr->setPosition(
             { ((topRect.size.x * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.x * 0.5f)),
-              ((topRect.size.y * 0.5f) - (m_livesTextUPtr->getGlobalBounds().size.y * 0.5f)) });
+              (topRect.size.y - m_livesTextUPtr->getGlobalBounds().size.y) });
     }
 
     void TopPanel::draw(sf::RenderTarget & t_target, const sf::RenderStates & t_states) const
