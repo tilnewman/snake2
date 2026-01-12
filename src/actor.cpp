@@ -3,6 +3,7 @@
 //
 #include "actor.hpp"
 
+#include "actors.hpp"
 #include "cell-anim.hpp"
 #include "config.hpp"
 #include "context.hpp"
@@ -56,8 +57,6 @@ namespace snake2
 
     bool Food::onEat(const Context & t_context)
     {
-        // TODO maybe place another food
-
         // this tracks how many food pieces have been eaten during the whole game
         ++t_context.game.food_pieces_eaten;
 
@@ -90,6 +89,21 @@ namespace snake2
         t_context.snake.faster(t_context);
         t_context.top.update(t_context);
 
+        // respawn if needed
+        if (t_context.level.food_eaten >= t_context.level.food_to_spawn_on_start)
+        {
+            if (t_context.level.food_to_spawn_after_start > 0)
+            {
+                --t_context.level.food_to_spawn_after_start;
+
+                t_context.actors.add(
+                    t_context,
+                    Actor::Food,
+                    t_context.random.from(t_context.actors.findFreePositions(t_context)));
+            }
+        }
+
+        // win the level if all the food is eaten
         if (t_context.config.food_pieces_per_level == t_context.level.food_eaten)
         {
             t_context.state.setPending(State::LevelWon);

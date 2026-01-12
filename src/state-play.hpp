@@ -18,7 +18,7 @@ namespace snake2
         State type() const override { return State::Play; }
         void onEnter(const Context & t_context) override;
         void onExit(const Context & t_context) override;
-        void update(const Context & t_context, const float t_elapsedTimeSec) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
         void handleEvent(const Context & t_context, const sf::Event & t_event) override;
 
         void draw(
@@ -26,9 +26,14 @@ namespace snake2
             sf::RenderTarget & t_target,
             const sf::RenderStates & t_states) const override;
 
+        private:
+        void updateFoodSpawn(const Context & t_context, const float t_elapsedSec);
+
       private:
         bool m_wasSnakeAlive;
         FramerateDisplay m_framerateDisplay;
+        float m_spawnElapsedSec;
+        float m_spawnSec;
     };
 
 } // namespace snake2

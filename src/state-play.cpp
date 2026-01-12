@@ -6,10 +6,11 @@
 #include "actors.hpp"
 #include "cell-anim.hpp"
 #include "context.hpp"
+#include "game-info.hpp"
 #include "grid-display.hpp"
+#include "level.hpp"
 #include "random.hpp"
 #include "snake.hpp"
-#include "sound-player.hpp"
 #include "text-anim.hpp"
 #include "top-panel.hpp"
 
@@ -19,9 +20,15 @@ namespace snake2
     StatePlay::StatePlay()
         : m_wasSnakeAlive{ true }
         , m_framerateDisplay{}
+        , m_spawnElapsedSec{ 0.0f }
+        , m_spawnSec{ 0.0f }
     {}
 
-    void StatePlay::onEnter(const Context & t_context) { m_framerateDisplay.setup(t_context); }
+    void StatePlay::onEnter(const Context & t_context)
+    {
+        m_framerateDisplay.setup(t_context);
+        m_spawnSec = t_context.random.fromTo(2.0f, 5.0f);
+    }
 
     void StatePlay::onExit(const Context &) {}
 
@@ -32,6 +39,8 @@ namespace snake2
         t_context.cell_anim.update(t_context, t_elapsedSec);
         t_context.text_anim.update(t_context, t_elapsedSec);
         m_framerateDisplay.update(t_context, t_elapsedSec);
+
+        updateFoodSpawn(t_context, t_elapsedSec);
     }
 
     void StatePlay::draw(
@@ -61,6 +70,18 @@ namespace snake2
 
         t_context.actors.handleEvent(t_context, t_event);
         t_context.snake.handleEvent(t_context, t_event);
+    }
+
+    void StatePlay::updateFoodSpawn(const Context & t_context, const float t_elapsedSec)
+    {
+        m_spawnElapsedSec += t_elapsedSec;
+        if (m_spawnElapsedSec > m_spawnSec)
+        {
+            m_spawnElapsedSec = 0.0f;
+            m_spawnSec        = t_context.random.fromTo(2.0f, 5.0f);
+
+            // TODO
+        }
     }
 
 } // namespace snake2

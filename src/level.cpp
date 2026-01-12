@@ -14,10 +14,26 @@ namespace snake2
 
     void Level::setup(const Context & t_context)
     {
-        food_eaten             = 0;
-        food_to_spawn_on_start = t_context.config.food_pieces_per_level;
+        food_eaten = 0;
 
         const std::size_t levelNumber{ t_context.game.level };
+
+        food_to_spawn_on_start = t_context.config.food_pieces_per_level;
+        if (levelNumber <= food_to_spawn_on_start)
+        {
+            food_to_spawn_on_start -= levelNumber;
+
+            food_to_spawn_after_start = levelNumber;
+            if (food_to_spawn_after_start > t_context.config.food_pieces_per_level)
+            {
+                food_to_spawn_after_start = t_context.config.food_pieces_per_level;
+            }
+        }
+        else
+        {
+            food_to_spawn_on_start    = 0;
+            food_to_spawn_after_start = t_context.config.food_pieces_per_level;
+        }
 
         // walls and obstacles
         if (levelNumber == 1)
