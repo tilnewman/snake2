@@ -32,7 +32,7 @@ namespace snake2
         sf::Color cell_slow_color{ sf::Color::Cyan };
         sf::Color cell_fast_color{ 255, 50, 100 };
         
-        float snake_speed_slow_mult{ 2.0f };
+        float snake_speed_slow_mult{ 1.5f };
         float snake_speed_fast_mult{ 0.875f };
         float snake_speed_default{ 0.125f };
         float cell_anim_duration_sec{ 0.25f };
