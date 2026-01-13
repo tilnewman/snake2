@@ -63,30 +63,50 @@ namespace snake2
         // this tracks how many food pieces have been eaten during just this level
         ++t_context.level.food_eaten;
 
-        const float pitch{ util::map(
-            t_context.level.food_eaten,
-            1_st,
-            t_context.config.food_pieces_per_level,
-            0.33f,
-            1.0f) };
-
-        t_context.sfx.play("shine", pitch);
-
+        // make the snake longer
         t_context.snake.grow(
             (t_context.layout.cellCount().y / 2u) +
             (2u * static_cast<unsigned>(std::sqrt(t_context.snake.length()))));
 
+        // calculate the score for eating this food
         const std::size_t score{ t_context.game.food_pieces_eaten + t_context.level.food_eaten +
                                  t_context.game.level };
 
+        // find out if this increase in score means a bonus life will be awarded
+        static std::size_t scoreDiv{ 500_st };
+        const std::size_t scoreDivBefore{ t_context.game.score / scoreDiv };
+        const std::size_t scoreDivAfter{ (t_context.game.score + score) / scoreDiv };
+        if (scoreDivBefore < scoreDivAfter)
+        {
+            t_context.sfx.play("bonus-life");
+            ++t_context.game.lives;
+            scoreDiv *= 2;
+        }
+        else
+        {
+            const float pitch{ util::map(
+                t_context.level.food_eaten,
+                1_st,
+                t_context.config.food_pieces_per_level,
+                0.33f,
+                1.0f) };
+
+            t_context.sfx.play("shine", pitch);
+        }
+
+        // actually increase the score
         t_context.game.score += score;
 
+        // spawn animations
         std::string scoreStr{ "+" };
         scoreStr += std::to_string(score);
-
-        t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), scoreStr, color());
+        t_context.cell_anim.add(t_context, position(), color());
+
+        // speed up snake speed
         t_context.snake.faster(t_context);
+
+        // update top panel numbers
         t_context.top.update(t_context);
 
         // respawn if needed
