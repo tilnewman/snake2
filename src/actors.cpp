@@ -79,8 +79,7 @@ namespace snake2
             std::erase(positions, actorUPtr->position());
         }
 
-        const GridPosVec_t snakePositions{ t_context.snake.positions() };
-        for (const GridPos_t & gridPos : snakePositions)
+        for (const GridPos_t & gridPos : t_context.snake.positions())
         {
             std::erase(positions, gridPos);
         }
