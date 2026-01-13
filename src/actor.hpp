@@ -22,7 +22,8 @@ namespace snake2
         Food,
         Wall,
         Shrink,
-        Slow
+        Slow,
+        Rainbow
     };
 
     //
@@ -31,10 +32,10 @@ namespace snake2
     {
         virtual ~IActor() = default;
 
-        virtual Actor type() const                                                   = 0;
-        virtual const GridPos_t position() const                                     = 0;
-        virtual const sf::Color color() const                                        = 0;
-        virtual void update(const Context & t_context, const float t_elpasedTimeSec) = 0;
+        virtual Actor type() const                                               = 0;
+        virtual const GridPos_t position() const                                 = 0;
+        virtual const sf::Color color() const                                    = 0;
+        virtual void update(const Context & t_context, const float t_elapsedSec) = 0;
 
         // returns true if the eaten actor needs to be removed by the caller
         virtual bool onEat(const Context & t_context) = 0;
@@ -63,6 +64,7 @@ namespace snake2
         Actor type() const final { return m_type; }
         const GridPos_t position() const final { return m_position; }
         const sf::Color color() const final { return m_color; }
+        void color(const sf::Color & t_color) { m_color = t_color; }
 
         void draw(
             const Context & t_context,
@@ -71,7 +73,7 @@ namespace snake2
 
         void handleEvent(const Context & t_context, const sf::Event & t_event) override;
 
-        void update(const Context & t_context, const float t_elpasedTimeSec) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
 
       private:
         Actor m_type;
@@ -117,6 +119,22 @@ namespace snake2
         Slow(const Context & t_context, const GridPos_t & t_position);
         virtual ~Slow() override = default;
         bool onEat(const Context & t_context) override;
+    };
+
+    //
+
+    class Rainbow : public ActorBase
+    {
+      public:
+        Rainbow(const Context & t_context, const GridPos_t & t_position);
+        virtual ~Rainbow() override = default;
+        bool onEat(const Context & t_context) override;
+        void update(const Context & t_context, const float t_elapsedSec) override;
+
+      private:
+        sf::Color m_color1;
+        sf::Color m_color2;
+        float m_elapsedSec;
     };
 
 } // namespace snake2

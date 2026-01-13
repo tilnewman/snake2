@@ -5,6 +5,7 @@
 
 #include "actors.hpp"
 #include "cell-anim.hpp"
+#include "color-range.hpp"
 #include "config.hpp"
 #include "context.hpp"
 #include "game-info.hpp"
@@ -176,6 +177,46 @@ namespace snake2
         t_context.text_anim.add(t_context, position(), "Slow!", color());
         ++t_context.game.slow_pieces_eaten;
         return true;
+    }
+
+    //
+
+    Rainbow::Rainbow(const Context & t_context, const GridPos_t & t_position)
+        : ActorBase(Actor::Rainbow, t_position, t_context.config.cell_slow_color)
+        , m_color1{ colors::randomVibrant(t_context.random) }
+        , m_color2{ colors::randomVibrant(t_context.random) }
+        , m_elapsedSec{ 0.0f }
+    {}
+
+    bool Rainbow::onEat(const Context & t_context)
+    {
+        t_context.sfx.play("bonus-life");
+
+        t_context.snake.slower(t_context);
+        t_context.snake.shrink();
+        ++t_context.game.lives;
+
+        t_context.cell_anim.add(t_context, position(), color());
+        t_context.text_anim.add(t_context, position(), "Rainbow!", color());
+
+        ++t_context.game.rainbow_pieces_eaten;
+        return true;
+    }
+
+    void Rainbow::update(const Context & t_context, const float t_elapsedSec)
+    {
+        const float timeBetweenColorsSec{ 0.2f };
+        m_elapsedSec += t_elapsedSec;
+        if (m_elapsedSec > timeBetweenColorsSec)
+        {
+            m_elapsedSec = 0.0f;
+            m_color1     = m_color2;
+            m_color2     = colors::randomVibrant(t_context.random);
+        }
+
+        const float ratio{ util::map(m_elapsedSec, 0.0f, timeBetweenColorsSec, 0.0f, 1.0f) };
+        const sf::Color color{ colors::blend(ratio, m_color1, m_color2) };
+        ActorBase::color(color);
     }
 
 } // namespace snake2

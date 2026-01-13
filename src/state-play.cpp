@@ -110,19 +110,29 @@ namespace snake2
             m_spawnElapsedSec = 0.0f;
             m_spawnSec        = randomTimeUntilSpawn(t_context);
 
-            if (t_context.random.boolean())
+            if (t_context.random.fromTo(1, 20) == 1)
             {
                 t_context.actors.add(
                     t_context,
-                    Actor::Slow,
+                    Actor::Rainbow,
                     t_context.random.from(t_context.actors.findFreePositions(t_context)));
             }
             else
             {
-                t_context.actors.add(
-                    t_context,
-                    Actor::Shrink,
-                    t_context.random.from(t_context.actors.findFreePositions(t_context)));
+                if (t_context.random.boolean())
+                {
+                    t_context.actors.add(
+                        t_context,
+                        Actor::Slow,
+                        t_context.random.from(t_context.actors.findFreePositions(t_context)));
+                }
+                else
+                {
+                    t_context.actors.add(
+                        t_context,
+                        Actor::Shrink,
+                        t_context.random.from(t_context.actors.findFreePositions(t_context)));
+                }
             }
         }
     }

@@ -69,6 +69,9 @@ namespace snake2
         m_animations.emplace_back(t_context, "Slow Pieces Eaten", t_context.game.slow_pieces_eaten);
 
         m_animations.emplace_back(
+            t_context, "Rainbow Pieces Eaten", t_context.game.rainbow_pieces_eaten);
+
+        m_animations.emplace_back(
             t_context, "Tail Pieces Eaten", t_context.game.snake_pieces_eaten);
 
         m_animations.emplace_back(
