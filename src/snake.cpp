@@ -10,11 +10,11 @@
 #include "grid-display.hpp"
 #include "keys.hpp"
 #include "layout.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state.hpp"
 #include "text-anim.hpp"
 #include "top-panel.hpp"
-#include "util.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -81,13 +81,13 @@ namespace snake2
         {
             if (util::keys::isArrow(keyPtr->scancode))
             {
-                if (util::keys::isOpposite(keyPtr->scancode, m_direction))
+                // check if the new position would end up eating self
+                const auto directionBefore{ m_direction };
+                m_direction = keyPtr->scancode;
+                if (isPositionOnTheSnake(makeMovedPosition(t_context)))
                 {
                     t_context.sfx.play("error-1");
-                }
-                else
-                {
-                    m_direction = keyPtr->scancode;
+                    m_direction = directionBefore;
                 }
             }
         }
@@ -156,8 +156,18 @@ namespace snake2
 
         const GridPos_t newPos{ makeMovedPosition(t_context) };
 
+        // check for eating self
+        if (isPositionOnTheSnake(newPos))
+        {
+            t_context.sfx.play("step-smash");
+            ++t_context.game.snake_pieces_eaten;
+            kill(t_context);
+            return;
+        }
+
         m_positions.insert(std::begin(m_positions), newPos);
 
+        // grow tail if needed
         if (0 == m_toGrowCount)
         {
             m_positions.pop_back();
@@ -167,24 +177,10 @@ namespace snake2
             --m_toGrowCount;
         }
 
+        // keep track of longest tail length
         if (m_positions.size() > t_context.game.longest_tail_length)
         {
             t_context.game.longest_tail_length = m_positions.size();
-        }
-
-        // check for eating self
-        if (m_positions.size() > 1)
-        {
-            for (std::size_t index{ 1 }; index < m_positions.size(); ++index)
-            {
-                if (newPos == m_positions.at(index))
-                {
-                    t_context.sfx.play("step-smash");
-                    ++t_context.game.snake_pieces_eaten;
-                    kill(t_context);
-                    return;
-                }
-            }
         }
 
         // if not eating self, eat other Actors, if any
@@ -194,6 +190,7 @@ namespace snake2
         }
         else
         {
+            // if there was a piece within eating range but we didn't, then miss
             if (surroundingActorCountBefore > 0)
             {
                 t_context.sfx.play("miss");
@@ -201,6 +198,19 @@ namespace snake2
                 ++t_context.game.miss_count;
             }
         }
+    }
+
+    bool Snake::isPositionOnTheSnake(const GridPos_t & t_gridPos) const
+    {
+        for (const GridPos_t & position : m_positions)
+        {
+            if (t_gridPos == position)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     const GridPos_t Snake::makeMovedPosition(const Context & t_context) const

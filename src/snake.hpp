@@ -45,6 +45,7 @@ namespace snake2
       private:
         void move(const Context & t_context);
         [[nodiscard]] const GridPos_t makeMovedPosition(const Context & t_context) const;
+        [[nodiscard]] bool isPositionOnTheSnake(const GridPos_t & t_gridPos) const;
 
       private:
         GridPosVec_t m_positions;
