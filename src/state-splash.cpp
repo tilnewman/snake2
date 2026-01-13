@@ -34,7 +34,7 @@ namespace snake2
     void StateSplash::update(const Context & t_context, const float t_elapsedSec)
     {
         m_elapsedSec += t_elapsedSec;
-        if (m_elapsedSec > 4.0f)
+        if (m_elapsedSec > 6.0f)
         {
             t_context.state.setPending(State::PrePlay);
         }
