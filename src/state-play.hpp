@@ -6,6 +6,8 @@
 #include "framerate-display.hpp"
 #include "state.hpp"
 
+#include <SFML/Graphics/Text.hpp>
+
 namespace snake2
 {
 
@@ -34,6 +36,8 @@ namespace snake2
         FramerateDisplay m_framerateDisplay;
         float m_spawnElapsedSec;
         float m_spawnSec;
+        bool m_isPaused;
+        sf::Text m_pauseText;
     };
 
 } // namespace snake2

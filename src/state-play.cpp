@@ -6,11 +6,16 @@
 #include "actors.hpp"
 #include "cell-anim.hpp"
 #include "context.hpp"
+#include "font.hpp"
 #include "game-info.hpp"
 #include "grid-display.hpp"
+#include "layout.hpp"
 #include "level.hpp"
 #include "random.hpp"
+#include "sfml-defaults.hpp"
+#include "sfml-util.hpp"
 #include "snake.hpp"
+#include "sound-player.hpp"
 #include "text-anim.hpp"
 #include "top-panel.hpp"
 
@@ -21,25 +26,33 @@ namespace snake2
         : m_framerateDisplay{}
         , m_spawnElapsedSec{ 0.0f }
         , m_spawnSec{ 0.0f }
+        , m_isPaused{ false }
+        , m_pauseText{ util::SfmlDefaults::instance().font() }
     {}
 
     void StatePlay::onEnter(const Context & t_context)
     {
         m_framerateDisplay.setup(t_context);
-        m_spawnSec = randomTimeUntilSpawn(t_context);
+        m_spawnSec  = randomTimeUntilSpawn(t_context);
+        m_pauseText = t_context.font.makeText(FontSize::Huge, "PAUSED", sf::Color::White);
+        util::centerInside(m_pauseText, t_context.layout.screenRect());
     }
 
     void StatePlay::onExit(const Context &) {}
 
     void StatePlay::update(const Context & t_context, const float t_elapsedSec)
     {
-        t_context.actors.update(t_context, t_elapsedSec);
-        t_context.snake.update(t_context, t_elapsedSec);
-        t_context.cell_anim.update(t_context, t_elapsedSec);
-        t_context.text_anim.update(t_context, t_elapsedSec);
         m_framerateDisplay.update(t_context, t_elapsedSec);
 
         updateSpawn(t_context, t_elapsedSec);
+
+        if (!m_isPaused)
+        {
+            t_context.snake.update(t_context, t_elapsedSec);
+            t_context.actors.update(t_context, t_elapsedSec);
+            t_context.cell_anim.update(t_context, t_elapsedSec);
+            t_context.text_anim.update(t_context, t_elapsedSec);
+        }
     }
 
     void StatePlay::draw(
@@ -54,6 +67,11 @@ namespace snake2
         t_context.text_anim.draw(t_target, t_states);
         t_context.top.draw(t_target, t_states);
         // m_framerateDisplay.draw(t_target, t_states);
+
+        if (m_isPaused)
+        {
+            t_target.draw(m_pauseText, t_states);
+        }
     }
 
     void StatePlay::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -65,14 +83,27 @@ namespace snake2
                 t_context.state.setPending(State::GameOver);
                 return;
             }
+            else if (keyPtr->scancode == sf::Keyboard::Scancode::Space)
+            {
+                m_isPaused = !m_isPaused;
+                t_context.sfx.play("pause");
+            }
         }
 
-        t_context.actors.handleEvent(t_context, t_event);
-        t_context.snake.handleEvent(t_context, t_event);
+        if (!m_isPaused)
+        {
+            t_context.actors.handleEvent(t_context, t_event);
+            t_context.snake.handleEvent(t_context, t_event);
+        }
     }
 
     void StatePlay::updateSpawn(const Context & t_context, const float t_elapsedSec)
     {
+        if (m_isPaused)
+        {
+            return;
+        }
+
         m_spawnElapsedSec += t_elapsedSec;
         if (m_spawnElapsedSec > m_spawnSec)
         {
