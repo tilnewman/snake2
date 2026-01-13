@@ -66,6 +66,7 @@ namespace snake2
 
         // make the snake longer
         t_context.snake.grow(
+            (t_context.game.level * 2u) +
             (t_context.layout.cellCount().y / 2u) +
             (2u * static_cast<unsigned>(std::sqrt(t_context.snake.length()))));
 
