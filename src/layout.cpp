@@ -32,6 +32,7 @@ namespace snake2
         m_bottomRect.size = { m_screenRect.size.x,
                               (m_screenRect.size.y - m_bottomRect.position.y) };
 
+        // establish how big the cells will be and how many fit in the bottom rect
         m_cellSize.x = std::floor(m_screenRect.size.y * t_config.cell_size_ratio);
         m_cellSize.y = m_cellSize.x;
 
