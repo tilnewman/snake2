@@ -24,20 +24,29 @@
 namespace snake2
 {
 
-    void ActorBase::draw(
+    ActorBase::ActorBase(
         const Context & t_context,
-        sf::RenderTarget & t_target,
-        const sf::RenderStates & t_states) const
+        const Actor t_type,
+        const GridPos_t & t_position,
+        const sf::Color & t_color)
+        : m_type{ t_type }
+        , m_position{ t_position }
+        , m_rectangle{}
     {
         const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
             t_context, m_position) };
 
-        sf::RectangleShape rectangle;
-        rectangle.setFillColor(m_color);
-        rectangle.setPosition(screenRect.position);
-        rectangle.setSize(screenRect.size);
+        m_rectangle.setPosition(screenRect.position);
+        m_rectangle.setSize(screenRect.size);
+        m_rectangle.setFillColor(t_color);
+    }
 
-        t_target.draw(rectangle, t_states);
+    void ActorBase::draw(
+        const Context &,
+        sf::RenderTarget & t_target,
+        const sf::RenderStates & t_states) const
+    {
+        t_target.draw(m_rectangle, t_states);
     }
 
     void ActorBase::handleEvent(const Context &, const sf::Event &)
@@ -53,7 +62,7 @@ namespace snake2
     //
 
     Food::Food(const Context & t_context, const GridPos_t & t_position)
-        : ActorBase(Actor::Food, t_position, t_context.config.cell_food_color)
+        : ActorBase(t_context, Actor::Food, t_position, t_context.config.cell_food_color)
     {}
 
     bool Food::onEat(const Context & t_context)
@@ -66,8 +75,7 @@ namespace snake2
 
         // make the snake longer
         t_context.snake.grow(
-            (t_context.game.level * 2u) +
-            (t_context.layout.cellCount().y / 2u) +
+            (t_context.game.level * 2u) + (t_context.layout.cellCount().y / 2u) +
             (2u * static_cast<unsigned>(std::sqrt(t_context.snake.length()))));
 
         // calculate the score for eating this food
@@ -105,7 +113,7 @@ namespace snake2
         t_context.text_anim.add(t_context, position(), scoreStr, color());
         t_context.cell_anim.add(t_context, position(), color());
 
-        // speed up snake speed
+        // speed up snake
         t_context.snake.faster(t_context);
 
         // update top panel numbers
@@ -137,7 +145,7 @@ namespace snake2
     //
 
     Wall::Wall(const Context & t_context, const GridPos_t & t_position)
-        : ActorBase(Actor::Wall, t_position, t_context.config.cell_wall_color)
+        : ActorBase(t_context, Actor::Wall, t_position, t_context.config.cell_wall_color)
     {}
 
     bool Wall::onEat(const Context & t_context)
@@ -151,7 +159,7 @@ namespace snake2
     //
 
     Shrink::Shrink(const Context & t_context, const GridPos_t & t_position)
-        : ActorBase(Actor::Shrink, t_position, t_context.config.cell_shrink_color)
+        : ActorBase(t_context, Actor::Shrink, t_position, t_context.config.cell_shrink_color)
     {}
 
     bool Shrink::onEat(const Context & t_context)
@@ -167,7 +175,7 @@ namespace snake2
     //
 
     Slow::Slow(const Context & t_context, const GridPos_t & t_position)
-        : ActorBase(Actor::Slow, t_position, t_context.config.cell_slow_color)
+        : ActorBase(t_context, Actor::Slow, t_position, t_context.config.cell_slow_color)
     {}
 
     bool Slow::onEat(const Context & t_context)
@@ -183,7 +191,7 @@ namespace snake2
     //
 
     Rainbow::Rainbow(const Context & t_context, const GridPos_t & t_position)
-        : ActorBase(Actor::Rainbow, t_position, t_context.config.cell_slow_color)
+        : ActorBase(t_context, Actor::Rainbow, t_position, t_context.config.cell_slow_color)
         , m_color1{ colors::randomVibrant(t_context.random) }
         , m_color2{ colors::randomVibrant(t_context.random) }
         , m_elapsedSec{ 0.0f }
@@ -196,7 +204,7 @@ namespace snake2
         t_context.snake.slower(t_context);
         t_context.snake.shrink();
         ++t_context.game.lives;
-        
+
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Rainbow!", color());
 

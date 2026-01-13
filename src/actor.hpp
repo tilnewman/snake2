@@ -6,6 +6,7 @@
 #include "grid-types.hpp"
 
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Window/Event.hpp>
@@ -53,18 +54,18 @@ namespace snake2
     class ActorBase : public IActor
     {
       public:
-        ActorBase(const Actor t_type, const GridPos_t & t_position, const sf::Color & t_color)
-            : m_type{ t_type }
-            , m_position{ t_position }
-            , m_color{ t_color }
-        {}
+        ActorBase(
+            const Context & t_context,
+            const Actor t_type,
+            const GridPos_t & t_position,
+            const sf::Color & t_color);
 
         virtual ~ActorBase() override = default;
 
         Actor type() const final { return m_type; }
         const GridPos_t position() const final { return m_position; }
-        const sf::Color color() const final { return m_color; }
-        void color(const sf::Color & t_color) { m_color = t_color; }
+        const sf::Color color() const final { return m_rectangle.getFillColor(); }
+        void color(const sf::Color & t_color) { m_rectangle.setFillColor(t_color); }
 
         void draw(
             const Context & t_context,
@@ -78,7 +79,7 @@ namespace snake2
       private:
         Actor m_type;
         GridPos_t m_position;
-        sf::Color m_color;
+        sf::RectangleShape m_rectangle;
     };
 
     //
