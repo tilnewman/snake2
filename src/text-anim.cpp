@@ -35,7 +35,7 @@ namespace snake2
         const sf::Color & t_color)
     {
         TextAnimation & anim{ m_animations.emplace_back() };
-        anim.text = t_context.font.makeText(FontSize::Medium, t_text, t_color);
+        anim.text = t_context.font.makeText(FontSize::Large, t_text, t_color);
 
         const sf::FloatRect screenRect{ t_context.grid_display.gridPosToScreenRect(
             t_context, t_gridPos) };
