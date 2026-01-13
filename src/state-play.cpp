@@ -53,7 +53,7 @@ namespace snake2
         t_context.cell_anim.draw(t_target, t_states);
         t_context.text_anim.draw(t_target, t_states);
         t_context.top.draw(t_target, t_states);
-        m_framerateDisplay.draw(t_target, t_states);
+        // m_framerateDisplay.draw(t_target, t_states);
     }
 
     void StatePlay::handleEvent(const Context & t_context, const sf::Event & t_event)
