@@ -47,11 +47,21 @@ namespace snake2
         m_direction           = sf::Keyboard::Scancode::Left;
 
         // start the snake in the center of the screen horizontally
-        const int vertPos{ static_cast<int>(t_context.layout.cellCount().y / 6u) };
-        const int leftMostPos{ static_cast<int>(t_context.layout.cellCount().x / 3u) };
-        for (unsigned x{ 0 }; x < (t_context.layout.cellCount().x / 4); ++x)
+        const sf::Vector2i cellCount{ t_context.layout.cellCount() };
+        const int vertPos{ cellCount.y / 6 };
+        const int leftMostPos{ cellCount.x / 3 };
+        const int length{ (cellCount.x / 6) + static_cast<int>(t_context.game.level) };
+        for (int x{ 0 }; x < length; ++x)
         {
-            m_positions.emplace_back(leftMostPos + static_cast<int>(x), vertPos);
+            const GridPos_t position{ leftMostPos + static_cast<int>(x), vertPos };
+            if (position.x < (cellCount.x - 1))
+            {
+                m_positions.emplace_back(position);
+            }
+            else
+            {
+                break;
+            }
         }
     }
 
