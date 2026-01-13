@@ -195,11 +195,13 @@ namespace snake2
         t_context.snake.slower(t_context);
         t_context.snake.shrink();
         ++t_context.game.lives;
-
+        
         t_context.cell_anim.add(t_context, position(), color());
         t_context.text_anim.add(t_context, position(), "Rainbow!", color());
 
         ++t_context.game.rainbow_pieces_eaten;
+
+        t_context.top.update(t_context);
         return true;
     }
 
