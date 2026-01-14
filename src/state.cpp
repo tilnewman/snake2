@@ -40,8 +40,8 @@ namespace snake2
         {
             m_currentStateUPtr->onExit(t_context);
             m_currentStateUPtr = make(m_pendingStateOpt.value());
-            m_currentStateUPtr->onEnter(t_context);
             m_pendingStateOpt.reset();
+            m_currentStateUPtr->onEnter(t_context);
         }
     }
 
