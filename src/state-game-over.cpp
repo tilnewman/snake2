@@ -86,7 +86,7 @@ namespace snake2
 
     void StateGameOver::update(const Context & t_context, const float t_elapsedSec)
     {
-        updateSnakeTextColor(t_context, t_elapsedSec);
+        updateTextColor(t_context, t_elapsedSec);
         updateAnimations(t_context, t_elapsedSec);
     }
 
@@ -109,7 +109,7 @@ namespace snake2
         t_target.draw(m_animations.at(m_animIndex).stat_text, t_states);
     }
 
-    void StateGameOver::updateSnakeTextColor(const Context & t_context, const float t_elapsedSec)
+    void StateGameOver::updateTextColor(const Context & t_context, const float t_elapsedSec)
     {
         const float timeBetweenColorsSec{ 1.5f };
         m_colorElapsedSec += t_elapsedSec;

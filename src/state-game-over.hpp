@@ -60,7 +60,7 @@ namespace snake2
             const sf::RenderStates & t_states) const override;
 
       private:
-        void updateSnakeTextColor(const Context & t_context, const float t_elapsedSec);
+        void updateTextColor(const Context & t_context, const float t_elapsedSec);
         void updateAnimations(const Context & t_context, const float t_elapsedSec);
 
       private:
