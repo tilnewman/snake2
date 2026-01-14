@@ -39,7 +39,7 @@ namespace snake2
         , m_color2{}
         , m_animations{}
         , m_animIndex{ 0 }
-        , m_slider{ 2.5f }
+        , m_slider{ 1.0f }
     {}
 
     void StateGameOver::onEnter(const Context & t_context)
