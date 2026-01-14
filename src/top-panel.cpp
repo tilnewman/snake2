@@ -25,17 +25,14 @@ namespace snake2
 
     void TopPanel::setup(const Context & t_context)
     {
-        m_livesTextUPtr = std::make_unique<sf::Text>(t_context.font.font());
-        m_scoreTextUPtr = std::make_unique<sf::Text>(t_context.font.font());
-        m_levelTextUPtr = std::make_unique<sf::Text>(t_context.font.font());
+        m_livesTextUPtr = std::make_unique<sf::Text>(
+            t_context.font.makeText(FontSize::Large, "Lives:", sf::Color(230, 190, 50)));
 
-        const sf::Color yellow(230, 190, 50);
-        const sf::Color orange(255, 170, 60);
-        const sf::Color creamCool(230, 190, 180, 192);
+        m_scoreTextUPtr = std::make_unique<sf::Text>(
+            t_context.font.makeText(FontSize::Large, "Score:", sf::Color(255, 170, 60)));
 
-        *m_livesTextUPtr = t_context.font.makeText(FontSize::Large, "Lives:", yellow);
-        *m_scoreTextUPtr = t_context.font.makeText(FontSize::Large, "Score:", orange);
-        *m_levelTextUPtr = t_context.font.makeText(FontSize::Large, "Level:", creamCool);
+        m_levelTextUPtr = std::make_unique<sf::Text>(
+            t_context.font.makeText(FontSize::Large, "Level:", sf::Color(180, 140, 130)));
 
         update(t_context);
     }
