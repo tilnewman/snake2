@@ -161,6 +161,7 @@ namespace snake2
         {
             t_context.sfx.play("step-smash");
             ++t_context.game.snake_pieces_eaten;
+            m_positions.insert(std::begin(m_positions), newPos);
             kill(t_context);
             return;
         }
