@@ -32,15 +32,17 @@ namespace snake2
         sf::Color cell_shrink_color{ sf::Color::Magenta };
         sf::Color cell_slow_color{ sf::Color::Cyan };
         sf::Color cell_fast_color{ 255, 50, 100 };
-        
+
         float snake_speed_slow_mult{ 1.5f };
-        float snake_speed_fast_mult{ 0.875f };
-        float snake_speed_default{ 0.125f };
+        float snake_speed_fast_mult{ 0.9f };
+        float snake_time_between_moves_default{ 0.125f };
+        float snake_time_between_moves_min{ 0.05f };
+        float snake_speed_step{ 0.01f };
         float cell_anim_duration_sec{ 0.25f };
         float cell_anim_scale_max{ 3.0f };
         float text_anim_duration_sec{ 1.0f };
         float text_anim_rise_mult{ 3.0f };
-        
+
         std::size_t food_pieces_per_level{ 7 };
 
         std::string save_game_file_name{ "snake-score.txt" };

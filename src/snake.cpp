@@ -45,14 +45,14 @@ namespace snake2
         m_isAlive             = true;
         m_toGrowCount         = 0;
         m_elapsedTimeSec      = 0.0f;
-        m_timeBetweenMovesSec = t_context.config.snake_speed_default;
+        m_timeBetweenMovesSec = calcTimeBetweenMoves(t_context);
         m_direction           = sf::Keyboard::Scancode::Left;
 
         // start the snake in the center of the screen horizontally
         const sf::Vector2i cellCount{ t_context.layout.cellCount() };
         const int vertPos{ cellCount.y / 6 };
         const int leftMostPos{ cellCount.x / 3 };
-        const int length{ (cellCount.x / 6) + static_cast<int>(t_context.game.level) };
+        const int length{ (cellCount.x / 6) + (static_cast<int>(t_context.game.level) * 2) };
         for (int x{ 0 }; x < length; ++x)
         {
             const GridPos_t position{ leftMostPos + static_cast<int>(x), vertPos };
@@ -288,6 +288,21 @@ namespace snake2
                 m_positions.pop_back();
             }
         }
+    }
+
+    float Snake::calcTimeBetweenMoves(const Context & t_context) const
+    {
+        float timeBetweenMoves{ t_context.config.snake_time_between_moves_default };
+
+        timeBetweenMoves -=
+            (t_context.config.snake_speed_step * static_cast<float>(t_context.game.level));
+
+        if (timeBetweenMoves < t_context.config.snake_time_between_moves_min)
+        {
+            timeBetweenMoves = t_context.config.snake_time_between_moves_min;
+        }
+
+        return timeBetweenMoves;
     }
 
 } // namespace snake2
