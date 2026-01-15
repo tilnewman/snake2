@@ -13,7 +13,7 @@
 namespace util
 {
     // All Sliders:
-    //  - Use sin() to achieve smooth motion called "sliding" here.
+    //  - Use Smooth Step to achieve sin motion called "sliding" here.
     //  - Start automatically at the given value and isMoving() returns true.
     //  - Call Update() with a fraction of a second to move the value towards the target.
     //  - Update() will call stop() automatically when target value is reached or IsRealClose().
@@ -28,19 +28,19 @@ namespace util
     // Will not work with negative speeds or update(...).
     //
     template <typename T = float>
-    class SliderRatio
+    class SinSliderRatio
     {
         static_assert(std::is_floating_point_v<T>);
 
       public:
-        constexpr SliderRatio() noexcept
+        constexpr SinSliderRatio() noexcept
             : m_isMoving{ false }
             , m_speed{ 0 }
             , m_value{ 0 }
             , m_radians{ 0 }
         {}
 
-        explicit constexpr SliderRatio(const T t_speed, const T t_startAt = T(0)) noexcept
+        explicit constexpr SinSliderRatio(const T t_speed, const T t_startAt = T(0)) noexcept
             : m_isMoving{ true }
             , m_speed{ 0 }
             , m_value{ 0 }
@@ -107,19 +107,19 @@ namespace util
     // Will not work with negative speeds or update(...).
     //
     template <typename T = float>
-    class SmoothStepRatio
+    class SliderRatio
     {
         static_assert(std::is_floating_point_v<T>);
 
       public:
-        constexpr SmoothStepRatio() noexcept
+        constexpr SliderRatio() noexcept
             : m_isMoving{ false }
             , m_speed{ 0 }
             , m_value{ 0 }
             , m_base{ 0 }
         {}
 
-        explicit constexpr SmoothStepRatio(const T t_speed, const T t_startAt = T(0)) noexcept
+        explicit constexpr SliderRatio(const T t_speed, const T t_startAt = T(0)) noexcept
             : m_isMoving{ true }
             , m_speed{ 0 }
             , m_value{ 0 }

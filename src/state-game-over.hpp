@@ -70,7 +70,7 @@ namespace snake2
         sf::Color m_color2;
         std::vector<StatAnimation> m_animations;
         std::size_t m_animIndex;
-        util::SmoothStepRatio<float> m_slider;
+        util::SliderRatio<float> m_slider;
     };
 
 } // namespace snake2
