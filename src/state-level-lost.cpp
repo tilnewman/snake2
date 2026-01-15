@@ -17,6 +17,7 @@
 #include "sfml-util.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
+#include "splat-image.hpp"
 #include "text-anim.hpp"
 #include "top-panel.hpp"
 
@@ -34,9 +35,11 @@ namespace snake2
 
         m_text = t_context.font.makeText(FontSize::Huge, "You Died!", sf::Color::Red);
         util::centerInside(m_text, t_context.layout.screenRect());
+
+        t_context.splat.startDisplaying(t_context, t_context.snake.positions().front());
     }
 
-    void StateLevelLost::onExit(const Context &) {}
+    void StateLevelLost::onExit(const Context & t_context) { t_context.splat.stopDisplaying(); }
 
     void StateLevelLost::update(const Context & t_context, const float t_elapsedSec)
     {
@@ -65,6 +68,7 @@ namespace snake2
         t_context.cell_anim.draw(t_target, t_states);
         t_context.text_anim.draw(t_target, t_states);
         t_context.top.draw(t_target, t_states);
+        t_context.splat.draw(t_target, t_states);
         t_target.draw(m_text, t_states);
     }
 

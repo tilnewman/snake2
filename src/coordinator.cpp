@@ -34,10 +34,22 @@ namespace snake2
         , m_gamInfo{}
         , m_level{}
         , m_topPanel{}
-        , m_context{ m_config,      m_layout,      m_gridDisplay,          m_random,
-                     m_snake,       m_actors,      m_cellAnimationManager, m_textAnimationManager,
-                     m_soundPlayer, m_fontManager, m_stateManager,         m_gamInfo,
-                     m_level,       m_topPanel }
+        , m_splatImage{}
+        , m_context{ m_config,
+                     m_layout,
+                     m_gridDisplay,
+                     m_random,
+                     m_snake,
+                     m_actors,
+                     m_cellAnimationManager,
+                     m_textAnimationManager,
+                     m_soundPlayer,
+                     m_fontManager,
+                     m_stateManager,
+                     m_gamInfo,
+                     m_level,
+                     m_topPanel,
+                     m_splatImage }
     {}
 
     void Coordinator::run(const Config & t_config)
@@ -70,6 +82,7 @@ namespace snake2
         m_actors.setup(m_context);
         m_cellAnimationManager.setup(m_context);
         m_topPanel.setup(m_context);
+        m_splatImage.setup(m_context);
 
         m_soundPlayer.setMediaPath((m_config.media_path / "sfx").string());
         m_soundPlayer.loadAll();

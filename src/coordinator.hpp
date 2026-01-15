@@ -16,6 +16,7 @@
 #include "random.hpp"
 #include "snake.hpp"
 #include "sound-player.hpp"
+#include "splat-image.hpp"
 #include "state.hpp"
 #include "text-anim.hpp"
 #include "top-panel.hpp"
@@ -65,6 +66,7 @@ namespace snake2
         GameInfo m_gamInfo;
         Level m_level;
         TopPanel m_topPanel;
+        SplatImage m_splatImage;
         Context m_context;
     };
 

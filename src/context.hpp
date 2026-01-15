@@ -26,6 +26,7 @@ namespace snake2
     class StateManager;
     class TextAnimationManager;
     class TopPanel;
+    class SplatImage;
 
     //
 
@@ -45,7 +46,8 @@ namespace snake2
             StateManager & t_stateManager,
             GameInfo & t_gameInfo,
             Level & t_levelInfo,
-            TopPanel & t_topPanel)
+            TopPanel & t_topPanel,
+            SplatImage & t_splatImage)
             : config{ t_config }
             , layout{ t_layout }
             , grid_display{ t_gridDisplay }
@@ -60,6 +62,7 @@ namespace snake2
             , game{ t_gameInfo }
             , level{ t_levelInfo }
             , top{ t_topPanel }
+            , splat{ t_splatImage }
         {}
 
         const Config & config;
@@ -76,6 +79,7 @@ namespace snake2
         GameInfo & game;
         Level & level;
         TopPanel & top;
+        SplatImage & splat;
     };
 
 } // namespace snake2
