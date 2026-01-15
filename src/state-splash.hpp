@@ -29,7 +29,8 @@ namespace snake2
             const sf::RenderStates & t_states) const override;
 
       private:
-        sf::Text m_text;
+        sf::Text m_titleText;
+        sf::Text m_instructionText;
         float m_elapsedSec;
         float m_colorElapsedSec;
         sf::Color m_color1;

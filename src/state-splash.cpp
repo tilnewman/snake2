@@ -15,7 +15,8 @@
 namespace snake2
 {
     StateSplash::StateSplash()
-        : m_text{ util::SfmlDefaults::instance().font() }
+        : m_titleText{ util::SfmlDefaults::instance().font() }
+        , m_instructionText{ util::SfmlDefaults::instance().font() }
         , m_elapsedSec{ 0.0f }
         , m_colorElapsedSec{ 0.0f }
         , m_color1{}
@@ -27,8 +28,18 @@ namespace snake2
         m_color1 = sf::Color::Cyan;
         m_color2 = colors::randomVibrant(t_context.random);
 
-        m_text = t_context.font.makeText(FontSize::Colossal, "Snake!", m_color1);
-        util::centerInside(m_text, t_context.layout.screenRect());
+        m_titleText = t_context.font.makeText(FontSize::Colossal, "Snake!", m_color1);
+
+        const sf::FloatRect screenRect{ t_context.layout.screenRect() };
+        util::centerInside(m_titleText, screenRect);
+        m_titleText.move({ 0.0f, -(screenRect.size.y * 0.2f) });
+
+        m_instructionText =
+            t_context.font.makeText(FontSize::Large, "press any key to start", sf::Color::Cyan);
+
+        m_instructionText.setPosition(
+            { ((screenRect.size.x * 0.5f) - (m_instructionText.getGlobalBounds().size.x * 0.5f)),
+              (util::bottom(m_titleText) + (screenRect.size.y * 0.15f)) });
     }
 
     void StateSplash::onExit(const Context &) {}
@@ -36,7 +47,7 @@ namespace snake2
     void StateSplash::update(const Context & t_context, const float t_elapsedSec)
     {
         m_elapsedSec += t_elapsedSec;
-        if (m_elapsedSec > 6.0f)
+        if (m_elapsedSec > 20.0f)
         {
             t_context.state.setPending(State::PrePlay);
         }
@@ -52,7 +63,7 @@ namespace snake2
 
         const float ratio{ util::map(m_colorElapsedSec, 0.0f, timeBetweenColorsSec, 0.0f, 1.0f) };
         const sf::Color color{ colors::blend(ratio, m_color1, m_color2) };
-        m_text.setFillColor(color);
+        m_titleText.setFillColor(color);
     }
 
     void StateSplash::handleEvent(const Context & t_context, const sf::Event & t_event)
@@ -69,7 +80,8 @@ namespace snake2
     void StateSplash::draw(
         const Context &, sf::RenderTarget & t_target, const sf::RenderStates & t_states) const
     {
-        t_target.draw(m_text, t_states);
+        t_target.draw(m_titleText, t_states);
+        t_target.draw(m_instructionText, t_states);
     }
 
 } // namespace snake2
