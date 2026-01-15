@@ -38,21 +38,6 @@ namespace snake2
         }
     }
 
-    void Walls::full(const Context & t_context)
-    {
-        for (int x{ 1 }; x < static_cast<int>(t_context.layout.cellCount().x - 1u); ++x)
-        {
-            t_context.actors.add(t_context, Actor::Wall, { x, 0 });
-
-            t_context.actors.add(
-                t_context,
-                Actor::Wall,
-                { x, static_cast<int>(t_context.layout.cellCount().y - 1u) });
-        }
-
-        halfVert(t_context);
-    }
-
     void Walls::cutHolesInBorderWalls(const Context & t_context)
     {
         const sf::Vector2i cellCount{ t_context.layout.cellCount() };
@@ -86,6 +71,37 @@ namespace snake2
             for (int x{ 0 }; x < blockDimm.x; ++x)
             {
                 t_context.actors.add(t_context, Actor::Wall, { blockDimm + sf::Vector2i{ x, y } });
+            }
+        }
+    }
+
+    void Walls::full(const Context & t_context, const std::size_t t_thickness)
+    {
+        const int thicknessInt{ static_cast<int>(t_thickness) };
+
+        for (int y{ 0 }; y < thicknessInt; ++y)
+        {
+            for (int x{ y }; x < static_cast<int>(t_context.layout.cellCount().x - y); ++x)
+            {
+                t_context.actors.add(t_context, Actor::Wall, { x, y });
+                
+                t_context.actors.add(
+                    t_context,
+                    Actor::Wall,
+                    { x, static_cast<int>(t_context.layout.cellCount().y - (y + 1)) });
+            }
+        }
+
+        for (int x{ 0 }; x < thicknessInt; ++x)
+        {
+            for (int y{ x }; y < static_cast<int>(t_context.layout.cellCount().y - x); ++y)
+            {
+                t_context.actors.add(t_context, Actor::Wall, { x, y });
+
+                t_context.actors.add(
+                    t_context,
+                    Actor::Wall,
+                    { static_cast<int>(t_context.layout.cellCount().x - (x + 1)), y });
             }
         }
     }

@@ -3,6 +3,7 @@
 //
 // walls.hpp
 //
+#include <cstdlib>
 
 namespace snake2
 {
@@ -16,7 +17,7 @@ namespace snake2
       public:
         static void halfHoriz(const Context & t_context);
         static void halfVert(const Context & t_context);
-        static void full(const Context & t_context);
+        static void full(const Context & t_context, const std::size_t t_thickness);
         static void cutHolesInBorderWalls(const Context & t_context);
         static void centerBlock(const Context & t_context);
     };

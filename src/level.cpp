@@ -52,34 +52,27 @@ namespace snake2
         }
         else if (levelNumber == 4)
         {
-            Walls::full(t_context);
+            Walls::full(t_context, 1);
             Walls::cutHolesInBorderWalls(t_context);
         }
         else if (levelNumber == 5)
         {
-            Walls::full(t_context);
+            Walls::full(t_context, 1);
         }
         else if (levelNumber == 6)
         {
-            Walls::full(t_context);
+            Walls::full(t_context, 1);
             Walls::centerBlock(t_context);
         }
         else
         {
-            if (t_context.random.fromTo(1, 6) == 1)
+            if (t_context.random.fromTo(1, 4) == 1)
             {
-                if (t_context.random.boolean())
-                {
-                    Walls::halfVert(t_context);
-                }
-                else
-                {
-                    Walls::halfHoriz(t_context);
-                }
+                Walls::full(t_context, t_context.random.fromTo(2, 6));
             }
             else
             {
-                Walls::full(t_context);
+                Walls::full(t_context, 1);
 
                 if (t_context.random.boolean())
                 {
