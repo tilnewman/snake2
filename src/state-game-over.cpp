@@ -14,6 +14,9 @@
 #include "sfml-defaults.hpp"
 #include "sfml-util.hpp"
 
+#include <fstream>
+#include <iostream>
+
 namespace snake2
 {
 
@@ -56,7 +59,30 @@ namespace snake2
         // setup animations
         m_animations.reserve(12);
 
-        m_animations.emplace_back(t_context, "Final Score", t_context.game.score);
+        std::string highScoreStr{ "Final Score" };
+        const std::size_t highScore{ loadHighScoreFromFile(t_context) };
+        if (highScore > 0)
+        {
+            if (t_context.game.score > highScore)
+            {
+                highScoreStr += " (New High Score!)";
+                saveHighScoreFromFile(t_context);
+            }
+            else
+            {
+                highScoreStr += " (High Score: " + std::to_string(highScore) + ")";
+            }
+        }
+        else
+        {
+            if (t_context.game.score > 0)
+            {
+                highScoreStr += " (New High Score!)";
+                saveHighScoreFromFile(t_context);
+            }
+        }
+
+        m_animations.emplace_back(t_context, highScoreStr, t_context.game.score);
 
         m_animations.emplace_back(t_context, "Final Level", t_context.game.level);
 
@@ -160,7 +186,7 @@ namespace snake2
         else if (StatAnimPhase::Hold == anim.phase)
         {
             anim.elapsed_sec += t_elapsedSec;
-            if (anim.elapsed_sec > 4.0f)
+            if (anim.elapsed_sec > 6.0f)
             {
                 anim.elapsed_sec = 0.0f;
                 anim.phase       = StatAnimPhase::Label;
@@ -170,6 +196,62 @@ namespace snake2
                     m_animIndex = 0;
                 }
             }
+        }
+    }
+
+    std::size_t StateGameOver::loadHighScoreFromFile(const Context & t_context) const
+    {
+        try
+        {
+            if (!std::filesystem::exists(
+                    std::filesystem::path(t_context.config.save_game_file_name)))
+            {
+                return 0;
+            }
+
+            nlohmann::json json;
+
+            {
+                std::ifstream ifStream(t_context.config.save_game_file_name);
+                if (!ifStream)
+                {
+                    throw std::runtime_error("The file could not be opened or read.");
+                }
+
+                ifStream >> json;
+            }
+
+            GameInfo savedGameInfo = json.get<GameInfo>();
+            return savedGameInfo.score;
+        }
+        catch (const std::exception & ex)
+        {
+            std::cout << "Failed to load high score file: " << ex.what() << '\n';
+        }
+        catch (...)
+        {
+            std::cout << "Failed to load high score file: (non-standard exception)\n";
+        }
+
+        return 0;
+    }
+
+    void StateGameOver::saveHighScoreFromFile(const Context & t_context) const
+    {
+        try
+        {
+            nlohmann::json json = t_context.game;
+
+            std::ofstream ofStream(t_context.config.save_game_file_name, std::ios::trunc);
+            ofStream << json;
+        }
+        catch (const std::exception & ex)
+        {
+            std::cout << "Failed to save high score file: " << ex.what() << '\n';
+        }
+        catch (...)
+        {
+            std::cout << "Failed to save high score file: (non-standard exception)\n";
         }
     }
 

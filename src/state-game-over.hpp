@@ -62,6 +62,8 @@ namespace snake2
       private:
         void updateTextColor(const Context & t_context, const float t_elapsedSec);
         void updateAnimations(const Context & t_context, const float t_elapsedSec);
+        std::size_t loadHighScoreFromFile(const Context & t_context) const;
+        void saveHighScoreFromFile(const Context & t_context) const;
 
       private:
         float m_colorElapsedSec;

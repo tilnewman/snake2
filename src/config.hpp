@@ -4,6 +4,7 @@
 // config.hpp
 //
 #include <filesystem>
+#include <string>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -41,6 +42,8 @@ namespace snake2
         float text_anim_rise_mult{ 3.0f };
         
         std::size_t food_pieces_per_level{ 7 };
+
+        std::string save_game_file_name{ "snake-score.txt" };
     };
 
 } // namespace snake2
