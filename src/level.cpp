@@ -68,7 +68,7 @@ namespace snake2
         {
             if (t_context.random.fromTo(1, 4) == 1)
             {
-                Walls::full(t_context, t_context.random.fromTo(2, 6));
+                Walls::full(t_context, t_context.random.fromTo(2_st, 6_st));
             }
             else
             {

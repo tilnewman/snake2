@@ -81,27 +81,27 @@ namespace snake2
 
         for (int y{ 0 }; y < thicknessInt; ++y)
         {
-            for (int x{ y }; x < static_cast<int>(t_context.layout.cellCount().x - y); ++x)
+            for (int x{ y }; x < (static_cast<int>(t_context.layout.cellCount().x) - y); ++x)
             {
                 t_context.actors.add(t_context, Actor::Wall, { x, y });
                 
                 t_context.actors.add(
                     t_context,
                     Actor::Wall,
-                    { x, static_cast<int>(t_context.layout.cellCount().y - (y + 1)) });
+                    { x, (static_cast<int>(t_context.layout.cellCount().y) - (y + 1)) });
             }
         }
 
         for (int x{ 0 }; x < thicknessInt; ++x)
         {
-            for (int y{ x }; y < static_cast<int>(t_context.layout.cellCount().y - x); ++y)
+            for (int y{ x }; y < (static_cast<int>(t_context.layout.cellCount().y) - x); ++y)
             {
                 t_context.actors.add(t_context, Actor::Wall, { x, y });
 
                 t_context.actors.add(
                     t_context,
                     Actor::Wall,
-                    { static_cast<int>(t_context.layout.cellCount().x - (x + 1)), y });
+                    { (static_cast<int>(t_context.layout.cellCount().x) - (x + 1)), y });
             }
         }
     }
