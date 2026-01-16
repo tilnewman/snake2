@@ -56,7 +56,7 @@ namespace snake2
         for (int x{ 0 }; x < length; ++x)
         {
             const GridPos_t position{ leftMostPos + static_cast<int>(x), vertPos };
-            if (position.x < (cellCount.x - 1))
+            if (position.x < (cellCount.x - 6))
             {
                 m_positions.emplace_back(position);
             }
