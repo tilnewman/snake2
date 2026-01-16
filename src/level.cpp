@@ -78,11 +78,11 @@ namespace snake2
                 {
                     Walls::cutHolesInBorderWalls(t_context);
                 }
-            }
 
-            if (t_context.random.boolean())
-            {
-                Walls::centerBlock(t_context);
+                if (t_context.random.boolean())
+                {
+                    Walls::centerBlock(t_context);
+                }
             }
         }
     }
